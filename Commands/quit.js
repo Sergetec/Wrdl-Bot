@@ -1,4 +1,4 @@
-const { Client, CommandInteraction, Message} = require('discord.js')
+const { Client, CommandInteraction} = require('discord.js')
 const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')

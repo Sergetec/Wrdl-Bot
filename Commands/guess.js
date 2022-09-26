@@ -66,7 +66,13 @@ module.exports = {
             //Check for valid word
             let found
             let auxChars
-            const file = fs.readFileSync('valid_guess.txt', 'utf-8');
+            let file
+            if (global.ROGame) {
+                file = fs.readFileSync('valid_ro.txt', 'utf-8');
+            }
+            if (global.ENGame) {
+                file = fs.readFileSync('valid_en.txt', 'utf-8');
+            }
             const wordArray = file.split('\n');
             for (let i = 0; i < wordArray.length; ++i){
                 let word = wordArray[i]

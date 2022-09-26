@@ -1,8 +1,11 @@
 const { Client, CommandInteraction } = require('discord.js')
-const { MessageEmbed } = require('discord.js')
+const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js')
 const fs = require('fs')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
+
+global.ROGame = false
+global.ENGame = false
 
 module.exports = {
     name: 'start',
@@ -24,49 +27,160 @@ module.exports = {
             return await interaction.reply({ embeds: [message], ephemeral: true })
         }
 
-        const word = randomWord()
+        const row = new MessageActionRow()
+        row.addComponents(
+            new MessageButton()
+                .setCustomId('EN')
+                .setLabel('English')
+                .setEmoji('🇬🇧')
+                .setStyle('PRIMARY')
+        )
+        row.addComponents(
+            new MessageButton()
+                .setCustomId('RO')
+                .setLabel('Romanian')
+                .setEmoji('🇷🇴')
+                .setStyle('PRIMARY')
+        )
+        const deadRowEN = new MessageActionRow()
+        deadRowEN.addComponents(
+            new MessageButton()
+                .setCustomId('EN')
+                .setLabel('English')
+                .setEmoji('🇬🇧')
+                .setStyle('SUCCESS')
+        )
+        deadRowEN.addComponents(
+            new MessageButton()
+                .setCustomId('RO')
+                .setLabel('Romanian')
+                .setEmoji('🇷🇴')
+                .setStyle('PRIMARY')
+        )
+
+        const deadRowRO = new MessageActionRow()
+        deadRowRO.addComponents(
+            new MessageButton()
+                .setCustomId('EN')
+                .setLabel('English')
+                .setEmoji('🇬🇧')
+                .setStyle('PRIMARY')
+        )
+        deadRowRO.addComponents(
+            new MessageButton()
+                .setCustomId('RO')
+                .setLabel('Romanian')
+                .setEmoji('🇷🇴')
+                .setStyle('SUCCESS')
+        )
+
         const message = new MessageEmbed()
             .setTitle('Wordle Game')
-            .setColor('WHITE')
-            .addFields({
-                name: 'Game started',
-                value: '👉 Use \`/guess\` to make your guess',
-            })
-        await interaction.reply({ embeds: [message] });
-        const expires1 = new Date()
-        expires1.setMinutes(expires1.getMinutes() + 5)
-        let schema = await gamesSchema.create({
-            guildID: guildID,
-            channelStarted: channel,
-            userID: userID,
-            word: word,
-            guesses: '0',
-            replyMessage: '\n',
-            expires: expires1,
-        })
-        await schema.save();
+            .setColor('RED')
+            .setDescription('❗ Choose your language')
+        await interaction.reply({ embeds: [message], components: [row] })
 
-        schema = await statsSchema.findOne(query)
-        if (schema){
-            schema.gamesTotal = schema.gamesTotal + 1
-            await schema.save()
-        }
-        else{
-            schema = await statsSchema.create({
-                guildID: guildID,
-                userID: userID,
-                gamesTotal: 1,
-                gamesWon: 0,
-                gamesLost: 0,
-                winRate: 0,
+        let collector
+        const filter = (interaction) => interaction.user.id === userID
+        const time = 1000 * 30
+
+        collector = interaction.channel.createMessageComponentCollector({ filter, max: 1, time })
+        collector.on('collect', async (btnInt) => {
+            if (!btnInt){
+                return;
+            }
+            if (btnInt.customId !== 'EN' && btnInt.customId !== 'RO'){
+                return;
+            }
+            await btnInt.deferUpdate()
+            switch (btnInt.customId){
+                case 'RO':
+                        global.ROGame = true
+                    break;
+                case 'EN':
+                    global.ENGame = true;
+                    break;
+            }
+            collector.on('end', async () => {
+                const messageExpired = new MessageEmbed()
+                    .setTitle('Wordle Game')
+                    .setColor('WHITE')
+                    .setDescription('❗ Time has expired')
+                return await interaction.editReply({ embeds: [messageExpired], components: [deadRow] })
             })
-            await schema.save()
-        }
+
+            const ROMessage = new MessageEmbed()
+                .setTitle('Wordle Game')
+                .setColor('GREEN')
+                .addFields({
+                    name: 'Joc inceput',
+                    value: '👉 Foloseste \`/guess\` pentru a ghici cuvantul',
+                })
+
+            const ENMessage = new MessageEmbed()
+                .setTitle('Wordle Game')
+                .setColor('WHITE')
+                .addFields({
+                    name: 'Game started',
+                    value: '👉 Use \`/guess\` to make your guess',
+                })
+
+            let word
+            if (global.ROGame){
+                await interaction.editReply({ embeds: [ROMessage], components: [deadRowRO] })
+                word = randomWord_RO()
+            }
+            if (global.ENGame){
+                await interaction.editReply({ embeds: [ENMessage], components: [deadRowEN] })
+                word = randomWord_EN()
+            }
+
+            //Stats database
+            const expires1 = new Date()
+            expires1.setMinutes(expires1.getMinutes() + 5)
+            let schema = await gamesSchema.create({
+                guildID: guildID,
+                channelStarted: channel,
+                userID: userID,
+                word: word,
+                guesses: '0',
+                replyMessage: '\n',
+                expires: expires1,
+            })
+            await schema.save();
+
+            schema = await statsSchema.findOne(query)
+            if (schema){
+                schema.gamesTotal = schema.gamesTotal + 1
+                await schema.save()
+            }
+            else{
+                schema = await statsSchema.create({
+                    guildID: guildID,
+                    userID: userID,
+                    gamesTotal: 1,
+                    gamesWon: 0,
+                    gamesLost: 0,
+                    winRate: 0,
+                })
+                await schema.save()
+            }
+        })
     }
 }
 
-function randomWord(){
-    const file = fs.readFileSync('words_list.txt', 'utf-8');
+function randomWord_EN(){
+    const file = fs.readFileSync('words_en.txt', 'utf-8');
+    const wordArray = file.split('\n');
+
+    let randomWord
+    let rand = Math.floor(Math.random() * wordArray.length)
+    randomWord = wordArray[rand]
+    return randomWord
+}
+
+function randomWord_RO(){
+    const file = fs.readFileSync('words_ro.txt', 'utf-8');
     const wordArray = file.split('\n');
 
     let randomWord
