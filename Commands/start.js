@@ -113,13 +113,13 @@ module.exports = {
                 .setTitle('Wordle Game')
                 .setColor('GREEN')
                 .addFields({
-                    name: 'Joc inceput',
-                    value: '👉 Foloseste \`/guess\` pentru a ghici cuvantul',
+                    name: 'Joc început',
+                    value: '👉 Folosește \`/guess\` pentru a ghici cuvântul',
                 })
 
             const ENMessage = new MessageEmbed()
                 .setTitle('Wordle Game')
-                .setColor('WHITE')
+                .setColor('GREEN')
                 .addFields({
                     name: 'Game started',
                     value: '👉 Use \`/guess\` to make your guess',
