@@ -39,7 +39,7 @@ module.exports = {
                 const message = new MessageEmbed()
                     .setTitle('Wordle Game')
                     .setColor('RED')
-                    .setDescription('❗*Your guess must **not contain spaces**')
+                    .setDescription('❗Your guess must **not contain spaces**')
                 return await interaction.reply({ embeds: [message], ephemeral: true })
             }
             if (guessedWord.length !== 5){
@@ -67,13 +67,13 @@ module.exports = {
             let found
             let auxChars
             let file
-            if (global.ROGame) {
-                file = fs.readFileSync('valid_ro.txt', 'utf-8');
+            if (result.language === 'EN') {
+                file = fs.readFileSync('Words/valid_en.txt', 'utf-8')
             }
-            if (global.ENGame) {
-                file = fs.readFileSync('valid_en.txt', 'utf-8');
+            if (result.language === 'RO') {
+                file = fs.readFileSync('Words/valid_ro.txt', 'utf-8')
             }
-            const wordArray = file.split('\n');
+            const wordArray = file.split('\n')
             for (let i = 0; i < wordArray.length; ++i){
                 let word = wordArray[i]
                 auxChars = ''

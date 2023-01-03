@@ -4,13 +4,10 @@ const fs = require('fs')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
 
-global.ROGame = false
-global.ENGame = false
-
 module.exports = {
     name: 'start',
     description: 'starts the game',
-    async execute(client, interaction){
+    async execute(client, interaction) {
         const userID = interaction.user.id
         const guildID = interaction.guild.id
         const channel = interaction.channel.id
@@ -19,7 +16,7 @@ module.exports = {
             userID: userID,
         }
         const result = await gamesSchema.findOne(query)
-        if (result){
+        if (result) {
             const message = new MessageEmbed()
                 .setTitle('Wordle Game')
                 .setColor('RED')
@@ -79,26 +76,26 @@ module.exports = {
             .setColor('RED')
             .setDescription('❗ Choose your language')
         await interaction.reply({ embeds: [message], components: [row] })
-
+        let ENGame = false, ROGame = false
         let collector
         const filter = (interaction) => interaction.user.id === userID
         const time = 1000 * 30
 
         collector = interaction.channel.createMessageComponentCollector({ filter, max: 1, time })
         collector.on('collect', async (btnInt) => {
-            if (!btnInt){
+            if (!btnInt) {
                 return;
             }
-            if (btnInt.customId !== 'EN' && btnInt.customId !== 'RO'){
+            if (btnInt.customId !== 'EN' && btnInt.customId !== 'RO') {
                 return;
             }
             await btnInt.deferUpdate()
-            switch (btnInt.customId){
-                case 'RO':
-                        global.ROGame = true
-                    break;
+            switch (btnInt.customId) {
                 case 'EN':
-                    global.ENGame = true;
+                    ENGame = true;
+                    break;
+                case 'RO':
+                    ROGame = true
                     break;
             }
             collector.on('end', async () => {
@@ -125,29 +122,45 @@ module.exports = {
                     value: '👉 Use \`/guess\` to make your guess',
                 })
 
-            let word
-            if (global.ROGame){
-                await interaction.editReply({ embeds: [ROMessage], components: [deadRowRO] })
-                word = randomWord_RO()
-            }
-            if (global.ENGame){
+            let schema
+            if (ENGame) {
                 await interaction.editReply({ embeds: [ENMessage], components: [deadRowEN] })
-                word = randomWord_EN()
-            }
+                let word = randomWord_EN()
 
-            //Stats database
-            const expires1 = new Date()
-            expires1.setMinutes(expires1.getMinutes() + 5)
-            let schema = await gamesSchema.create({
-                guildID: guildID,
-                channelStarted: channel,
-                userID: userID,
-                word: word,
-                guesses: '0',
-                replyMessage: '\n',
-                expires: expires1,
-            })
-            await schema.save();
+                //Stats database
+                const expires1 = new Date()
+                expires1.setMinutes(expires1.getMinutes() + 1)
+                schema = await gamesSchema.create({
+                    guildID: guildID,
+                    channelStarted: channel,
+                    userID: userID,
+                    word: word,
+                    guesses: '0',
+                    replyMessage: '\n',
+                    language: 'EN',
+                    expires: expires1,
+                })
+                await schema.save();
+            }
+            if (ROGame) {
+                await interaction.editReply({ embeds: [ROMessage], components: [deadRowRO] })
+                let word = randomWord_RO()
+
+                //Stats database
+                const expires1 = new Date()
+                expires1.setMinutes(expires1.getMinutes() + 1)
+                schema = await gamesSchema.create({
+                    guildID: guildID,
+                    channelStarted: channel,
+                    userID: userID,
+                    word: word,
+                    guesses: '0',
+                    replyMessage: '\n',
+                    language: 'RO',
+                    expires: expires1,
+                })
+                await schema.save();
+            }
 
             schema = await statsSchema.findOne(query)
             if (schema){
@@ -169,9 +182,9 @@ module.exports = {
     }
 }
 
-function randomWord_EN(){
-    const file = fs.readFileSync('words_en.txt', 'utf-8');
-    const wordArray = file.split('\n');
+function randomWord_EN() {
+    const file = fs.readFileSync('Words/words_en.txt', 'utf-8')
+    const wordArray = file.split('\n')
 
     let randomWord
     let rand = Math.floor(Math.random() * wordArray.length)
@@ -179,9 +192,9 @@ function randomWord_EN(){
     return randomWord
 }
 
-function randomWord_RO(){
-    const file = fs.readFileSync('words_ro.txt', 'utf-8');
-    const wordArray = file.split('\n');
+function randomWord_RO() {
+    const file = fs.readFileSync('Words/words_ro.txt', 'utf-8')
+    const wordArray = file.split('\n')
 
     let randomWord
     let rand = Math.floor(Math.random() * wordArray.length)
