@@ -224,6 +224,8 @@ module.exports = {
                     await schema.save()
                 }
             })
+        } catch(err) {
+            console.log(err)
         }
     }
 }
