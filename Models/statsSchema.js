@@ -17,6 +17,12 @@ const schema = new Schema({
         gamesWon: reqNumber,
         gamesLost: reqNumber,
         winRate: reqNumber,
+        oneGuess: reqNumber,
+        twoGuess: reqNumber,
+        threeGuess: reqNumber,
+        fourGuess: reqNumber,
+        fiveGuess: reqNumber,
+        sixGuess: reqNumber,
     })
 
 const name = 'stats'

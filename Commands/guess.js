@@ -566,6 +566,26 @@ module.exports = {
                 schema = await statsSchema.findOne(query2)
                 schema.gamesWon = schema.gamesWon + 1
                 schema.winRate = Math.trunc(schema.gamesWon / schema.gamesTotal * 100)
+                switch (count) {
+                    case 1:
+                        schema.oneGuess = schema.oneGuess + 1
+                        break
+                    case 2:
+                        schema.twoGuess = schema.twoGuess + 1
+                        break
+                    case 3:
+                        schema.threeGuess = schema.threeGuess + 1
+                        break
+                    case 4:
+                        schema.fourGuess = schema.fourGuess + 1
+                        break
+                    case 5:
+                        schema.fiveGuess = schema.fiveGuess + 1
+                        break
+                    case 6:
+                        schema.sixGuess = schema.sixGuess + 1
+                        break
+                }
                 await schema.save()
                 return await interaction.reply({ embeds: [message] })
             }

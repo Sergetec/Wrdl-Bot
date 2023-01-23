@@ -220,6 +220,12 @@ module.exports = {
                         gamesWon: 0,
                         gamesLost: 0,
                         winRate: 0,
+                        oneGuess: 0,
+                        twoGuess: 0,
+                        threeGuess: 0,
+                        fourGuess: 0,
+                        fiveGuess: 0,
+                        sixGuess: 0,
                     })
                     await schema.save()
                 }
