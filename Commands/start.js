@@ -171,7 +171,8 @@ module.exports = {
                     let word = randomWord_EN()
 
                     //Stats database
-                    const expires1 = new Date()
+                    let expires1 = new Date()
+                    expires1 = expires1.toLocaleString('ro-RO', {timezone: 'Europe/Bucharest'})
                     expires1.setMinutes(expires1.getMinutes() + 2)
                     schema = await gamesSchema.create({
                         guildID: guildID,
@@ -191,7 +192,8 @@ module.exports = {
                     let word = randomWord_RO()
 
                     //Stats database
-                    const expires1 = new Date()
+                    let expires1 = new Date()
+                    expires1 = expires1.toLocaleString('ro-RO', {timezone: 'Europe/Bucharest'})
                     expires1.setMinutes(expires1.getMinutes() + 2)
                     schema = await gamesSchema.create({
                         guildID: guildID,
