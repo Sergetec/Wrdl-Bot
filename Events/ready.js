@@ -29,12 +29,14 @@ module.exports = {
         for (let guild of Guilds) {
             guild = client.guilds.cache.get(guild)
             const check = async () => {
+                let expires1 = new Date()
+                let dt = new Date(expires1.getTime() + 120 * 60 * 1000)
+                dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                 const query = {
                     guildID: guild.id,
-                    expires: {$lt: new Date()},
+                    expires: {$lt: dt},
                 }
                 const results = await gamesSchema.find(query)
-
                 const query2 = {
                     guildID: guild.id,
                 }
