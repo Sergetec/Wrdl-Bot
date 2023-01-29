@@ -172,7 +172,7 @@ module.exports = {
 
                     //Stats database
                     let expires1 = new Date()
-                    let dt = new Date(expires1.getTime() + 2 * 60 * 1000)
+                    let dt = new Date(expires1.getTime() + 122 * 60 * 1000)
                     dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                     schema = await gamesSchema.create({
                         guildID: guildID,
@@ -193,10 +193,8 @@ module.exports = {
 
                     //Stats database
                     let expires1 = new Date()
-                    console.log(expires1)
-                    let dt = new Date(expires1.getTime() + 2 * 60 * 1000)
+                    let dt = new Date(expires1.getTime() + 122 * 60 * 1000)
                     dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
-                    console.log(dt)
                     schema = await gamesSchema.create({
                         guildID: guildID,
                         channelStarted: channel,
