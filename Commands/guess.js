@@ -621,6 +621,7 @@ module.exports = {
             let expires1 = new Date()
             let dt = new Date(expires1.getTime() + 2 * 60 * 1000)
             dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
+            console.log(dt)
 
             let schema2 = await gamesSchema.findOne(query)
             schema2.expires = dt
