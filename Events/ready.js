@@ -25,21 +25,20 @@ module.exports = {
         client.user.setStatus('online')
 
         //Check for inactive games
-        try {
-            let Guilds = client.guilds.cache.map(guild => guild.id)
-            for (let guild of Guilds) {
-                guild = client.guilds.cache.get(guild)
-                const check = async () => {
-                    const query = {
-                        guildID: guild.id,
-                        expires: {$lt: new Date()},
-                    }
-                    const results = await gamesSchema.find(query)
+        let Guilds = client.guilds.cache.map(guild => guild.id)
+        for (let guild of Guilds) {
+            guild = client.guilds.cache.get(guild)
+            const check = async () => {
+                const query = {
+                    guildID: guild.id,
+                    expires: {$lt: new Date()},
+                }
+                const results = await gamesSchema.find(query)
 
-                    const query2 = {
-                        guildID: guild.id,
-                    }
-
+                const query2 = {
+                    guildID: guild.id,
+                }
+                try {
                     if (!isIterable(results)) {
                         await gamesSchema.deleteMany(query)
                         let schema = await statsSchema.findOne(query2)
@@ -54,8 +53,7 @@ module.exports = {
                             .setDescription(`<@${results.userID}>'s game has ended due to inactivity`)
 
                         await client.channels.cache.get(channel).send({ embeds: [message] })
-                    }
-                    else {
+                    } else {
                         for (const result of results) {
                             await gamesSchema.deleteMany(query)
                             let schema2 = await statsSchema.findOne(query2)
@@ -72,12 +70,12 @@ module.exports = {
                             await client.channels.cache.get(channel).send({ embeds: [message2] })
                         }
                     }
-                    setTimeout(check, 1000 * 30)
+                } catch (err) {
+                    console.log(err)
                 }
-                await check()
+                setTimeout(check, 1000 * 30)
             }
-        } catch (err) {
-            console.log(err)
+            await check()
         }
     }
 }
