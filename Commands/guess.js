@@ -619,11 +619,11 @@ module.exports = {
 
             //Update inactive time
             let expires1 = new Date()
-            expires1.setMinutes(expires1.getMinutes() + 3)
-            expires1 = expires1.toLocaleString('ro-RO', {timezone: 'Europe/Bucharest'})
+            let dt = new Date(expires1.getTime() + 2 * 60 * 1000)
+            dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
 
             let schema2 = await gamesSchema.findOne(query)
-            schema2.expires = expires1
+            schema2.expires = dt
             await schema2.save()
 
             schema = await gamesSchema.findOne(query2)

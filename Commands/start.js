@@ -172,8 +172,8 @@ module.exports = {
 
                     //Stats database
                     let expires1 = new Date()
-                    expires1.setMinutes(expires1.getMinutes() + 3)
-                    expires1 = expires1.toLocaleString('ro-RO', {timezone: 'Europe/Bucharest'})
+                    let dt = new Date(expires1.getTime() + 2 * 60 * 1000)
+                    dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                     schema = await gamesSchema.create({
                         guildID: guildID,
                         channelStarted: channel,
@@ -183,7 +183,7 @@ module.exports = {
                         replyMessage: '\n',
                         alphabet: alphabetLetters,
                         language: 'EN',
-                        expires: expires1,
+                        expires: dt,
                     })
                     await schema.save();
                 }
@@ -193,8 +193,8 @@ module.exports = {
 
                     //Stats database
                     let expires1 = new Date()
-                    expires1.setMinutes(expires1.getMinutes() + 3)
-                    expires1 = expires1.toLocaleString('ro-RO', {timezone: 'Europe/Bucharest'})
+                    let dt = new Date(expires1.getTime() + 2 * 60 * 1000)
+                    dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                     schema = await gamesSchema.create({
                         guildID: guildID,
                         channelStarted: channel,
@@ -204,7 +204,7 @@ module.exports = {
                         replyMessage: '\n',
                         alphabet: alphabetLetters,
                         language: 'RO',
-                        expires: expires1,
+                        expires: dt,
                     })
                     await schema.save();
                 }
