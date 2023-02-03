@@ -633,7 +633,7 @@ module.exports = {
             await schema.save()
             const message = new MessageEmbed()
                 .setTitle(`Wordle Game`)
-                .setColor('YELLOW')
+                .setColor('#FF964D')
                 .addFields({
                     name: '\u200b',
                     value: `${replyMessage}`,

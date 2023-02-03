@@ -74,7 +74,7 @@ module.exports = {
 
             const message = new MessageEmbed()
                 .setTitle('Wordle Game')
-                .setColor('RED')
+                .setColor('#FF964D')
                 .setDescription('❗ Choose your language')
             await interaction.reply({ embeds: [message], components: [row] })
             let ENGame = false, ROGame = false
@@ -102,7 +102,7 @@ module.exports = {
                 collector.on('end', async () => {
                     const messageExpired = new MessageEmbed()
                         .setTitle('Wordle Game')
-                        .setColor('WHITE')
+                        .setColor('RED')
                         .setDescription('❗ Time has expired')
                     return await interaction.editReply({embeds: [messageExpired], components: [deadRow]})
                 })

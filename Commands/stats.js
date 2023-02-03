@@ -67,7 +67,7 @@ module.exports = {
 
                 const message = new MessageEmbed()
                     .setTitle(`📊 WRDL STATS GLOBAL 📊`)
-                    .setColor('#ff7869')
+                    .setColor('#FF964D')
                     .setThumbnail(user.avatarURL({dynamic: true, size: 512}))
                     .setDescription(`
                     👤 **<@${user.id}>
@@ -93,7 +93,7 @@ module.exports = {
             else {
                 const message = new MessageEmbed()
                     .setTitle(`📊 WRDL STATS 📊`)
-                    .setColor('#ff7869')
+                    .setColor('#FF964D')
                     .setDescription(`❓ <@${user.id}> haven\'t played a game.`)
 
                 return await interaction.reply({ embeds: [message] })
@@ -121,7 +121,7 @@ module.exports = {
 
                 const message = new MessageEmbed()
                     .setTitle(`📊 WRDL STATS SERVER 📊`)
-                    .setColor('#ff7869')
+                    .setColor('#FF964D')
                     .setThumbnail(user.avatarURL({dynamic: true, size: 512}))
                     .setDescription(`
                     👤 **<@${user.id}>
@@ -147,7 +147,7 @@ module.exports = {
             else {
                 const message = new MessageEmbed()
                     .setTitle(`📊 WRDL STATS 📊`)
-                    .setColor('#ff7869')
+                    .setColor('#FF964D9')
                     .setDescription(`❓ <@${user.id}> haven\'t played a game in this server.`)
 
                 return await interaction.reply({ embeds: [message] })
