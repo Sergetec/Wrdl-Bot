@@ -35,7 +35,7 @@ module.exports = {
             .setThumbnail(client.user.avatarURL({ dynamic: true, size: 512 }))
             .addFields({
                 name: '🚩 \`/start\`',
-                value: 'Start your own Wordle game, you will have to choose the preffered language everytime',
+                value: 'Start your own Wordle game, you will have to choose the preferred language every time',
                 inline: true,
             })
             .addFields({
