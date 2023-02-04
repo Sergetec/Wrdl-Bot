@@ -237,10 +237,10 @@ module.exports = {
                             alphabetCurr[11] = '<:L_darker_gray:1064629167783690402>'
                         }
                         if (charsGuessed[i] === 'm') {
-                            alphabetCurr[12] = '<:M_darker_gray:1064629169134260234>\n'
+                            alphabetCurr[12] = '<:M_darker_gray:1064629169134260234>'
                         }
                         if (charsGuessed[i] === 'n') {
-                            alphabetCurr[13] = '<:N_darker_gray:1064629171453702316>'
+                            alphabetCurr[13] = '\n<:N_darker_gray:1064629171453702316>'
                         }
                         if (charsGuessed[i] === 'o') {
                             alphabetCurr[14] = '<:O_darker_gray:1064629174238707772>'
@@ -339,11 +339,11 @@ module.exports = {
                     }
                     if (charsGuessed[i] === 'm') {
                         reply[i] = '<:M_green:1012673136279441508> '
-                        alphabetCurr[12] = '<:M_green:1012673136279441508>\n'
+                        alphabetCurr[12] = '<:M_green:1012673136279441508>'
                     }
                     if (charsGuessed[i] === 'n') {
                         reply[i] = '<:N_green:1012673137630007316> '
-                        alphabetCurr[13] = '<:N_green:1012673137630007316>'
+                        alphabetCurr[13] = '\n<:N_green:1012673137630007316>'
                     }
                     if (charsGuessed[i] === 'o') {
                         reply[i] = '<:O_green:1012673139135742012> '
@@ -452,11 +452,11 @@ module.exports = {
                             }
                             if (charsGuessed[i] === 'm'){
                                 reply[i] = '<:M_yellow:1012673307759353876> '
-                                alphabetCurr[12] = '<:M_yellow:1012673307759353876>\n'
+                                alphabetCurr[12] = '<:M_yellow:1012673307759353876>'
                             }
                             if (charsGuessed[i] === 'n'){
                                 reply[i] = '<:N_yellow:1012673309470642277> '
-                                alphabetCurr[13] = '<:N_yellow:1012673309470642277>'
+                                alphabetCurr[13] = '\n<:N_yellow:1012673309470642277>'
                             }
                             if (charsGuessed[i] === 'o'){
                                 reply[i] = '<:O_yellow:1012673310955421738> '
@@ -616,7 +616,7 @@ module.exports = {
 
             //Update inactive time
             let expires1 = new Date()
-            let dt = new Date(expires1.getTime() + 122 * 60 * 1000)
+            let dt = new Date(expires1.getTime() + 125 * 60 * 1000)
             dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
 
             let schema2 = await gamesSchema.findOne(query)

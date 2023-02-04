@@ -142,7 +142,7 @@ module.exports = {
                 alphabetGray[10] = '<:K_gray:1012693005548920852> '
                 alphabetGray[11] = '<:L_gray:1012693006769463408> '
                 alphabetGray[12] = '<:M_gray:1012693008300396564> '
-                alphabetGray[13] = '<:N_gray:1012693009411878953> '
+                alphabetGray[13] = '\n<:N_gray:1012693009411878953> '
                 alphabetGray[14] = '<:O_gray:1012693011286736957> '
                 alphabetGray[15] = '<:P_gray:1012693012956057640> '
                 alphabetGray[16] = '<:Q_gray:1012693014516342864> '
@@ -162,9 +162,6 @@ module.exports = {
                     else {
                         alphabetLetters += alphabetGray[i]
                     }
-                    if (i === 12) {
-                        alphabetLetters += '\n'
-                    }
                 }
                 if (ENGame) {
                     await interaction.editReply({embeds: [ENMessage], components: [deadRowEN]})
@@ -172,7 +169,7 @@ module.exports = {
 
                     //Stats database
                     let expires1 = new Date()
-                    let dt = new Date(expires1.getTime() + 122 * 60 * 1000)
+                    let dt = new Date(expires1.getTime() + 125 * 60 * 1000)
                     dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                     schema = await gamesSchema.create({
                         guildID: guildID,
@@ -193,7 +190,7 @@ module.exports = {
 
                     //Stats database
                     let expires1 = new Date()
-                    let dt = new Date(expires1.getTime() + 122 * 60 * 1000)
+                    let dt = new Date(expires1.getTime() + 125 * 60 * 1000)
                     dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                     schema = await gamesSchema.create({
                         guildID: guildID,
