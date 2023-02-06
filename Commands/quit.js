@@ -1,11 +1,10 @@
-const { Client, CommandInteraction} = require('discord.js')
 const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
 
 module.exports = {
     name: 'quit',
-    description: 'quit the ongoing game',
+    description: 'Quit your current game',
     async execute(client, interaction){
         const userID = interaction.user.id
         const guildID = interaction.guild.id

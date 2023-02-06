@@ -1,4 +1,3 @@
-const { Client, CommandInteraction } = require('discord.js')
 const { MessageEmbed } = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
@@ -6,7 +5,7 @@ const fs = require("fs");
 
 module.exports = {
     name: 'guess',
-    description: 'guess the word',
+    description: 'Make your guess',
     options: [
         {
             name: 'word',
@@ -619,7 +618,7 @@ module.exports = {
 
             //Update inactive time
             let expires1 = new Date()
-            let dt = new Date(expires1.getTime() + 122 * 60 * 1000)
+            let dt = new Date(expires1.getTime() + 125 * 60 * 1000)
             dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
 
             let schema2 = await gamesSchema.findOne(query)

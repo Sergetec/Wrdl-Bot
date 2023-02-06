@@ -1,4 +1,3 @@
-const { Client, CommandInteraction } = require('discord.js')
 const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js')
 const fs = require('fs')
 const gamesSchema = require('../Models/gamesSchema')
@@ -6,7 +5,7 @@ const statsSchema = require('../Models/statsSchema')
 
 module.exports = {
     name: 'start',
-    description: 'starts the game',
+    description: 'Start a new game',
     async execute(client, interaction) {
         try {
             const userID = interaction.user.id
@@ -104,7 +103,7 @@ module.exports = {
                         .setTitle('Wordle Game')
                         .setColor('RED')
                         .setDescription('❗ Time has expired')
-                    return await interaction.editReply({embeds: [messageExpired], components: [deadRow]})
+                    return await interaction.editReply({ embeds: [messageExpired], components: [deadRow] })
                 })
 
                 const ROMessage = new MessageEmbed()
@@ -167,12 +166,12 @@ module.exports = {
                     }
                 }
                 if (ENGame) {
-                    await interaction.editReply({embeds: [ENMessage], components: [deadRowEN]})
+                    await interaction.editReply({ embeds: [ENMessage], components: [deadRowEN] })
                     let word = randomWord_EN()
 
                     //Stats database
                     let expires1 = new Date()
-                    let dt = new Date(expires1.getTime() + 122 * 60 * 1000)
+                    let dt = new Date(expires1.getTime() + 125 * 60 * 1000)
                     dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                     schema = await gamesSchema.create({
                         guildID: guildID,
@@ -188,12 +187,12 @@ module.exports = {
                     await schema.save();
                 }
                 if (ROGame) {
-                    await interaction.editReply({embeds: [ROMessage], components: [deadRowRO]})
+                    await interaction.editReply({ embeds: [ROMessage], components: [deadRowRO] })
                     let word = randomWord_RO()
 
                     //Stats database
                     let expires1 = new Date()
-                    let dt = new Date(expires1.getTime() + 122 * 60 * 1000)
+                    let dt = new Date(expires1.getTime() + 125 * 60 * 1000)
                     dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                     schema = await gamesSchema.create({
                         guildID: guildID,

@@ -1,10 +1,9 @@
-const { Client, CommandInteraction} = require('discord.js')
 const { MessageEmbed } = require('discord.js')
 const statsSchema = require('../Models/statsSchema')
 
 module.exports = {
     name: 'stats',
-    description: 'Shows wordle stats of someone',
+    description: 'Shows someone\'s Wordle stats',
     options: [
         {
             name: 'type',
