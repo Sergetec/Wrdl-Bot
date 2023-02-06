@@ -239,7 +239,7 @@ module.exports = {
                             alphabetCurr[12] = '<:M_darker_gray:1064629169134260234>'
                         }
                         if (charsGuessed[i] === 'n') {
-                            alphabetCurr[13] = '<:N_darker_gray:1064629171453702316>'
+                            alphabetCurr[13] = '\n<:N_darker_gray:1064629171453702316>'
                         }
                         if (charsGuessed[i] === 'o') {
                             alphabetCurr[14] = '<:O_darker_gray:1064629174238707772>'
@@ -342,7 +342,7 @@ module.exports = {
                     }
                     if (charsGuessed[i] === 'n') {
                         reply[i] = '<:N_green:1012673137630007316> '
-                        alphabetCurr[13] = '<:N_green:1012673137630007316>'
+                        alphabetCurr[13] = '\n<:N_green:1012673137630007316>'
                     }
                     if (charsGuessed[i] === 'o') {
                         reply[i] = '<:O_green:1012673139135742012> '
@@ -455,7 +455,7 @@ module.exports = {
                             }
                             if (charsGuessed[i] === 'n'){
                                 reply[i] = '<:N_yellow:1012673309470642277> '
-                                alphabetCurr[13] = '<:N_yellow:1012673309470642277>'
+                                alphabetCurr[13] = '\n<:N_yellow:1012673309470642277>'
                             }
                             if (charsGuessed[i] === 'o'){
                                 reply[i] = '<:O_yellow:1012673310955421738> '
@@ -522,9 +522,6 @@ module.exports = {
                     }
                     alphabetNew += alphabetCurr[i] + ' '
                 }
-                // if (i === 13) {
-                //     alphabetNew += '\n'
-                // }
             }
             let perfectMatch = true
             for (let i = 0; i < 5; ++i) {
