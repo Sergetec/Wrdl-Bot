@@ -32,6 +32,7 @@ module.exports = {
         const user = interaction.options.getUser('user') || interaction.user
         const userID = user.id
 
+        let currentStreak = 0, maxStreak = 0
         let gamesTotal = 0, gamesWon = 0, gamesLost = 0, winRate = 0
         let oneGuess = 0, twoGuess = 0, threeGuess = 0, fourGuess = 0, fiveGuess = 0, sixGuess = 0
         let Strings = {
@@ -60,6 +61,7 @@ module.exports = {
                     fourGuess += result.fourGuess
                     fiveGuess += result.fiveGuess
                     sixGuess += result.sixGuess
+                    maxStreak = Math.max(maxStreak, result.maxStreak)
                 }
                 winRate = Math.trunc(gamesWon / gamesTotal * 100)
                 getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGuess, sixGuess, Strings)
@@ -74,7 +76,8 @@ module.exports = {
 🌍 Total Games: \`${gamesTotal}\`
 🎉 Words Solved: \`${gamesWon}\`
 📈 Words Unsolved: \`${gamesLost}\`
-📝 WinRate: \`${winRate}%\`**
+📝 WinRate: \`${winRate}%\`
+🔥 Highest Streak: \`${maxStreak}\`**
                     
 **Words guessed**
 **1** ${Strings.oneGuessString} \`${oneGuess}\`
@@ -116,6 +119,8 @@ module.exports = {
                 fourGuess = schema.fourGuess
                 fiveGuess = schema.fiveGuess
                 sixGuess = schema.sixGuess
+                currentStreak = schema.currentStreak
+                maxStreak = schema.maxStreak
                 getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGuess, sixGuess, Strings)
 
                 const message = new MessageEmbed()
@@ -128,7 +133,9 @@ module.exports = {
 🌍 Total Games: \`${gamesTotal}\`
 🎉 Words Solved: \`${gamesWon}\`
 📈 Words Unsolved: \`${gamesLost}\`
-📝 WinRate: \`${winRate}%\`**
+📝 WinRate: \`${winRate}%\`
+🔥 Highest Streak: \`${maxStreak}\`
+🔥 Current Streak: \`${currentStreak}\`**
                     
 **Words guessed**
 **1** ${Strings.oneGuessString} \`${oneGuess}\`

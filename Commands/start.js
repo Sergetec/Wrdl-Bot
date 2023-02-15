@@ -224,6 +224,8 @@ module.exports = {
                         fourGuess: 0,
                         fiveGuess: 0,
                         sixGuess: 0,
+                        currentStreak: 0,
+                        maxStreak: 0,
                     })
                     await schema.save()
                 }
@@ -252,8 +254,4 @@ function randomWord_RO() {
     let rand = Math.floor(Math.random() * wordArray.length)
     randomWord = wordArray[rand]
     return randomWord
-}
-
-function convertTZ(date, tzString) {
-    return new Date((typeof date === "string" ? new Date(date) : date).toLocaleString("ro-RO", {timeZone: tzString}))
 }

@@ -59,6 +59,7 @@ module.exports = {
                             let schema = await statsSchema.findOne(query2)
                             schema.gamesLost = schema.gamesLost + 1
                             schema.winRate = Math.trunc(schema.gamesWon / schema.gamesTotal * 100)
+                            schema.currentStreak = 0
                             await schema.save()
                             let channel = results.channelStarted
                             const message = new MessageEmbed()
@@ -78,6 +79,7 @@ module.exports = {
                                 let schema2 = await statsSchema.findOne(query2)
                                 schema2.gamesLost = schema2.gamesLost + 1
                                 schema2.winRate = Math.trunc(schema2.gamesWon / schema2.gamesTotal * 100)
+                                schema2.currentStreak = 0
                                 await schema2.save()
                                 let channel = result.channelStarted
                                 const message2 = new MessageEmbed()
@@ -117,6 +119,7 @@ module.exports = {
                     let schema = await statsSchema.findOne(query2)
                     schema.gamesLost = schema.gamesLost + 1
                     schema.winRate = Math.trunc(schema.gamesWon / schema.gamesTotal * 100)
+                    schema.currentStreak = 0
                     await schema.save()
                 }
                 else {
@@ -130,6 +133,7 @@ module.exports = {
                         let schema2 = await statsSchema.findOne(query2)
                         schema2.gamesLost = schema2.gamesLost + 1
                         schema2.winRate = Math.trunc(schema2.gamesWon / schema2.gamesTotal * 100)
+                        schema2.currentStreak = 0
                         await schema2.save()
                     }
                 }

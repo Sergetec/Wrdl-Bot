@@ -5,7 +5,7 @@ const statsSchema = require('../Models/statsSchema')
 module.exports = {
     name: 'quit',
     description: 'Quit your current game',
-    async execute(client, interaction){
+    async execute(client, interaction) {
         const userID = interaction.user.id
         const guildID = interaction.guild.id
         const query = {
@@ -13,12 +13,12 @@ module.exports = {
             userID: userID,
         }
         const result = await gamesSchema.findOne(query)
-        if (!result){
+        if (!result) {
             const message = new MessageEmbed()
                 .setTitle('Wordle Game')
                 .setColor('RED')
                 .setDescription('❗ **You have not started a game yet**')
-            return await interaction.reply({embeds: [message], ephemeral: true })
+            return await interaction.reply({ embeds: [message], ephemeral: true })
         }
         const row = new MessageActionRow()
         row.addComponents(
@@ -76,20 +76,21 @@ module.exports = {
 
         collector = interaction.channel.createMessageComponentCollector({ filter, max: 1, time })
         collector.on('collect', async (btnInt) => {
-            if (!btnInt){
+            if (!btnInt) {
                 return;
             }
-            if (btnInt.customId !== 'quit_game' && btnInt.customId !== 'continue_game'){
+            if (btnInt.customId !== 'quit_game' && btnInt.customId !== 'continue_game') {
                 return;
             }
             await btnInt.deferUpdate()
-            switch (btnInt.customId){
+            switch (btnInt.customId) {
                 case 'quit_game':
                     quitGame = true
                     await gamesSchema.deleteMany(query)
                     let schema = await statsSchema.findOne(query)
                     schema.gamesLost = schema.gamesLost + 1
                     schema.winRate = Math.trunc(schema.gamesWon / schema.gamesTotal * 100)
+                    schema.currentStreak = 0
                     await schema.save()
 
                     break;
@@ -113,14 +114,14 @@ module.exports = {
                     .setDescription('❗ Time has expired')
                 return await interaction.editReply({ embeds: [messageExpired], components: [deadRow] })
             })
-            if (quitGame){
+            if (quitGame) {
                 return await interaction.editReply({ embeds: [quitMessage], components: [deadRow] })
             }
-            if (continueGame){
+            if (continueGame) {
                 await interaction.editReply({ embeds: [continueMessage], components: [deadRow] })
                 let channel = result.channelStarted
                 let replyMessage = result.replyMessage
-                if (replyMessage === '\n'){
+                if (replyMessage === '\n') {
                     return
                 }
                 let count = result.guesses

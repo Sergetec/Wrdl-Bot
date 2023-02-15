@@ -23,6 +23,8 @@ const schema = new Schema({
         fourGuess: reqNumber,
         fiveGuess: reqNumber,
         sixGuess: reqNumber,
+        currentStreak: reqNumber,
+        maxStreak: reqNumber,
     })
 
 const name = 'stats'

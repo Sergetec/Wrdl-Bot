@@ -562,6 +562,11 @@ module.exports = {
                 schema = await statsSchema.findOne(query2)
                 schema.gamesWon = schema.gamesWon + 1
                 schema.winRate = Math.trunc(schema.gamesWon / schema.gamesTotal * 100)
+                let currentStreak = schema.currentStreak, maxStreak = schema.maxStreak
+                currentStreak++
+                schema.currentStreak = currentStreak
+                maxStreak = Math.max(maxStreak, currentStreak)
+                schema.maxStreak = maxStreak
                 switch (count) {
                     case 1:
                         schema.oneGuess = schema.oneGuess + 1
@@ -609,6 +614,7 @@ module.exports = {
                 schema = await statsSchema.findOne(query2)
                 schema.gamesLost = schema.gamesLost + 1
                 schema.winRate = Math.trunc(schema.gamesWon / schema.gamesTotal * 100)
+                schema.currentStreak = 0
                 await schema.save()
                 return await interaction.reply({ embeds: [message] })
             }
