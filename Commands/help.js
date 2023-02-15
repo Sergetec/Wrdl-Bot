@@ -30,7 +30,7 @@ module.exports = {
 
             embeds.push(new MessageEmbed()
                 .setTitle('Commands Information')
-                .setDescription('A new game will end automatically after 5 minutes of inactivity or by command. **Either way is a loss.**')
+                .setDescription('A new game will end automatically after 3 minutes of inactivity or by command. **Either way is a loss for the player.**')
                 .setColor('#FF964D')
                 .setThumbnail(client.user.avatarURL({dynamic: true, size: 512}))
                 .addFields({
