@@ -51,6 +51,7 @@ module.exports = {
                     try {
                         if (!isIterable(results)) {
                             let guildIDUser = results.guildID, userIDUser = results.userID
+                            await gamesSchema.deleteMany(query)
                             await expiredGameFound(guildIDUser, userIDUser) //in guild
                             let channel = results.channelStarted
                             const message = new MessageEmbed()
@@ -62,8 +63,9 @@ module.exports = {
                         } else {
                             for (const result of results) {
                                 let guildIDUser = result.guildID, userIDUser = result.userID
+                                await gamesSchema.deleteMany(query)
                                 await expiredGameFound(guildIDUser, userIDUser) //in guild
-                                let channel = results.channelStarted
+                                let channel = result.channelStarted
                                 const message = new MessageEmbed()
                                     .setTitle('Wordle Game')
                                     .setColor('RED')
@@ -94,11 +96,13 @@ module.exports = {
             try {
                 if (!isIterable(results)) {
                     let guildIDUser = results.guildID, userIDUser = results.userID
+                    await gamesSchema.deleteMany(query)
                     await expiredGameFound(guildIDUser, userIDUser) //not in guild
                 }
                 else {
                     for (const result of results) {
                         let guildIDUser = result.guildID, userIDUser = result.userID
+                        await gamesSchema.deleteMany(query)
                         await expiredGameFound(guildIDUser, userIDUser) //not in guild
                     }
                 }
@@ -125,7 +129,6 @@ async function expiredGameFound(guildIDUser, userIDUser) {
         guildID: guildIDUser,
         userID: userIDUser,
     }
-    await gamesSchema.deleteMany(query)
     let schema = await statsSchema.findOne(query2)
     schema.gamesLost = schema.gamesLost + 1
     schema.winRate = Math.trunc(schema.gamesWon / schema.gamesTotal * 100)
