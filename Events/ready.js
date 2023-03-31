@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const mongoPath = process.env.MONGO_URI
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, ActivityType } = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
 
@@ -20,7 +20,7 @@ module.exports = {
         });
         client.user.setActivity({
             name: `wordle games | /help`,
-            type: 'WATCHING'
+            type: ActivityType.Watching,
         })
         client.user.setStatus('online')
 
