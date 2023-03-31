@@ -1,6 +1,6 @@
 const mongoose = require("mongoose")
 const mongoPath = process.env.MONGO_URI
-const { MessageEmbed } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
 
@@ -44,10 +44,10 @@ module.exports = {
                     if (ok) {
                         let expires1 = new Date()
                         let dt = new Date(expires1.getTime() + 120 * 60 * 1000)
-                        dt = dt.toLocaleString('ro-RO', {timezone: 'Europe/Bucharest'})
+                        dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                         const query = {
                             guildID: guildId,
-                            expires: {$lt: dt},
+                            expires: { $lt: dt },
                         }
                         const results = await gamesSchema.find(query)
                         if (!isIterable(results)) {
@@ -55,9 +55,9 @@ module.exports = {
                             await gamesSchema.deleteMany(query)
                             await expiredGameFound(guildIDUser, userIDUser) //in guild
                             let channel = results.channelStarted
-                            const message = new MessageEmbed()
+                            const message = new EmbedBuilder()
                                 .setTitle('Wordle Game')
-                                .setColor('RED')
+                                .setColor('#ED4245')
                                 .setDescription(`<@${results.userID}>'s game has ended due to inactivity`)
 
                             await client.channels.cache.get(channel).send({embeds: [message]})
@@ -68,12 +68,12 @@ module.exports = {
                                 await gamesSchema.deleteMany(query)
                                 await expiredGameFound(guildIDUser, userIDUser) //in guild
                                 let channel = result.channelStarted
-                                const message = new MessageEmbed()
+                                const message = new EmbedBuilder()
                                     .setTitle('Wordle Game')
-                                    .setColor('RED')
+                                    .setColor('#ED4245')
                                     .setDescription(`<@${result.userID}>'s game has ended due to inactivity`)
 
-                                await client.channels.cache.get(channel).send({embeds: [message]})
+                                await client.channels.cache.get(channel).send({ embeds: [message] })
                             }
                         }
                     }
@@ -86,9 +86,9 @@ module.exports = {
                 */
                 let expires1 = new Date()
                 let dt = new Date(expires1.getTime() + 120 * 60 * 1000)
-                dt = dt.toLocaleString('ro-RO', {timezone: 'Europe/Bucharest'})
+                dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                 const query = {
-                    expires: {$lt: dt},
+                    expires: { $lt: dt },
                 }
                 const results = await gamesSchema.find(query)
                 if (!isIterable(results)) {

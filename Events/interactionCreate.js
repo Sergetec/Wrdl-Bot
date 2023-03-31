@@ -1,19 +1,19 @@
 module.exports = {
     name: 'interactionCreate',
-    description: 'slash commands handler',
+    description: 'Slash commands handler',
     on: true,
-    async execute(interaction, client){
+    async execute(interaction, client) {
         /*
         SLASH COMMANDS - HANDLER
         */
-        if (interaction.isCommand()){
+        if (interaction.isCommand()) {
             // await interaction.deferReply({ ephemeral: false }).catch(() => {});
 
             const command = client.commands.get(interaction.commandName)
-            if (!command){
-                return;
+            if (!command) {
+                return
             }
-            command.execute(client, interaction);
+            command.execute(client, interaction)
         }
     }
 }

@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js')
+const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
 const fs = require("fs");
@@ -9,7 +9,7 @@ module.exports = {
     options: [
         {
             name: 'word',
-            type: 'STRING',
+            type: ApplicationCommandOptionType.String,
             description: 'Your guess',
             required: true,
         },
@@ -23,9 +23,9 @@ module.exports = {
         }
         const result = await gamesSchema.findOne(query)
         if (!result) {
-            const message = new MessageEmbed()
+            const message = new EmbedBuilder()
                 .setTitle('Wordle Game')
-                .setColor('RED')
+                .setColor('#ED4245')
                 .setDescription('❗ **You have not started a game yet**')
             return await interaction.reply({ embeds: [message], ephemeral: true })
         }
@@ -38,23 +38,23 @@ module.exports = {
             let wordToGuess = result.word
             let guessedWord = interaction.options.getString('word')
             if (hasWhiteSpace(guessedWord)) {
-                const message = new MessageEmbed()
+                const message = new EmbedBuilder()
                     .setTitle('Wordle Game')
-                    .setColor('RED')
+                    .setColor('#ED4245')
                     .setDescription('❗Your guess must **not contain spaces**')
                 return await interaction.reply({ embeds: [message], ephemeral: true })
             }
             if (guessedWord.length !== 5) {
-                const message = new MessageEmbed()
+                const message = new EmbedBuilder()
                     .setTitle('Wordle Game')
-                    .setColor('RED')
+                    .setColor('#ED4245')
                     .setDescription('❗ Your guess must be a **5 character word**')
                 return await interaction.reply({ embeds: [message], ephemeral: true })
             }
             if (hasNumber(guessedWord)) {
-                const message = new MessageEmbed()
+                const message = new EmbedBuilder()
                     .setTitle('Wordle Game')
-                    .setColor('RED')
+                    .setColor('#ED4245')
                     .setDescription('❗You **cannot use numbers**')
                 return await interaction.reply({ embeds: [message], ephemeral: true })
             }
@@ -93,9 +93,9 @@ module.exports = {
                 }
             }
             if (!found) {
-                const message = new MessageEmbed()
+                const message = new EmbedBuilder()
                     .setTitle('Wordle Game')
-                    .setColor('RED')
+                    .setColor('#ED4245')
                     .setDescription(`❗**${charsGuessed}** is not in the words list`)
                 return await interaction.reply({ embeds: [message], ephemeral: true })
             }
@@ -540,9 +540,9 @@ module.exports = {
             let schema
             if (perfectMatch) {
                 await gamesSchema.deleteMany(query2)
-                const message = new MessageEmbed()
+                const message = new EmbedBuilder()
                     .setTitle(`Wordle Game`)
-                    .setColor('GREEN')
+                    .setColor('#57F287')
                     .setDescription(
                         `🎉 You won 🎉
                         The word was **${wordToGuess}**
@@ -592,9 +592,9 @@ module.exports = {
             }
             if (count >= 6) {
                 await gamesSchema.deleteMany(query2)
-                const message = new MessageEmbed()
+                const message = new EmbedBuilder()
                     .setTitle(`Wordle Game`)
-                    .setColor('RED')
+                    .setColor('#ED4245')
                     .setDescription(
                         `❗ You lost ❗
                         The word was **${wordToGuess}**
@@ -633,7 +633,7 @@ module.exports = {
             schema.replyMessage = replyMessage
             schema.alphabet = alphabetNew
             await schema.save()
-            const message = new MessageEmbed()
+            const message = new EmbedBuilder()
                 .setTitle(`Wordle Game`)
                 .setColor('#FF964D')
                 .addFields({

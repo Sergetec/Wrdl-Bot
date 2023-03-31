@@ -1,16 +1,16 @@
-const { MessageEmbed } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const statsSchema = require('../Models/statsSchema')
 
 module.exports = {
     name: 'leaderboard',
     description: 'Shows the top players on this server',
-    async execute(client, interaction){
+    async execute(client, interaction) {
         const guildID = interaction.guild.id
         const query = {
             guildID: guildID,
         }
         const results = await statsSchema.find(query)
-        if (results.length !== 0){
+        if (results.length !== 0) {
             for (let i = 0; i < results.length; ++i) {
                 for (let j = 0; j < results.length; ++j) {
                     if (results[i].gamesWon > results[j].gamesWon) {
@@ -24,19 +24,19 @@ module.exports = {
                 top += `**${count}**. <@${results[i].userID}> | **${results[i].gamesWon} wins**\n`
                 count++
             }
-            const message = new MessageEmbed()
+            const message = new EmbedBuilder()
                 .setTitle(`↗️ LEADERBOARD ↗️`)
-                .setColor('#0080ff')
+                .setColor('#0080FF')
                 .addFields({
                     name: 'Top players',
                     value: `${top}`,
                 })
             return await interaction.reply({ embeds: [message] })
         }
-        else{
-            const message = new MessageEmbed()
+        else {
+            const message = new EmbedBuilder()
                 .setTitle(`↗️ LEADERBOARD ↗️`)
-                .setColor('#0080ff')
+                .setColor('#0080FF')
                 .setDescription('❓ **No one has played yet in this guild**')
             return await interaction.reply({ embeds: [message], ephemeral: true })
         }

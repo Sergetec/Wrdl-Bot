@@ -1,4 +1,5 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js')
+const { ButtonStyle } = require('discord.js');
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
 
@@ -14,39 +15,39 @@ module.exports = {
         }
         const result = await gamesSchema.findOne(query)
         if (!result) {
-            const message = new MessageEmbed()
+            const message = new EmbedBuilder()
                 .setTitle('Wordle Game')
-                .setColor('RED')
+                .setColor('#ED4245')
                 .setDescription('❗ **You have not started a game yet**')
             return await interaction.reply({ embeds: [message], ephemeral: true })
         }
-        const row = new MessageActionRow()
+        const row = new ActionRowBuilder()
         row.addComponents(
-            new MessageButton()
+            new ButtonBuilder()
                 .setCustomId('quit_game')
-                .setStyle('DANGER')
+                .setStyle(ButtonStyle.Danger)
                 .setLabel('Quit')
         )
 
         row.addComponents(
-            new MessageButton()
+            new ButtonBuilder()
                 .setCustomId('continue_game')
-                .setStyle('SUCCESS')
+                .setStyle(ButtonStyle.Success)
                 .setLabel('Continue')
         )
 
-        const deadRow = new MessageActionRow()
+        const deadRow = new ActionRowBuilder()
         deadRow.addComponents(
-            new MessageButton()
+            new ButtonBuilder()
                 .setCustomId('quit_game_disabled')
-                .setStyle('DANGER')
+                .setStyle(ButtonStyle.Danger)
                 .setLabel('Quit')
                 .setDisabled(true)
         )
         deadRow.addComponents(
-            new MessageButton()
+            new ButtonBuilder()
                 .setCustomId('continue_game_disabled')
-                .setStyle('SUCCESS')
+                .setStyle(ButtonStyle.Success)
                 .setLabel('Continue')
                 .setDisabled(true)
         )
@@ -55,20 +56,20 @@ module.exports = {
         const filter = (interaction) => interaction.user.id === userID
         const time = 1000 * 30
 
-        const message = new MessageEmbed()
+        const message = new EmbedBuilder()
             .setTitle('Wordle Game')
-            .setColor('RED')
+            .setColor('#ED4245')
             .setDescription('❗ Are you sure that you want to **quit this game**? This will **__count as a loss__** on your account. You can still continue if you wish to')
         await interaction.reply({ embeds: [message], components: [row] })
 
-        const quitMessage = new MessageEmbed()
+        const quitMessage = new EmbedBuilder()
             .setTitle('Wordle Game')
-            .setColor('RED')
+            .setColor('#ED4245')
             .setDescription('❗ Game quited')
 
-        const continueMessage = new MessageEmbed()
+        const continueMessage = new EmbedBuilder()
             .setTitle('Wordle Game')
-            .setColor('GREEN')
+            .setColor('#57F287')
             .setDescription('✅ Game continued')
 
         let continueGame = false
@@ -108,9 +109,9 @@ module.exports = {
                     break;
             }
             collector.on('end', async () => {
-                const messageExpired = new MessageEmbed()
+                const messageExpired = new EmbedBuilder()
                     .setTitle('Wordle Game')
-                    .setColor('WHITE')
+                    .setColor('#ED4245')
                     .setDescription('❗ Time has expired')
                 return await interaction.editReply({ embeds: [messageExpired], components: [deadRow] })
             })
@@ -125,9 +126,9 @@ module.exports = {
                     return
                 }
                 let count = result.guesses
-                const messageToSendContinue = new MessageEmbed()
+                const messageToSendContinue = new EmbedBuilder()
                     .setTitle(`Wordle Game`)
-                    .setColor('WHITE')
+                    .setColor('#FF964D')
                     .addFields({
                         name: '\u200b',
                         value: `${replyMessage}`,

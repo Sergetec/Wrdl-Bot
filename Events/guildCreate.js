@@ -1,26 +1,30 @@
-const { MessageEmbed } = require('discord.js');
+const { EmbedBuilder, ChannelType, PermissionsBitField } = require('discord.js');
 
 module.exports = {
     name: 'guildCreate',
-    description: 'when bot joins a new guild',
+    description: 'When bot joins a new guild',
     on: true,
     async execute(guild) {
         try {
+            if (!guild.available) {
+                console.log("Not available")
+                return
+            }
             let channelToSend = ""
             guild.channels.cache.forEach((channel) => {
-                if (channel.type === 'GUILD_TEXT' && channelToSend === "") {
-                    if (channel.permissionsFor(guild.me).has('SEND_MESSAGES') && channel.permissionsFor(guild.me).has('VIEW_CHANNEL')) {
+                if (channel.type === ChannelType.GuildText && channelToSend === "") {
+                    if (channel.permissionsFor(guild.members.me).has(PermissionsBitField.Flags.SendMessages) && channel.permissionsFor(guild.members.me).has(PermissionsBitField.Flags.ViewChannel)) {
                         channelToSend = channel
                     }
                 }
             })
-            // channelToSend = guild.channels.cache.find(channel =>  channel.type === 'GUILD_TEXT' && channel.permissionsFor(guild.me).has('SEND_MESSAGES') && channel.permissionsFor(guild.me).has('VIEW_CHANNEL'))
+            // channelToSend = guild.channels.cache.find(channel => channel.type === ChannelType.GuildText && channel.permissionsFor(guild.members.me).has(PermissionsBitField.Flags.SendMessages))
             if (!channelToSend) {
-                return;
+                return
             }
-            const message = new MessageEmbed()
+            const message = new EmbedBuilder()
                 .setTitle('Wordle Bot')
-                .setColor('#ffdd00')
+                .setColor('#FF964D')
                 .setDescription(
                     `👋 **Hi, I am Wordle Bot!**
             
@@ -38,7 +42,7 @@ module.exports = {
                 )
                 .setTimestamp(Date.now())
 
-            await channelToSend.send({embeds: [message]});
+            await channelToSend.send({ embeds: [message] })
         } catch (err) {
             console.log(err)
         }

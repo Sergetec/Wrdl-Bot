@@ -1,4 +1,4 @@
-const { MessageEmbed } = require('discord.js')
+const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const statsSchema = require('../Models/statsSchema')
 
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
     options: [
         {
             name: 'type',
-            type: 'STRING',
+            type: ApplicationCommandOptionType.String,
             description: 'Global or in this server',
             required: true,
             choices: [
@@ -23,7 +23,7 @@ module.exports = {
         },
         {
             name: 'user',
-            type: 'USER',
+            type: ApplicationCommandOptionType.User,
             description: 'The user of which to display stats',
             required: false,
         },
@@ -66,10 +66,10 @@ module.exports = {
                 winRate = Math.trunc(gamesWon / gamesTotal * 100)
                 getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGuess, sixGuess, Strings)
 
-                const message = new MessageEmbed()
+                const message = new EmbedBuilder()
                     .setTitle(`📊 WRDL STATS GLOBAL 📊`)
                     .setColor('#FF964D')
-                    .setThumbnail(user.avatarURL({dynamic: true, size: 512}))
+                    .setThumbnail(user.avatarURL({ dynamic: true, size: 512 }))
                     .setDescription(`
                     👤 **<@${user.id}>
                     
@@ -93,9 +93,9 @@ module.exports = {
                 return await interaction.reply({ embeds: [message] })
             }
             else {
-                const message = new MessageEmbed()
+                const message = new EmbedBuilder()
                     .setTitle(`📊 WRDL STATS 📊`)
-                    .setColor('#FF964D')
+                    .setColor('#ED4245')
                     .setDescription(`❓ <@${user.id}> haven\'t played a game.`)
 
                 return await interaction.reply({ embeds: [message] })
@@ -123,10 +123,10 @@ module.exports = {
                 maxStreak = schema.maxStreak
                 getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGuess, sixGuess, Strings)
 
-                const message = new MessageEmbed()
+                const message = new EmbedBuilder()
                     .setTitle(`📊 WRDL STATS SERVER 📊`)
                     .setColor('#FF964D')
-                    .setThumbnail(user.avatarURL({dynamic: true, size: 512}))
+                    .setThumbnail(user.avatarURL({ dynamic: true, size: 512 }))
                     .setDescription(`
                     👤 **<@${user.id}>
                     
@@ -151,9 +151,9 @@ module.exports = {
                 return await interaction.reply({ embeds: [message] })
             }
             else {
-                const message = new MessageEmbed()
+                const message = new EmbedBuilder()
                     .setTitle(`📊 WRDL STATS 📊`)
-                    .setColor('#FF964D9')
+                    .setColor('#ED4245')
                     .setDescription(`❓ <@${user.id}> haven\'t played a game in this server.`)
 
                 return await interaction.reply({ embeds: [message] })

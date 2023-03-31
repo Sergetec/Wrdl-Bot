@@ -1,4 +1,4 @@
-const { MessageEmbed, MessageActionRow, MessageButton } = require('discord.js')
+const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
 const fs = require('fs')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
@@ -17,61 +17,61 @@ module.exports = {
             }
             const result = await gamesSchema.findOne(query)
             if (result) {
-                const message = new MessageEmbed()
+                const message = new EmbedBuilder()
                     .setTitle('Wordle Game')
                     .setColor('RED')
                     .setDescription('❓ **You have already started a game**')
-                return await interaction.reply({embeds: [message], ephemeral: true})
+                return await interaction.reply({ embeds: [message], ephemeral: true })
             }
 
-            const row = new MessageActionRow()
+            const row = new ActionRowBuilder()
             row.addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                     .setCustomId('EN')
                     .setLabel('English')
                     .setEmoji('🇬🇧')
-                    .setStyle('PRIMARY')
+                    .setStyle(ButtonStyle.Primary)
             )
             row.addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                     .setCustomId('RO')
                     .setLabel('Romanian')
                     .setEmoji('🇷🇴')
-                    .setStyle('PRIMARY')
+                    .setStyle(ButtonStyle.Primary)
             )
-            const deadRowEN = new MessageActionRow()
+            const deadRowEN = new ActionRowBuilder()
             deadRowEN.addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                     .setCustomId('EN')
                     .setLabel('English')
                     .setEmoji('🇬🇧')
-                    .setStyle('SUCCESS')
+                    .setStyle(ButtonStyle.Success)
             )
             deadRowEN.addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                     .setCustomId('RO')
                     .setLabel('Romanian')
                     .setEmoji('🇷🇴')
-                    .setStyle('PRIMARY')
+                    .setStyle(ButtonStyle.Primary)
             )
 
-            const deadRowRO = new MessageActionRow()
+            const deadRowRO = new ActionRowBuilder()
             deadRowRO.addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                     .setCustomId('EN')
                     .setLabel('English')
                     .setEmoji('🇬🇧')
-                    .setStyle('PRIMARY')
+                    .setStyle(ButtonStyle.Primary)
             )
             deadRowRO.addComponents(
-                new MessageButton()
+                new ButtonBuilder()
                     .setCustomId('RO')
                     .setLabel('Romanian')
                     .setEmoji('🇷🇴')
-                    .setStyle('SUCCESS')
+                    .setStyle(ButtonStyle.Success)
             )
 
-            const message = new MessageEmbed()
+            const message = new EmbedBuilder()
                 .setTitle('Wordle Game')
                 .setColor('#FF964D')
                 .setDescription('❗ Choose your language')
@@ -81,7 +81,7 @@ module.exports = {
             const filter = (interaction) => interaction.user.id === userID
             const time = 1000 * 30
 
-            collector = interaction.channel.createMessageComponentCollector({filter, max: 1, time})
+            collector = interaction.channel.createMessageComponentCollector({ filter, max: 1, time })
             collector.on('collect', async (btnInt) => {
                 if (!btnInt) {
                     return
@@ -99,24 +99,24 @@ module.exports = {
                         break
                 }
                 collector.on('end', async () => {
-                    const messageExpired = new MessageEmbed()
+                    const messageExpired = new EmbedBuilder()
                         .setTitle('Wordle Game')
-                        .setColor('RED')
+                        .setColor('#ED4245')
                         .setDescription('❗ Time has expired')
                     return await interaction.editReply({ embeds: [messageExpired], components: [deadRow] })
                 })
 
-                const ROMessage = new MessageEmbed()
+                const ROMessage = new EmbedBuilder()
                     .setTitle('Wordle Game')
-                    .setColor('GREEN')
+                    .setColor('#57F287')
                     .addFields({
                         name: 'Joc început',
                         value: '👉 Folosește \`/guess\` pentru a ghici cuvântul',
                     })
 
-                const ENMessage = new MessageEmbed()
+                const ENMessage = new EmbedBuilder()
                     .setTitle('Wordle Game')
-                    .setColor('GREEN')
+                    .setColor('#57F287')
                     .addFields({
                         name: 'Game started',
                         value: '👉 Use \`/guess\` to make your guess',
