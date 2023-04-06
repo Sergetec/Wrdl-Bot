@@ -195,12 +195,12 @@ function getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGue
     }
     if (oneGuessPercent >= 3.5) {
         let sferturi = oneGuessPercent / 3.5
-        oneGuessPercent /= 3.5
+        // oneGuessPercent /= 3.5
         //afisare
         for (let i = 1; i <= sferturi; ++i) {
             Strings.oneGuessString += '<:Bar1:1066803409417670676>'
         }
-        oneGuessPercent -= sferturi
+        // oneGuessPercent -= sferturi
         counter -= sferturi
     }
     counter = Math.ceil(counter)
@@ -232,12 +232,12 @@ function getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGue
     }
     if (twoGuessPercent >= 3.5) {
         let sferturi = twoGuessPercent / 3.5
-        twoGuessPercent /= 3.5
+        // twoGuessPercent /= 3.5
         //afisare
         for (let i = 1; i <= sferturi; ++i) {
             Strings.twoGuessString += '<:Bar1:1066803409417670676>'
         }
-        twoGuessPercent -= sferturi
+        // twoGuessPercent -= sferturi
         counter -= sferturi
     }
     counter = Math.ceil(counter)
@@ -269,12 +269,12 @@ function getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGue
     }
     if (threeGuessPercent >= 3.5) {
         let sferturi = threeGuessPercent / 3.5
-        threeGuessPercent /= 3.5
+        // threeGuessPercent /= 3.5
         //afisare
         for (let i = 1; i <= sferturi; ++i) {
             Strings.threeGuessString += '<:Bar1:1066803409417670676>'
         }
-        threeGuessPercent -= sferturi
+        // threeGuessPercent -= sferturi
         counter -= sferturi
     }
     counter = Math.ceil(counter)
@@ -306,12 +306,12 @@ function getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGue
     }
     if (fourGuessPercent >= 3.5) {
         let sferturi = fourGuessPercent / 3.5
-        fourGuessPercent /= 3.5
+        // fourGuessPercent /= 3.5
         //afisare
         for (let i = 1; i <= sferturi; ++i) {
             Strings.fourGuessString += '<:Bar1:1066803409417670676>'
         }
-        fourGuessPercent -= sferturi
+        // fourGuessPercent -= sferturi
         counter -= sferturi
     }
     counter = Math.ceil(counter)
@@ -343,12 +343,12 @@ function getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGue
     }
     if (fiveGuessPercent >= 3.5) {
         let sferturi = fiveGuessPercent / 3.5
-        fiveGuessPercent /= 3.5
+        // fiveGuessPercent /= 3.5
         //afisare
         for (let i = 1; i <= sferturi; ++i) {
             Strings.fiveGuessString += '<:Bar1:1066803409417670676>'
         }
-        fiveGuessPercent -= sferturi
+        // fiveGuessPercent -= sferturi
         counter -= sferturi
     }
     counter = Math.ceil(counter)
@@ -380,17 +380,17 @@ function getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGue
     }
     if (sixGuessPercent >= 3.5) {
         let sferturi = sixGuessPercent / 3.5
-        sixGuessPercent /= 3.5
+        // sixGuessPercent /= 3.5
         //afisare
         for (let i = 1; i <= sferturi; ++i) {
             Strings.sixGuessString += '<:Bar1:1066803409417670676>'
         }
-        sixGuessPercent -= sferturi
+        // sixGuessPercent -= sferturi
         counter -= sferturi
     }
     counter = Math.ceil(counter)
     for (let i = 1; i <= counter; ++i) {
         Strings.sixGuessString += '<:BarDark:1066831537812815965>'
     }
-    counter = 7
+    // counter = 7
 }

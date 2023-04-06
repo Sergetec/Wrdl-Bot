@@ -19,7 +19,7 @@ module.exports = {
             if (result) {
                 const message = new EmbedBuilder()
                     .setTitle('Wordle Game')
-                    .setColor('RED')
+                    .setColor('#ED4245')
                     .setDescription('❓ **You have already started a game**')
                 return await interaction.reply({ embeds: [message], ephemeral: true })
             }
