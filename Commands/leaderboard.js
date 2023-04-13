@@ -1,44 +1,103 @@
-const { EmbedBuilder } = require('discord.js')
+const { EmbedBuilder, ApplicationCommandOptionType} = require('discord.js')
 const statsSchema = require('../Models/statsSchema')
 
 module.exports = {
     name: 'leaderboard',
-    description: 'Shows the top players on this server',
+    description: 'Shows the top players',
+    options: [
+        {
+            name: 'type',
+            type: ApplicationCommandOptionType.String,
+            description: 'Global or in this server',
+            required: true,
+            choices: [
+                {
+                    name: 'global',
+                    value: 'global',
+                },
+                {
+                    name: 'server',
+                    value: 'server',
+                },
+            ],
+        },
+    ],
     async execute(client, interaction) {
-        const guildID = interaction.guild.id
-        const query = {
-            guildID: guildID,
+        try {
+            const type = interaction.options.get('type').value
+            if (type === 'global') {
+                await interaction.reply({ content: 'Fetching...' })
+                const results = await statsSchema.find()
+                await getTop(client, interaction, results)
+            }
+            else if (type === 'server') {
+                const guildID = interaction.guild.id
+                const query = {
+                    guildID: guildID,
+                }
+                await interaction.reply({ content: 'Fetching...' })
+                const results = await statsSchema.find(query)
+                await getTop(client, interaction, results)
+            }
+        } catch(err) {
+            console.log(err)
         }
-        const results = await statsSchema.find(query)
-        if (results.length !== 0) {
-            for (let i = 0; i < results.length; ++i) {
-                for (let j = 0; j < results.length; ++j) {
-                    if (results[i].gamesWon > results[j].gamesWon) {
-                        [results[i], results[j]] = [results[j], results[i]]
-                    }
+    }
+}
+
+async function getTop(client, interaction, results) {
+    if (results.length !== 0) {
+        for (let i = 0; i < results.length; ++i) {
+            for (let j = 0; j < results.length; ++j) {
+                if (results[i].gamesWon > results[j].gamesWon) {
+                    [results[i], results[j]] = [results[j], results[i]]
                 }
             }
-            let top = ''
-            let count = 1
-            for (let i = 0; i < results.length; ++i) {
-                top += `**${count}**. <@${results[i].userID}> | **${results[i].gamesWon} wins**\n`
-                count++
+        }
+        let top = ''
+        let count = 1
+        for (let i = 0; i < results.length; ++i) {
+            if (i === 10) {
+                break
             }
-            const message = new EmbedBuilder()
-                .setTitle(`↗️ LEADERBOARD ↗️`)
-                .setColor('#0080FF')
-                .addFields({
-                    name: 'Top players',
-                    value: `${top}`,
-                })
-            return await interaction.reply({ embeds: [message] })
+            let id = results[i].userID
+            const fetchUser = await client.users.fetch(id)
+            if (i === 0) {
+                top += `:first_place: ${fetchUser.username} | **${results[i].gamesWon} wins**\n`
+                count++;
+                continue
+            }
+            if (i === 1) {
+                top += `:second_place: ${fetchUser.username} | **${results[i].gamesWon} wins**\n`
+                count++;
+                continue
+            }
+            if (i === 2) {
+                top += `:third_place: ${fetchUser.username} | **${results[i].gamesWon} wins**\n`
+                count++;
+                continue
+            }
+            top += `**${count}**. ${fetchUser.username} | **${results[i].gamesWon} wins**\n`
+            count++
         }
-        else {
-            const message = new EmbedBuilder()
-                .setTitle(`↗️ LEADERBOARD ↗️`)
-                .setColor('#0080FF')
-                .setDescription('❓ **No one has played yet in this guild**')
-            return await interaction.reply({ embeds: [message], ephemeral: true })
-        }
+        count-- //at the end of the loop count will be + 1 than the actual number of people on the leaderboard
+        const message = new EmbedBuilder()
+            .setTitle(`↗️ LEADERBOARD ↗️`)
+            .setColor('#0080FF')
+            .addFields({
+                name: 'Top players',
+                value: `${top}`,
+            })
+            .setFooter({
+                text: `Top ${count} out of ${results.length} ${results.length > 1 ? 'players' : 'player'}`
+            })
+        return await interaction.editReply({ content: '', embeds: [message] })
+    }
+    else {
+        const message = new EmbedBuilder()
+            .setTitle(`↗️ LEADERBOARD ↗️`)
+            .setColor('#0080FF')
+            .setDescription('❓ **No one has played yet**')
+        return await interaction.editReply({ content: '', embeds: [message], ephemeral: true })
     }
 }
