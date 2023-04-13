@@ -79,7 +79,7 @@ module.exports = {
 📝 WinRate: \`${winRate}%\`
 🔥 Highest Streak: \`${maxStreak}\`**
                     
-**Words guessed**
+**Guess Distribution**
 **1** ${Strings.oneGuessString} \`${oneGuess}\`
 **2** ${Strings.twoGuessString} \`${twoGuess}\`
 **3** ${Strings.threeGuessString} \`${threeGuess}\`
@@ -137,7 +137,7 @@ module.exports = {
 🔥 Highest Streak: \`${maxStreak}\`
 🔥 Current Streak: \`${currentStreak}\`**
                     
-**Words guessed**
+**Guess Distribution**
 **1** ${Strings.oneGuessString} \`${oneGuess}\`
 **2** ${Strings.twoGuessString} \`${twoGuess}\`
 **3** ${Strings.threeGuessString} \`${threeGuess}\`
