@@ -55,17 +55,17 @@ module.exports = {
 
             embeds.push(new EmbedBuilder()
                 .setTitle('Stats Information')
-                .setDescription('With **Wrdl** you can view your stats or someone else\'s, as well as the leaderboard on the current server.')
+                .setDescription('With **Wrdl** you can view your stats or someone else\'s, as well as the leaderboard either on the current server or globally.')
                 .setColor('#FF964D')
                 .setThumbnail(client.user.avatarURL({ dynamic: true, size: 512 }))
                 .addFields({
                     name: '❓ \`/stats\`',
-                    value: 'Displays either your or someone else\'s game statistics, either globally or from that specific server',
+                    value: 'Displays either your or someone else\'s game statistics, either globally or from that server',
                     inline: true,
                 })
                 .addFields({
                     name: '📜 \`/leaderboard\`',
-                    value: 'Displays the current leaderboard on the server',
+                    value: 'Displays the current leaderboard either on the server or globally',
                     inline: true,
                 })
                 .setFooter({
