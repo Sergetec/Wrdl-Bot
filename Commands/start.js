@@ -55,6 +55,7 @@ module.exports = {
                     .setLabel('English')
                     .setEmoji('🇬🇧')
                     .setStyle(ButtonStyle.Success)
+                    .setDisabled(true)
             )
             deadRowEN.addComponents(
                 new ButtonBuilder()
@@ -62,6 +63,7 @@ module.exports = {
                     .setLabel('Romanian')
                     .setEmoji('🇷🇴')
                     .setStyle(ButtonStyle.Primary)
+                    .setDisabled(true)
             )
             deadRowEN.addComponents(
                 new ButtonBuilder()
@@ -69,6 +71,7 @@ module.exports = {
                     .setLabel('Turkish')
                     .setEmoji('🇹🇷')
                     .setStyle(ButtonStyle.Primary)
+                    .setDisabled(true)
             )
 
             //Romanian - selected
@@ -79,6 +82,7 @@ module.exports = {
                     .setLabel('English')
                     .setEmoji('🇬🇧')
                     .setStyle(ButtonStyle.Primary)
+                    .setDisabled(true)
             )
             deadRowRO.addComponents(
                 new ButtonBuilder()
@@ -86,6 +90,7 @@ module.exports = {
                     .setLabel('Romanian')
                     .setEmoji('🇷🇴')
                     .setStyle(ButtonStyle.Success)
+                    .setDisabled(true)
             )
             deadRowRO.addComponents(
                 new ButtonBuilder()
@@ -93,6 +98,7 @@ module.exports = {
                     .setLabel('Turkish')
                     .setEmoji('🇹🇷')
                     .setStyle(ButtonStyle.Primary)
+                    .setDisabled(true)
             )
 
             //Turkish - selected
@@ -103,6 +109,7 @@ module.exports = {
                     .setLabel('English')
                     .setEmoji('🇬🇧')
                     .setStyle(ButtonStyle.Primary)
+                    .setDisabled(true)
             )
             deadRowTR.addComponents(
                 new ButtonBuilder()
@@ -110,6 +117,7 @@ module.exports = {
                     .setLabel('Romanian')
                     .setEmoji('🇷🇴')
                     .setStyle(ButtonStyle.Primary)
+                    .setDisabled(true)
             )
             deadRowTR.addComponents(
                 new ButtonBuilder()
@@ -117,6 +125,7 @@ module.exports = {
                     .setLabel('Turkish')
                     .setEmoji('🇹🇷')
                     .setStyle(ButtonStyle.Success)
+                    .setDisabled(true)
             )
 
             //Time expired
@@ -127,6 +136,7 @@ module.exports = {
                     .setLabel('English')
                     .setEmoji('🇬🇧')
                     .setStyle(ButtonStyle.Primary)
+                    .setDisabled(true)
             )
             deadRowAll.addComponents(
                 new ButtonBuilder()
@@ -134,6 +144,7 @@ module.exports = {
                     .setLabel('Romanian')
                     .setEmoji('🇷🇴')
                     .setStyle(ButtonStyle.Primary)
+                    .setDisabled(true)
             )
             deadRowAll.addComponents(
                 new ButtonBuilder()
@@ -141,6 +152,7 @@ module.exports = {
                     .setLabel('Turkish')
                     .setEmoji('🇹🇷')
                     .setStyle(ButtonStyle.Primary)
+                    .setDisabled(true)
             )
 
             const message = new EmbedBuilder()
