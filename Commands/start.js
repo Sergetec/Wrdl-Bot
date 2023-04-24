@@ -39,6 +39,15 @@ module.exports = {
                     .setEmoji('🇷🇴')
                     .setStyle(ButtonStyle.Primary)
             )
+            row.addComponents(
+                new ButtonBuilder()
+                    .setCustomId('TR')
+                    .setLabel('Turkish')
+                    .setEmoji('🇹🇷')
+                    .setStyle(ButtonStyle.Primary)
+            )
+
+            //English - selected
             const deadRowEN = new ActionRowBuilder()
             deadRowEN.addComponents(
                 new ButtonBuilder()
@@ -54,7 +63,15 @@ module.exports = {
                     .setEmoji('🇷🇴')
                     .setStyle(ButtonStyle.Primary)
             )
+            deadRowEN.addComponents(
+                new ButtonBuilder()
+                    .setCustomId('TR')
+                    .setLabel('Turkish')
+                    .setEmoji('🇹🇷')
+                    .setStyle(ButtonStyle.Primary)
+            )
 
+            //Romanian - selected
             const deadRowRO = new ActionRowBuilder()
             deadRowRO.addComponents(
                 new ButtonBuilder()
@@ -70,13 +87,68 @@ module.exports = {
                     .setEmoji('🇷🇴')
                     .setStyle(ButtonStyle.Success)
             )
+            deadRowRO.addComponents(
+                new ButtonBuilder()
+                    .setCustomId('TR')
+                    .setLabel('Turkish')
+                    .setEmoji('🇹🇷')
+                    .setStyle(ButtonStyle.Primary)
+            )
+
+            //Turkish - selected
+            const deadRowTR = new ActionRowBuilder()
+            deadRowTR.addComponents(
+                new ButtonBuilder()
+                    .setCustomId('EN')
+                    .setLabel('English')
+                    .setEmoji('🇬🇧')
+                    .setStyle(ButtonStyle.Primary)
+            )
+            deadRowTR.addComponents(
+                new ButtonBuilder()
+                    .setCustomId('RO')
+                    .setLabel('Romanian')
+                    .setEmoji('🇷🇴')
+                    .setStyle(ButtonStyle.Primary)
+            )
+            deadRowTR.addComponents(
+                new ButtonBuilder()
+                    .setCustomId('TR')
+                    .setLabel('Turkish')
+                    .setEmoji('🇹🇷')
+                    .setStyle(ButtonStyle.Success)
+            )
+
+            //Time expired
+            const deadRowAll = new ActionRowBuilder()
+            deadRowAll.addComponents(
+                new ButtonBuilder()
+                    .setCustomId('EN')
+                    .setLabel('English')
+                    .setEmoji('🇬🇧')
+                    .setStyle(ButtonStyle.Primary)
+            )
+            deadRowAll.addComponents(
+                new ButtonBuilder()
+                    .setCustomId('RO')
+                    .setLabel('Romanian')
+                    .setEmoji('🇷🇴')
+                    .setStyle(ButtonStyle.Primary)
+            )
+            deadRowAll.addComponents(
+                new ButtonBuilder()
+                    .setCustomId('TR')
+                    .setLabel('Turkish')
+                    .setEmoji('🇹🇷')
+                    .setStyle(ButtonStyle.Primary)
+            )
 
             const message = new EmbedBuilder()
                 .setTitle('Wordle Game')
                 .setColor('#FF964D')
                 .setDescription('❗ Choose your language')
             await interaction.reply({ embeds: [message], components: [row] })
-            let ENGame = false, ROGame = false
+            let ENGame = false, ROGame = false, TRGame = false
             let collector
             const filter = (interaction) => interaction.user.id === userID
             const time = 1000 * 30
@@ -86,16 +158,19 @@ module.exports = {
                 if (!btnInt) {
                     return
                 }
-                if (btnInt.customId !== 'EN' && btnInt.customId !== 'RO') {
+                if (btnInt.customId !== 'EN' && btnInt.customId !== 'RO' && btnInt.customId !== 'TR') {
                     return
                 }
                 await btnInt.deferUpdate()
                 switch (btnInt.customId) {
                     case 'EN':
-                        ENGame = true;
+                        ENGame = true
                         break
                     case 'RO':
                         ROGame = true
+                        break
+                    case 'TR':
+                        TRGame = true
                         break
                 }
                 collector.on('end', async () => {
@@ -103,7 +178,7 @@ module.exports = {
                         .setTitle('Wordle Game')
                         .setColor('#ED4245')
                         .setDescription('❗ Time has expired')
-                    return await interaction.editReply({ embeds: [messageExpired], components: [deadRow] })
+                    return await interaction.editReply({ embeds: [messageExpired], components: [deadRowAll] })
                 })
 
                 const ROMessage = new EmbedBuilder()
@@ -120,6 +195,14 @@ module.exports = {
                     .addFields({
                         name: 'Game started',
                         value: '👉 Use \`/guess\` to make your guess',
+                    })
+
+                const TRMessage = new EmbedBuilder()
+                    .setTitle('Wordle Game')
+                    .setColor('#57F287')
+                    .addFields({
+                        name: 'Oyun başladı',
+                        value: '👉 Tahmininizi yapmak için `/guess` kullanın',
                     })
 
                 let schema
@@ -154,13 +237,9 @@ module.exports = {
                 alphabetGray[23] = '<:X_gray:1012693027778732132> '
                 alphabetGray[24] = '<:Y_gray:1012693029661974578> '
                 alphabetGray[25] = '<:Z_gray:1012693031402622996> '
-                for (let i = 0; i < 26; ++i) {
-                    if (i === 0) {
-                        alphabetLetters = alphabetGray[i]
-                    }
-                    else {
-                        alphabetLetters += alphabetGray[i]
-                    }
+                alphabetLetters = alphabetGray[0]
+                for (let i = 1; i < 26; ++i) {
+                    alphabetLetters += alphabetGray[i]
                 }
                 if (ENGame) {
                     await interaction.editReply({ embeds: [ENMessage], components: [deadRowEN] })
@@ -200,6 +279,27 @@ module.exports = {
                         replyMessage: '\n',
                         alphabet: alphabetLetters,
                         language: 'RO',
+                        expires: dt,
+                    })
+                    await schema.save();
+                }
+                if (TRGame) {
+                    await interaction.editReply({ embeds: [TRMessage], components: [deadRowTR] })
+                    let word = randomWord_TR()
+
+                    //Stats database
+                    let expires1 = new Date()
+                    let dt = new Date(expires1.getTime() + 123 * 60 * 1000)
+                    dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
+                    schema = await gamesSchema.create({
+                        guildID: guildID,
+                        channelStarted: channel,
+                        userID: userID,
+                        word: word,
+                        guesses: '0',
+                        replyMessage: '\n',
+                        alphabet: alphabetLetters,
+                        language: 'TR',
                         expires: dt,
                     })
                     await schema.save();
@@ -248,6 +348,16 @@ function randomWord_EN() {
 
 function randomWord_RO() {
     const file = fs.readFileSync('Words/words_ro.txt', 'utf-8')
+    const wordArray = file.split('\n')
+
+    let randomWord
+    let rand = Math.floor(Math.random() * wordArray.length)
+    randomWord = wordArray[rand]
+    return randomWord
+}
+
+function randomWord_TR() {
+    const file = fs.readFileSync('Words/words_tr.txt', 'utf-8')
     const wordArray = file.split('\n')
 
     let randomWord
