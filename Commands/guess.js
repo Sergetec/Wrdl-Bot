@@ -623,7 +623,6 @@ module.exports = {
             //Update inactive time
             let expires1 = new Date()
             let dt = new Date(expires1.getTime() + 123 * 60 * 1000)
-            dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
 
             let schema2 = await gamesSchema.findOne(query)
             schema2.expires = dt
