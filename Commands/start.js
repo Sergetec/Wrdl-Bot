@@ -173,7 +173,11 @@ module.exports = {
                 if (btnInt.customId !== 'EN' && btnInt.customId !== 'RO' && btnInt.customId !== 'TR') {
                     return
                 }
-                await btnInt.deferUpdate()
+                try {
+                    await btnInt.deferUpdate()
+                } catch (err) {
+                    //nimic
+                }
                 switch (btnInt.customId) {
                     case 'EN':
                         ENGame = true
@@ -260,7 +264,6 @@ module.exports = {
                     //Stats database
                     let expires1 = new Date()
                     let dt = new Date(expires1.getTime() + 123 * 60 * 1000)
-                    dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                     schema = await gamesSchema.create({
                         guildID: guildID,
                         channelStarted: channel,
@@ -281,7 +284,6 @@ module.exports = {
                     //Stats database
                     let expires1 = new Date()
                     let dt = new Date(expires1.getTime() + 123 * 60 * 1000)
-                    dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                     schema = await gamesSchema.create({
                         guildID: guildID,
                         channelStarted: channel,
@@ -302,7 +304,6 @@ module.exports = {
                     //Stats database
                     let expires1 = new Date()
                     let dt = new Date(expires1.getTime() + 123 * 60 * 1000)
-                    dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                     schema = await gamesSchema.create({
                         guildID: guildID,
                         channelStarted: channel,
@@ -321,8 +322,7 @@ module.exports = {
                 if (schema) {
                     schema.gamesTotal = schema.gamesTotal + 1
                     await schema.save()
-                }
-                else {
+                } else {
                     schema = await statsSchema.create({
                         guildID: guildID,
                         userID: userID,
@@ -342,7 +342,7 @@ module.exports = {
                     await schema.save()
                 }
             })
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }

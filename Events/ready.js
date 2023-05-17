@@ -8,7 +8,7 @@ module.exports = {
     name: 'ready',
     description: 'on startup | expired games',
     on: true,
-    async execute (client) {
+    async execute(client) {
         console.log('Wrdl Bot online!')
 
         await mongoose.connect(mongoPath, {
@@ -44,7 +44,6 @@ module.exports = {
                     if (ok) {
                         let expires1 = new Date()
                         let dt = new Date(expires1.getTime() + 120 * 60 * 1000)
-                        dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                         const query = {
                             guildID: guildId,
                             expires: { $lt: dt },
@@ -60,9 +59,8 @@ module.exports = {
                                 .setColor('#ED4245')
                                 .setDescription(`<@${results.userID}>'s game has ended due to inactivity`)
 
-                            await client.channels.cache.get(channel).send({embeds: [message]})
-                        }
-                        else {
+                            await client.channels.cache.get(channel).send({ embeds: [message] })
+                        } else {
                             for (const result of results) {
                                 let guildIDUser = result.guildID, userIDUser = result.userID
                                 await gamesSchema.deleteMany(query)
@@ -86,7 +84,6 @@ module.exports = {
                 */
                 let expires1 = new Date()
                 let dt = new Date(expires1.getTime() + 120 * 60 * 1000)
-                dt = dt.toLocaleString('ro-RO', { timezone: 'Europe/Bucharest' })
                 const query = {
                     expires: { $lt: dt },
                 }
@@ -95,8 +92,7 @@ module.exports = {
                     let guildIDUser = results.guildID, userIDUser = results.userID
                     await gamesSchema.deleteMany(query)
                     await expiredGameFound(guildIDUser, userIDUser) //not in guild
-                }
-                else {
+                } else {
                     for (const result of results) {
                         let guildIDUser = result.guildID, userIDUser = result.userID
                         await gamesSchema.deleteMany(query)

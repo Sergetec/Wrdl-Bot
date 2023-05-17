@@ -83,7 +83,11 @@ module.exports = {
             if (btnInt.customId !== 'quit_game' && btnInt.customId !== 'continue_game') {
                 return;
             }
-            await btnInt.deferUpdate()
+            try {
+                await btnInt.deferUpdate()
+            } catch (err) {
+                //nimic
+            }
             switch (btnInt.customId) {
                 case 'quit_game':
                     quitGame = true

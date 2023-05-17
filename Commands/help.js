@@ -162,7 +162,7 @@ module.exports = {
             collector.on('end', async () => {
                 await interaction.editReply({ embeds: [embeds[page]], components: [deadRow] })
             })
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }

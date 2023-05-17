@@ -91,8 +91,7 @@ module.exports = {
 [Add Wrdl to your server!](https://ptb.discord.com/api/oauth2/authorize?client_id=1011006137690239059&permissions=277025721344&scope=applications.commands%20bot)`)
 
                 return await interaction.reply({ embeds: [message] })
-            }
-            else {
+            } else {
                 const message = new EmbedBuilder()
                     .setTitle(`📊 WRDL STATS 📊`)
                     .setColor('#ED4245')
@@ -100,8 +99,7 @@ module.exports = {
 
                 return await interaction.reply({ embeds: [message] })
             }
-        }
-        else if (type === 'server') {
+        } else if (type === 'server') {
             const guildID = interaction.guild.id
             const query = {
                 guildID: guildID,
@@ -149,8 +147,7 @@ module.exports = {
 [Add Wrdl to your server!](https://ptb.discord.com/api/oauth2/authorize?client_id=1011006137690239059&permissions=277025721344&scope=applications.commands%20bot)`)
 
                 return await interaction.reply({ embeds: [message] })
-            }
-            else {
+            } else {
                 const message = new EmbedBuilder()
                     .setTitle(`📊 WRDL STATS 📊`)
                     .setColor('#ED4245')

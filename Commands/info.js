@@ -11,7 +11,7 @@ module.exports = {
                 .setColor('#FF964D')
                 .setImage('https://cdn.discordapp.com/attachments/1011356237172056065/1016439307646554152/unknown.png')
             return await interaction.reply({ embeds: [message] })
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }

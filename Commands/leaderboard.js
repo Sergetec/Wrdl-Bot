@@ -1,4 +1,4 @@
-const { EmbedBuilder, ApplicationCommandOptionType} = require('discord.js')
+const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const statsSchema = require('../Models/statsSchema')
 
 module.exports = {
@@ -29,8 +29,7 @@ module.exports = {
                 await interaction.reply({ content: 'Fetching...' })
                 const results = await statsSchema.find()
                 await getTop(client, interaction, results)
-            }
-            else if (type === 'server') {
+            } else if (type === 'server') {
                 const guildID = interaction.guild.id
                 const query = {
                     guildID: guildID,
@@ -39,7 +38,7 @@ module.exports = {
                 const results = await statsSchema.find(query)
                 await getTop(client, interaction, results)
             }
-        } catch(err) {
+        } catch (err) {
             console.log(err)
         }
     }
@@ -92,8 +91,7 @@ async function getTop(client, interaction, results) {
                 text: `Top ${count} out of ${results.length} ${results.length > 1 ? 'players' : 'player'}`
             })
         return await interaction.editReply({ content: '', embeds: [message] })
-    }
-    else {
+    } else {
         const message = new EmbedBuilder()
             .setTitle(`↗️ LEADERBOARD ↗️`)
             .setColor('#0080FF')
