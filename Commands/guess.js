@@ -620,9 +620,9 @@ module.exports = {
                 return await interaction.reply({ embeds: [message] })
             }
 
-            //Update inactive time
+            //Update expire time
             let expires1 = new Date()
-            let dt = new Date(expires1.getTime() + 123 * 60 * 1000)
+            let dt = new Date(expires1.getTime() + 3 * 1000 * 60).toUTCString()
 
             let schema2 = await gamesSchema.findOne(query)
             schema2.expires = dt

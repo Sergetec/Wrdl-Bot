@@ -261,9 +261,9 @@ module.exports = {
                     await interaction.editReply({ embeds: [ENMessage], components: [deadRowEN] })
                     let word = randomWord_EN()
 
-                    //Stats database
+                    //Games database
                     let expires1 = new Date()
-                    let dt = new Date(expires1.getTime() + 123 * 60 * 1000)
+                    let dt = new Date(expires1.getTime() + 3 * 1000 * 60).toUTCString()
                     schema = await gamesSchema.create({
                         guildID: guildID,
                         channelStarted: channel,
@@ -281,9 +281,9 @@ module.exports = {
                     await interaction.editReply({ embeds: [ROMessage], components: [deadRowRO] })
                     let word = randomWord_RO()
 
-                    //Stats database
+                    //Games database
                     let expires1 = new Date()
-                    let dt = new Date(expires1.getTime() + 123 * 60 * 1000)
+                    let dt = new Date(expires1.getTime() + 3 * 1000 * 60).toUTCString()
                     schema = await gamesSchema.create({
                         guildID: guildID,
                         channelStarted: channel,
@@ -301,9 +301,9 @@ module.exports = {
                     await interaction.editReply({ embeds: [TRMessage], components: [deadRowTR] })
                     let word = randomWord_TR()
 
-                    //Stats database
+                    //Games database
                     let expires1 = new Date()
-                    let dt = new Date(expires1.getTime() + 123 * 60 * 1000)
+                    let dt = new Date(expires1.getTime() + 3 * 1000 * 60).toUTCString()
                     schema = await gamesSchema.create({
                         guildID: guildID,
                         channelStarted: channel,
@@ -338,6 +338,7 @@ module.exports = {
                         sixGuess: 0,
                         currentStreak: 0,
                         maxStreak: 0,
+                        voteCount: 0,
                     })
                     await schema.save()
                 }

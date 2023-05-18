@@ -25,6 +25,7 @@ const schema = new Schema({
         sixGuess: reqNumber,
         currentStreak: reqNumber,
         maxStreak: reqNumber,
+        voteCount: reqNumber,
     })
 
 const name = 'stats'

@@ -1,43 +1,14 @@
-const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
+const { EmbedBuilder } = require('discord.js')
 const statsSchema = require('../Models/statsSchema')
 
 module.exports = {
     name: 'leaderboard',
     description: 'Shows the top players',
-    options: [
-        {
-            name: 'type',
-            type: ApplicationCommandOptionType.String,
-            description: 'Global or in this server',
-            required: true,
-            choices: [
-                {
-                    name: 'global',
-                    value: 'global',
-                },
-                {
-                    name: 'server',
-                    value: 'server',
-                },
-            ],
-        },
-    ],
     async execute(client, interaction) {
         try {
-            const type = interaction.options.get('type').value
-            if (type === 'global') {
-                await interaction.reply({ content: 'Fetching...' })
-                const results = await statsSchema.find()
-                await getTop(client, interaction, results)
-            } else if (type === 'server') {
-                const guildID = interaction.guild.id
-                const query = {
-                    guildID: guildID,
-                }
-                await interaction.reply({ content: 'Fetching...' })
-                const results = await statsSchema.find(query)
-                await getTop(client, interaction, results)
-            }
+            await interaction.reply({ content: 'Fetching...' })
+            const results = await statsSchema.find()
+            await getTop(client, interaction, results)
         } catch (err) {
             console.log(err)
         }

@@ -43,7 +43,7 @@ module.exports = {
                     let ok = guild.members.cache.get(botID)
                     if (ok) {
                         let expires1 = new Date()
-                        let dt = new Date(expires1.getTime() + 120 * 60 * 1000)
+                        let dt = new Date(expires1.getTime()).toUTCString()
                         const query = {
                             guildID: guildId,
                             expires: { $lt: dt },
