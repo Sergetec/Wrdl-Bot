@@ -6,22 +6,6 @@ module.exports = {
     description: 'Shows someone\'s Wordle stats',
     options: [
         {
-            name: 'type',
-            type: ApplicationCommandOptionType.String,
-            description: 'Global or in this server',
-            required: true,
-            choices: [
-                {
-                    name: 'global',
-                    value: 'global',
-                },
-                {
-                    name: 'server',
-                    value: 'server',
-                },
-            ],
-        },
-        {
             name: 'user',
             type: ApplicationCommandOptionType.User,
             description: 'The user of which to display stats',
@@ -43,89 +27,30 @@ module.exports = {
             fiveGuessString: '',
             sixGuessString: '',
         }
+        const query = {
+            userID: userID,
+        }
+        const results = await statsSchema.findOne(query)
+        if (results !== null) {
+            gamesTotal = results.gamesTotal
+            gamesWon = results.gamesWon
+            gamesLost = results.gamesLost
+            oneGuess = results.oneGuess
+            twoGuess = results.twoGuess
+            threeGuess = results.threeGuess
+            fourGuess = results.fourGuess
+            fiveGuess = results.fiveGuess
+            sixGuess = results.sixGuess
+            maxStreak = Math.max(maxStreak, results.maxStreak)
+            currentStreak = results.currentStreak
+            winRate = results.winRate
+            getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGuess, sixGuess, Strings)
 
-        const type = interaction.options.get('type').value
-        if (type === 'global') {
-            const query = {
-                userID: userID,
-            }
-            const results = await statsSchema.find(query)
-            if (results.length !== 0) {
-                for (const result of results) {
-                    gamesTotal += result.gamesTotal
-                    gamesWon += result.gamesWon
-                    gamesLost += result.gamesLost
-                    oneGuess += result.oneGuess
-                    twoGuess += result.twoGuess
-                    threeGuess += result.threeGuess
-                    fourGuess += result.fourGuess
-                    fiveGuess += result.fiveGuess
-                    sixGuess += result.sixGuess
-                    maxStreak = Math.max(maxStreak, result.maxStreak)
-                }
-                winRate = Math.trunc(gamesWon / gamesTotal * 100)
-                getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGuess, sixGuess, Strings)
-
-                const message = new EmbedBuilder()
-                    .setTitle(`📊 WRDL STATS GLOBAL 📊`)
-                    .setColor('#FF964D')
-                    .setThumbnail(user.avatarURL({ dynamic: true, size: 512 }))
-                    .setDescription(`
-                    👤 **<@${user.id}>
-                    
-🌍 Total Games: \`${gamesTotal}\`
-🎉 Words Solved: \`${gamesWon}\`
-📈 Words Unsolved: \`${gamesLost}\`
-📝 WinRate: \`${winRate}%\`
-🔥 Highest Streak: \`${maxStreak}\`**
-                    
-**Guess Distribution**
-**1** ${Strings.oneGuessString} \`${oneGuess}\`
-**2** ${Strings.twoGuessString} \`${twoGuess}\`
-**3** ${Strings.threeGuessString} \`${threeGuess}\`
-**4** ${Strings.fourGuessString} \`${fourGuess}\`
-**5** ${Strings.fiveGuessString} \`${fiveGuess}\`
-**6** ${Strings.sixGuessString} \`${sixGuess}\`
-                    
-                    
-[Add Wrdl to your server!](https://ptb.discord.com/api/oauth2/authorize?client_id=1011006137690239059&permissions=277025721344&scope=applications.commands%20bot)`)
-
-                return await interaction.reply({ embeds: [message] })
-            } else {
-                const message = new EmbedBuilder()
-                    .setTitle(`📊 WRDL STATS 📊`)
-                    .setColor('#ED4245')
-                    .setDescription(`❓ <@${user.id}> haven\'t played a game.`)
-
-                return await interaction.reply({ embeds: [message] })
-            }
-        } else if (type === 'server') {
-            const guildID = interaction.guild.id
-            const query = {
-                guildID: guildID,
-                userID: userID,
-            }
-            let schema = await statsSchema.findOne(query)
-            if (schema) {
-                gamesTotal = schema.gamesTotal
-                gamesWon = schema.gamesWon
-                gamesLost = schema.gamesLost
-                winRate = schema.winRate
-                oneGuess = schema.oneGuess
-                twoGuess = schema.twoGuess
-                threeGuess = schema.threeGuess
-                fourGuess = schema.fourGuess
-                fiveGuess = schema.fiveGuess
-                sixGuess = schema.sixGuess
-                currentStreak = schema.currentStreak
-                maxStreak = schema.maxStreak
-                getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGuess, sixGuess, Strings)
-
-                const message = new EmbedBuilder()
-                    .setTitle(`📊 WRDL STATS SERVER 📊`)
-                    .setColor('#FF964D')
-                    .setThumbnail(user.avatarURL({ dynamic: true, size: 512 }))
-                    .setDescription(`
+            const message = new EmbedBuilder()
+                .setTitle(`📊 WRDL STATISTICS 📊`)
+                .setColor('#FF964D')
+                .setThumbnail(user.avatarURL({ dynamic: true, size: 512 }))
+                .setDescription(`
                     👤 **<@${user.id}>
                     
 🌍 Total Games: \`${gamesTotal}\`
@@ -144,17 +69,17 @@ module.exports = {
 **6** ${Strings.sixGuessString} \`${sixGuess}\`
                     
                     
-[Add Wrdl to your server!](https://ptb.discord.com/api/oauth2/authorize?client_id=1011006137690239059&permissions=277025721344&scope=applications.commands%20bot)`)
+[Add Wrdl to your server!](https://discord.com/api/oauth2/authorize?client_id=1011006137690239059&permissions=277025721344&scope=applications.commands%20bot)`)
 
-                return await interaction.reply({ embeds: [message] })
-            } else {
-                const message = new EmbedBuilder()
-                    .setTitle(`📊 WRDL STATS 📊`)
-                    .setColor('#ED4245')
-                    .setDescription(`❓ <@${user.id}> haven\'t played a game in this server.`)
+            return await interaction.reply({ embeds: [message] })
+        } else {
+            const message = new EmbedBuilder()
+                .setTitle(`📊 WRDL STATISTICS 📊`)
+                .setColor('#ED4245')
+                .setThumbnail(user.avatarURL({ dynamic: true, size: 512 }))
+                .setDescription(`❓ <@${user.id}> haven\'t played a game yet.`)
 
-                return await interaction.reply({ embeds: [message] })
-            }
+            return await interaction.reply({ embeds: [message] })
         }
     }
 }

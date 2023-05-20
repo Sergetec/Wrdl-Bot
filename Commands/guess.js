@@ -18,7 +18,7 @@ module.exports = {
         const userID = interaction.user.id
         const guildID = interaction.guild.id
         const query = {
-            guildID: guildID,
+            // guildID: guildID,
             userID: userID,
         }
         const result = await gamesSchema.findOne(query)
@@ -109,7 +109,7 @@ module.exports = {
             let reply = []
             //Counter for index
             let counter
-            //All are grey in the beginning
+            //All are gray in the beginning
             let wordsRepeated = []
             for (let i = 97; i <= 122; ++i) {
                 wordsRepeated[i] = 0
@@ -621,8 +621,8 @@ module.exports = {
             }
 
             //Update expire time
-            let expires1 = new Date()
-            let dt = new Date(expires1.getTime() + 3 * 1000 * 60).toUTCString()
+            let dt = new Date()
+            dt = new Date(dt.getTime() + 3 * 60 * 1000).toUTCString()
 
             let schema2 = await gamesSchema.findOne(query)
             schema2.expires = dt

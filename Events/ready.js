@@ -26,77 +26,32 @@ module.exports = {
 
         //Check for inactive games
         const check = async () => {
-
             try {
-                /*
-
-                Check for expired inside of guild
-
-                */
-                let Guilds = client.guilds.cache.map(guild => guild.id)
-                for (let guild of Guilds) {
-                    guild = await client.guilds.cache.get(guild)
-
-                    //Guild check
-                    let guildId = guild.id
-                    let botID = "1011006137690239059"
-                    let ok = guild.members.cache.get(botID)
-                    if (ok) {
-                        let expires1 = new Date()
-                        let dt = new Date(expires1.getTime()).toUTCString()
-                        const query = {
-                            guildID: guildId,
-                            expires: { $lt: dt },
-                        }
-                        const results = await gamesSchema.find(query)
-                        if (!isIterable(results)) {
-                            let guildIDUser = results.guildID, userIDUser = results.userID
-                            await gamesSchema.deleteMany(query)
-                            await expiredGameFound(guildIDUser, userIDUser) //in guild
-                            let channel = results.channelStarted
-                            const message = new EmbedBuilder()
-                                .setTitle('Wordle Game')
-                                .setColor('#ED4245')
-                                .setDescription(`<@${results.userID}>'s game has ended due to inactivity`)
-
-                            await client.channels.cache.get(channel).send({ embeds: [message] })
-                        } else {
-                            for (const result of results) {
-                                let guildIDUser = result.guildID, userIDUser = result.userID
-                                await gamesSchema.deleteMany(query)
-                                await expiredGameFound(guildIDUser, userIDUser) //in guild
-                                let channel = result.channelStarted
-                                const message = new EmbedBuilder()
-                                    .setTitle('Wordle Game')
-                                    .setColor('#ED4245')
-                                    .setDescription(`<@${result.userID}>'s game has ended due to inactivity`)
-
-                                await client.channels.cache.get(channel).send({ embeds: [message] })
-                            }
-                        }
-                    }
-                }
-
-                /*
-
-                Check for expired outside of guild
-
-                */
-                let expires1 = new Date()
-                let dt = new Date(expires1.getTime() + 120 * 60 * 1000)
+                let dt = new Date().toUTCString()
                 const query = {
                     expires: { $lt: dt },
                 }
                 const results = await gamesSchema.find(query)
-                if (!isIterable(results)) {
-                    let guildIDUser = results.guildID, userIDUser = results.userID
-                    await gamesSchema.deleteMany(query)
-                    await expiredGameFound(guildIDUser, userIDUser) //not in guild
-                } else {
-                    for (const result of results) {
-                        let guildIDUser = result.guildID, userIDUser = result.userID
-                        await gamesSchema.deleteMany(query)
-                        await expiredGameFound(guildIDUser, userIDUser) //not in guild
+                for (let i = 0; i < results.length; ++i) {
+                    let userIDUser = results[i].userID
+                    await gamesSchema.deleteMany(query) //delete from games database
+                    await expiredGameFound(userIDUser) //update the user in stats database
+                    let guildID = results[i].guildID //get the guild id from database
+                    let botID = '1011006137690239059'
+                    let guild = client.guilds.cache.get(guildID) //cache the guild
+                    let ok = guild.members.cache.get(botID) //check if bot is in the guild
+                    if (ok) { //if it is, then send a message, otherwise it will go to the nest result
+                        let channel = results[i].channelStarted
+                        const message = new EmbedBuilder()
+                            .setTitle('Wordle Game')
+                            .setColor('#ED4245')
+                            .setDescription(`<@${results[i].userID}>'s game has ended due to inactivity`)
+
+                        try {
+                            await client.channels.cache.get(channel).send({ embeds: [message] })
+                        } catch (err) {
+                            console.log(err)
+                        }
                     }
                 }
                 setTimeout(check, 1000 * 30)
@@ -109,17 +64,8 @@ module.exports = {
     }
 }
 
-function isIterable(obj) {
-    //checks for null and undefined
-    if (obj == null) {
-        return false;
-    }
-    return typeof obj[Symbol.iterator] === 'function';
-}
-
-async function expiredGameFound(guildIDUser, userIDUser) {
+async function expiredGameFound(userIDUser) {
     const query2 = {
-        guildID: guildIDUser,
         userID: userIDUser,
     }
     let schema = await statsSchema.findOne(query2)
