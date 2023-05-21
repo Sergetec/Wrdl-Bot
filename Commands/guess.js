@@ -202,82 +202,82 @@ module.exports = {
                 for (let j = 0; j < 5; ++j) {
                     if (charsGuessed[i] !== wordToGuess[j]) {
                         if (charsGuessed[i] === 'a') {
-                            alphabetCurr[0] = '<:A_darker_gray:1064629141342793908>'
+                            alphabetCurr[10] = '\n\u1CBC<:A_darker_gray:1064629141342793908>'
                         }
                         if (charsGuessed[i] === 'b') {
-                            alphabetCurr[1] = '<:B_darker_gray:1064629144933122118>'
+                            alphabetCurr[23] = '<:B_darker_gray:1064629144933122118>'
                         }
                         if (charsGuessed[i] === 'c') {
-                            alphabetCurr[2] = '<:C_darker_gray:1064629146510168105>'
+                            alphabetCurr[21] = '<:C_darker_gray:1064629146510168105>'
                         }
                         if (charsGuessed[i] === 'd') {
-                            alphabetCurr[3] = '<:D_darker_gray:1064629149672685690>'
+                            alphabetCurr[12] = '<:D_darker_gray:1064629149672685690>'
                         }
                         if (charsGuessed[i] === 'e') {
-                            alphabetCurr[4] = '<:E_darker_gray:1064629151396540506>'
+                            alphabetCurr[2] = '<:E_darker_gray:1064629151396540506>'
                         }
                         if (charsGuessed[i] === 'f') {
-                            alphabetCurr[5] = '<:F_darker_gray:1064629153804058694>'
+                            alphabetCurr[13] = '<:F_darker_gray:1064629153804058694>'
                         }
                         if (charsGuessed[i] === 'g') {
-                            alphabetCurr[6] = '<:G_darker_gray:1064629155364356116>'
+                            alphabetCurr[14] = '<:G_darker_gray:1064629155364356116>'
                         }
                         if (charsGuessed[i] === 'h') {
-                            alphabetCurr[7] = '<:H_darker_gray:1064629158325522462>'
+                            alphabetCurr[15] = '<:H_darker_gray:1064629158325522462>'
                         }
                         if (charsGuessed[i] === 'i') {
-                            alphabetCurr[8] = '<:I_darker_gray:1064629159579635865>'
+                            alphabetCurr[7] = '<:I_darker_gray:1064629159579635865>'
                         }
                         if (charsGuessed[i] === 'j') {
-                            alphabetCurr[9] = '<:J_darker_gray:1064629162867953754>'
+                            alphabetCurr[16] = '<:J_darker_gray:1064629162867953754>'
                         }
                         if (charsGuessed[i] === 'k') {
-                            alphabetCurr[10] = '<:K_darker_gray:1064629164784758835>'
+                            alphabetCurr[17] = '<:K_darker_gray:1064629164784758835>'
                         }
                         if (charsGuessed[i] === 'l') {
-                            alphabetCurr[11] = '<:L_darker_gray:1064629167783690402>'
+                            alphabetCurr[18] = '<:L_darker_gray:1064629167783690402>'
                         }
                         if (charsGuessed[i] === 'm') {
-                            alphabetCurr[12] = '<:M_darker_gray:1064629169134260234>'
+                            alphabetCurr[25] = '<:M_darker_gray:1064629169134260234>'
                         }
                         if (charsGuessed[i] === 'n') {
-                            alphabetCurr[13] = '\n<:N_darker_gray:1064629171453702316>'
+                            alphabetCurr[24] = '<:N_darker_gray:1064629171453702316>'
                         }
                         if (charsGuessed[i] === 'o') {
-                            alphabetCurr[14] = '<:O_darker_gray:1064629174238707772>'
+                            alphabetCurr[8] = '<:O_darker_gray:1064629174238707772>'
                         }
                         if (charsGuessed[i] === 'p') {
-                            alphabetCurr[15] = '<:P_darker_gray:1064629176671416460>'
+                            alphabetCurr[9] = '<:P_darker_gray:1064629176671416460>'
                         }
                         if (charsGuessed[i] === 'q') {
-                            alphabetCurr[16] = '<:Q_darker_gray:1064634245873680485>'
+                            alphabetCurr[0] = '<:Q_darker_gray:1064634245873680485>'
                         }
                         if (charsGuessed[i] === 'r') {
-                            alphabetCurr[17] = '<:R_darker_gray:1064634248495112282>'
+                            alphabetCurr[3] = '<:R_darker_gray:1064634248495112282>'
                         }
                         if (charsGuessed[i] === 's') {
-                            alphabetCurr[18] = '<:S_darker_gray:1064634250252537946>'
+                            alphabetCurr[11] = '<:S_darker_gray:1064634250252537946>'
                         }
                         if (charsGuessed[i] === 't') {
-                            alphabetCurr[19] = '<:T_darker_gray:1064634252664254595>'
+                            alphabetCurr[4] = '<:T_darker_gray:1064634252664254595>'
                         }
                         if (charsGuessed[i] === 'u') {
-                            alphabetCurr[20] = '<:U_darker_gray:1064634254287454380>'
+                            alphabetCurr[6] = '<:U_darker_gray:1064634254287454380>'
                         }
                         if (charsGuessed[i] === 'v') {
-                            alphabetCurr[21] = '<:V_darker_gray:1064634280719941713>'
+                            alphabetCurr[22] = '<:V_darker_gray:1064634280719941713>'
                         }
                         if (charsGuessed[i] === 'w') {
-                            alphabetCurr[22] = '<:W_darker_gray:1064634282141810780>'
+                            alphabetCurr[1] = '<:W_darker_gray:1064634282141810780>'
                         }
                         if (charsGuessed[i] === 'x') {
-                            alphabetCurr[23] = '<:X_darker_gray:1064634283735658576>'
+                            alphabetCurr[20] = '<:X_darker_gray:1064634283735658576>'
                         }
                         if (charsGuessed[i] === 'y') {
-                            alphabetCurr[24] = '<:Y_darker_gray:1064634286533259354>'
+                            alphabetCurr[5] = '<:Y_darker_gray:1064634286533259354>'
                         }
                         if (charsGuessed[i] === 'z') {
-                            alphabetCurr[25] = '<:Z_darker_gray:1064634287917387916>'
+                            alphabetCurr[19] = '\n\u1CBC\u1CBC<:Z_darker_gray:1064634287917387916>'
                         }
                     }
                 }
@@ -292,107 +292,107 @@ module.exports = {
                     greenFound[i] = greenFound[i] + 1
                     if (charsGuessed[i] === 'a') {
                         reply[i] = '<:A_green:1012673118441058404> '
-                        alphabetCurr[0] = '<:A_green:1012673118441058404>'
+                        alphabetCurr[10] = '\n\u1CBC<:A_green:1012673118441058404>'
                     }
                     if (charsGuessed[i] === 'b') {
                         reply[i] = '<:B_green:1012673120072646707> '
-                        alphabetCurr[1] = '<:B_green:1012673120072646707>'
+                        alphabetCurr[23] = '<:B_green:1012673120072646707>'
                     }
                     if (charsGuessed[i] === 'c') {
                         reply[i] = '<:C_green:1012673121892970507> '
-                        alphabetCurr[2] = '<:C_green:1012673121892970507>'
+                        alphabetCurr[21] = '<:C_green:1012673121892970507>'
                     }
                     if (charsGuessed[i] === 'd') {
                         reply[i] = '<:D_green:1012673123428094023> '
-                        alphabetCurr[3] = '<:D_green:1012673123428094023>'
+                        alphabetCurr[12] = '<:D_green:1012673123428094023>'
                     }
                     if (charsGuessed[i] === 'e') {
                         reply[i] = '<:E_green:1012673124623470612> '
-                        alphabetCurr[4] = '<:E_green:1012673124623470612>'
+                        alphabetCurr[2] = '<:E_green:1012673124623470612>'
                     }
                     if (charsGuessed[i] === 'f') {
                         reply[i] = '<:F_green:1012673125839802443> '
-                        alphabetCurr[5] = '<:F_green:1012673125839802443>'
+                        alphabetCurr[13] = '<:F_green:1012673125839802443>'
                     }
                     if (charsGuessed[i] === 'g') {
                         reply[i] = '<:G_green:1012673127605600337> '
-                        alphabetCurr[6] = '<:G_green:1012673127605600337>'
+                        alphabetCurr[14] = '<:G_green:1012673127605600337>'
                     }
                     if (charsGuessed[i] === 'h') {
                         reply[i] = '<:H_green:1012673129149108334> '
-                        alphabetCurr[7] = '<:H_green:1012673129149108334>'
+                        alphabetCurr[15] = '<:H_green:1012673129149108334>'
                     }
                     if (charsGuessed[i] === 'i') {
                         reply[i] = '<:I_green:1012673130407407676> '
-                        alphabetCurr[8] = '<:I_green:1012673130407407676>'
+                        alphabetCurr[7] = '<:I_green:1012673130407407676>'
                     }
                     if (charsGuessed[i] === 'j') {
                         reply[i] = '<:J_green:1012673131791532132> '
-                        alphabetCurr[9] = '<:J_green:1012673131791532132>'
+                        alphabetCurr[16] = '<:J_green:1012673131791532132>'
                     }
                     if (charsGuessed[i] === 'k') {
                         reply[i] = '<:K_green:1012673133133713468> '
-                        alphabetCurr[10] = '<:K_green:1012673133133713468>'
+                        alphabetCurr[17] = '<:K_green:1012673133133713468>'
                     }
                     if (charsGuessed[i] === 'l') {
                         reply[i] = '<:L_green:1012673134660419584> '
-                        alphabetCurr[11] = '<:L_green:1012673134660419584>'
+                        alphabetCurr[18] = '<:L_green:1012673134660419584>'
                     }
                     if (charsGuessed[i] === 'm') {
                         reply[i] = '<:M_green:1012673136279441508> '
-                        alphabetCurr[12] = '<:M_green:1012673136279441508>'
+                        alphabetCurr[25] = '<:M_green:1012673136279441508>'
                     }
                     if (charsGuessed[i] === 'n') {
                         reply[i] = '<:N_green:1012673137630007316> '
-                        alphabetCurr[13] = '\n<:N_green:1012673137630007316>'
+                        alphabetCurr[24] = '<:N_green:1012673137630007316>'
                     }
                     if (charsGuessed[i] === 'o') {
                         reply[i] = '<:O_green:1012673139135742012> '
-                        alphabetCurr[14] = '<:O_green:1012673139135742012>'
+                        alphabetCurr[8] = '<:O_green:1012673139135742012>'
                     }
                     if (charsGuessed[i] === 'p') {
                         reply[i] = '<:P_green:1012673140448571473> '
-                        alphabetCurr[15] = '<:P_green:1012673140448571473>'
+                        alphabetCurr[9] = '<:P_green:1012673140448571473>'
                     }
                     if (charsGuessed[i] === 'q') {
                         reply[i] = '<:Q_green:1012673142038204426> '
-                        alphabetCurr[16] = '<:Q_green:1012673142038204426>'
+                        alphabetCurr[0] = '<:Q_green:1012673142038204426>'
                     }
                     if (charsGuessed[i] === 'r') {
                         reply[i] = '<:R_green:1012673143376183387> '
-                        alphabetCurr[17] = '<:R_green:1012673143376183387>'
+                        alphabetCurr[3] = '<:R_green:1012673143376183387>'
                     }
                     if (charsGuessed[i] === 's') {
                         reply[i] = '<:S_green:1012673144923902013> '
-                        alphabetCurr[18] = '<:S_green:1012673144923902013>'
+                        alphabetCurr[11] = '<:S_green:1012673144923902013>'
                     }
                     if (charsGuessed[i] === 't') {
                         reply[i] = '<:T_green:1012673146320605184> '
-                        alphabetCurr[19] = '<:T_green:1012673146320605184>'
+                        alphabetCurr[4] = '<:T_green:1012673146320605184>'
                     }
                     if (charsGuessed[i] === 'u') {
                         reply[i] = '<:U_green:1012673147834744863> '
-                        alphabetCurr[20] = '<:U_green:1012673147834744863>'
+                        alphabetCurr[6] = '<:U_green:1012673147834744863>'
                     }
                     if (charsGuessed[i] === 'v') {
                         reply[i] = '<:V_green:1012673149403398176> '
-                        alphabetCurr[21] = '<:V_green:1012673149403398176>'
+                        alphabetCurr[22] = '<:V_green:1012673149403398176>'
                     }
                     if (charsGuessed[i] === 'w') {
                         reply[i] = '<:W_green:1012673151274061824> '
-                        alphabetCurr[22] = '<:W_green:1012673151274061824>'
+                        alphabetCurr[1] = '<:W_green:1012673151274061824>'
                     }
                     if (charsGuessed[i] === 'x') {
                         reply[i] = '<:X_green:1012673152721096766> '
-                        alphabetCurr[23] = '<:X_green:1012673152721096766>'
+                        alphabetCurr[20] = '<:X_green:1012673152721096766>'
                     }
                     if (charsGuessed[i] === 'y') {
                         reply[i] = '<:Y_green:1012673154746953798> '
-                        alphabetCurr[24] = '<:Y_green:1012673154746953798>'
+                        alphabetCurr[5] = '<:Y_green:1012673154746953798>'
                     }
                     if (charsGuessed[i] === 'z') {
                         reply[i] = '<:Z_green:1012673156462432276> '
-                        alphabetCurr[25] = '<:Z_green:1012673156462432276>'
+                        alphabetCurr[19] = '\n\u1CBC\u1CBC<:Z_green:1012673156462432276>'
                     }
                 }
             }
@@ -405,107 +405,107 @@ module.exports = {
                         if (!greenFound[i] && wordsRepeated[counter] > 0) {
                             if (charsGuessed[i] === 'a') {
                                 reply[i] = '<:A_yellow:1012673286506827806> '
-                                alphabetCurr[0] = '<:A_yellow:1012673286506827806>'
+                                alphabetCurr[10] = '\n\u1CBC<:A_yellow:1012673286506827806>'
                             }
                             if (charsGuessed[i] === 'b') {
                                 reply[i] = '<:B_yellow:1012673288415223841> '
-                                alphabetCurr[1] = '<:B_yellow:1012673288415223841>'
+                                alphabetCurr[23] = '<:B_yellow:1012673288415223841>'
                             }
                             if (charsGuessed[i] === 'c') {
                                 reply[i] = '<:C_yellow:1012673290340417598> '
-                                alphabetCurr[2] = '<:C_yellow:1012673290340417598>'
+                                alphabetCurr[21] = '<:C_yellow:1012673290340417598>'
                             }
                             if (charsGuessed[i] === 'd') {
                                 reply[i] = '<:D_yellow:1012673292060065842> '
-                                alphabetCurr[3] = '<:D_yellow:1012673292060065842>'
+                                alphabetCurr[12] = '<:D_yellow:1012673292060065842>'
                             }
                             if (charsGuessed[i] === 'e') {
                                 reply[i] = '<:E_yellow:1012673294069141525> '
-                                alphabetCurr[4] = '<:E_yellow:1012673294069141525>'
+                                alphabetCurr[2] = '<:E_yellow:1012673294069141525>'
                             }
                             if (charsGuessed[i] === 'f') {
                                 reply[i] = '<:F_yellow:1012673295600070717> '
-                                alphabetCurr[5] = '<:F_yellow:1012673295600070717>'
+                                alphabetCurr[13] = '<:F_yellow:1012673295600070717>'
                             }
                             if (charsGuessed[i] === 'g') {
                                 reply[i] = '<:G_yellow:1012673297365860352> '
-                                alphabetCurr[6] = '<:G_yellow:1012673297365860352>'
+                                alphabetCurr[14] = '<:G_yellow:1012673297365860352>'
                             }
                             if (charsGuessed[i] === 'h') {
                                 reply[i] = '<:H_yellow:1012673299051986994> '
-                                alphabetCurr[7] = '<:H_yellow:1012673299051986994>'
+                                alphabetCurr[15] = '<:H_yellow:1012673299051986994>'
                             }
                             if (charsGuessed[i] === 'i') {
                                 reply[i] = '<:I_yellow:1012673300654194789> '
-                                alphabetCurr[8] = '<:I_yellow:1012673300654194789>'
+                                alphabetCurr[7] = '<:I_yellow:1012673300654194789>'
                             }
                             if (charsGuessed[i] === 'j') {
                                 reply[i] = '<:J_yellow:1012673302218686484> '
-                                alphabetCurr[9] = '<:J_yellow:1012673302218686484>'
+                                alphabetCurr[16] = '<:J_yellow:1012673302218686484>'
                             }
                             if (charsGuessed[i] === 'k') {
                                 reply[i] = '<:K_yellow:1012673304106106890> '
-                                alphabetCurr[10] = '<:K_yellow:1012673304106106890>'
+                                alphabetCurr[17] = '<:K_yellow:1012673304106106890>'
                             }
                             if (charsGuessed[i] === 'l') {
                                 reply[i] = '<:L_yellow:1012673305876111363> '
-                                alphabetCurr[11] = '<:L_yellow:1012673305876111363>'
+                                alphabetCurr[18] = '<:L_yellow:1012673305876111363>'
                             }
                             if (charsGuessed[i] === 'm') {
                                 reply[i] = '<:M_yellow:1012673307759353876> '
-                                alphabetCurr[12] = '<:M_yellow:1012673307759353876>'
+                                alphabetCurr[25] = '<:M_yellow:1012673307759353876>'
                             }
                             if (charsGuessed[i] === 'n') {
                                 reply[i] = '<:N_yellow:1012673309470642277> '
-                                alphabetCurr[13] = '\n<:N_yellow:1012673309470642277>'
+                                alphabetCurr[24] = '<:N_yellow:1012673309470642277>'
                             }
                             if (charsGuessed[i] === 'o') {
                                 reply[i] = '<:O_yellow:1012673310955421738> '
-                                alphabetCurr[14] = '<:O_yellow:1012673310955421738>'
+                                alphabetCurr[8] = '<:O_yellow:1012673310955421738>'
                             }
                             if (charsGuessed[i] === 'p') {
                                 reply[i] = '<:P_yellow:1012673312645718026> '
-                                alphabetCurr[15] = '<:P_yellow:1012673312645718026>'
+                                alphabetCurr[9] = '<:P_yellow:1012673312645718026>'
                             }
                             if (charsGuessed[i] === 'q') {
                                 reply[i] = '<:Q_yellow:1012673314726105118> '
-                                alphabetCurr[16] = '<:Q_yellow:1012673314726105118>'
+                                alphabetCurr[0] = '<:Q_yellow:1012673314726105118>'
                             }
                             if (charsGuessed[i] === 'r') {
                                 reply[i] = '<:R_yellow:1012673316605141072> '
-                                alphabetCurr[17] = '<:R_yellow:1012673316605141072>'
+                                alphabetCurr[3] = '<:R_yellow:1012673316605141072>'
                             }
                             if (charsGuessed[i] === 's') {
                                 reply[i] = '<:S_yellow:1012673318291263599> '
-                                alphabetCurr[18] = '<:S_yellow:1012673318291263599>'
+                                alphabetCurr[11] = '<:S_yellow:1012673318291263599>'
                             }
                             if (charsGuessed[i] === 't') {
                                 reply[i] = '<:T_yellow:1012673320010907660> '
-                                alphabetCurr[19] = '<:T_yellow:1012673320010907660>'
+                                alphabetCurr[4] = '<:T_yellow:1012673320010907660>'
                             }
                             if (charsGuessed[i] === 'u') {
                                 reply[i] = '<:U_yellow:1012673321713807410> '
-                                alphabetCurr[20] = '<:U_yellow:1012673321713807410>'
+                                alphabetCurr[6] = '<:U_yellow:1012673321713807410>'
                             }
                             if (charsGuessed[i] === 'v') {
                                 reply[i] = '<:V_yellow:1012691824227405824> '
-                                alphabetCurr[21] = '<:V_yellow:1012691824227405824>'
+                                alphabetCurr[22] = '<:V_yellow:1012691824227405824>'
                             }
                             if (charsGuessed[i] === 'w') {
                                 reply[i] = '<:W_yellow:1012691826102255666> '
-                                alphabetCurr[22] = '<:W_yellow:1012691826102255666>'
+                                alphabetCurr[1] = '<:W_yellow:1012691826102255666>'
                             }
                             if (charsGuessed[i] === 'x') {
                                 reply[i] = '<:X_yellow:1012691827251486732> '
-                                alphabetCurr[23] = '<:X_yellow:1012691827251486732>'
+                                alphabetCurr[20] = '<:X_yellow:1012691827251486732>'
                             }
                             if (charsGuessed[i] === 'y') {
                                 reply[i] = '<:Y_yellow:1012692413560668213> '
-                                alphabetCurr[24] = '<:Y_yellow:1012692413560668213>'
+                                alphabetCurr[5] = '<:Y_yellow:1012692413560668213>'
                             }
                             if (charsGuessed[i] === 'z') {
                                 reply[i] = '<:Z_yellow:1012692416043692082> '
-                                alphabetCurr[25] = '<:Z_yellow:1012692416043692082>'
+                                alphabetCurr[19] = '\n\u1CBC\u1CBC<:Z_yellow:1012692416043692082>'
                             }
                             wordsRepeated[counter] = wordsRepeated[counter] - 1
                         }
