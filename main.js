@@ -14,4 +14,19 @@ client.events = new Collection();
     require(`./Handlers/${handler}`)(client, Discord)
 })
 
+//Error handling
+const error = require('node:process');
+
+error.on('unhandledRejection', async (reason) => {
+    console.log('Unhandled Rejection ', reason)
+})
+
+error.on('uncaughtException', (err) => {
+    console.log('Uncaught Exception: ', err)
+})
+
+error.on('uncaughtExceptionMonitor', (err, origin) => {
+    console.log('Uncaught Exception Monitor: ', err, origin)
+})
+
 client.login(process.env.TOKEN)

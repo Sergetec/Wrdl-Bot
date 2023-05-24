@@ -5,13 +5,9 @@ module.exports = {
     name: 'leaderboard',
     description: 'Shows the top players',
     async execute(client, interaction) {
-        try {
-            await interaction.reply({ content: 'Fetching...' })
-            const results = await statsSchema.find()
-            await getTop(client, interaction, results)
-        } catch (err) {
-            console.log(err)
-        }
+        await interaction.reply({ content: 'Fetching...' })
+        const results = await statsSchema.find()
+        await getTop(client, interaction, results)
     }
 }
 

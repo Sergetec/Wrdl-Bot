@@ -59,7 +59,7 @@ module.exports = {
         const message = new EmbedBuilder()
             .setTitle('Wordle Game')
             .setColor('#ED4245')
-            .setDescription('❗ Are you sure that you want to **quit this game**? This will **__count as a loss__** on your account. You can still continue if you wish to')
+            .setDescription('❗ Are you sure that you want to **quit this game**? This will **__count as a loss__** on your account. You can still continue if you wish to.')
         await interaction.reply({ embeds: [message], components: [row] })
 
         const quitMessage = new EmbedBuilder()
@@ -78,16 +78,12 @@ module.exports = {
         collector = interaction.channel.createMessageComponentCollector({ filter, max: 1, time })
         collector.on('collect', async (btnInt) => {
             if (!btnInt) {
-                return;
+                return
             }
             if (btnInt.customId !== 'quit_game' && btnInt.customId !== 'continue_game') {
-                return;
+                return
             }
-            try {
-                await btnInt.deferUpdate()
-            } catch (err) {
-                //nimic
-            }
+            await btnInt.deferUpdate()
             switch (btnInt.customId) {
                 case 'quit_game':
                     quitGame = true
@@ -98,7 +94,7 @@ module.exports = {
                     schema.currentStreak = 0
                     await schema.save()
 
-                    break;
+                    break
                 case 'continue_game':
                     continueGame = true
 
@@ -110,7 +106,7 @@ module.exports = {
                     schema2.expires = expires1
                     await schema2.save()
 
-                    break;
+                    break
             }
             collector.on('end', async () => {
                 const messageExpired = new EmbedBuilder()

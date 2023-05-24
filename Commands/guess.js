@@ -202,7 +202,7 @@ module.exports = {
                 for (let j = 0; j < 5; ++j) {
                     if (charsGuessed[i] !== wordToGuess[j]) {
                         if (charsGuessed[i] === 'a') {
-                            alphabetCurr[10] = '\n\u1CBC<:A_darker_gray:1064629141342793908>'
+                            alphabetCurr[10] = '\n⠀<:A_darker_gray:1064629141342793908>'
                         }
                         if (charsGuessed[i] === 'b') {
                             alphabetCurr[23] = '<:B_darker_gray:1064629144933122118>'
@@ -277,7 +277,7 @@ module.exports = {
                             alphabetCurr[5] = '<:Y_darker_gray:1064634286533259354>'
                         }
                         if (charsGuessed[i] === 'z') {
-                            alphabetCurr[19] = '\n\u1CBC\u1CBC<:Z_darker_gray:1064634287917387916>'
+                            alphabetCurr[19] = '\n⠀⠀⠀<:Z_darker_gray:1064634287917387916>'
                         }
                     }
                 }
@@ -292,7 +292,7 @@ module.exports = {
                     greenFound[i] = greenFound[i] + 1
                     if (charsGuessed[i] === 'a') {
                         reply[i] = '<:A_green:1012673118441058404> '
-                        alphabetCurr[10] = '\n\u1CBC<:A_green:1012673118441058404>'
+                        alphabetCurr[10] = '\n⠀<:A_green:1012673118441058404>'
                     }
                     if (charsGuessed[i] === 'b') {
                         reply[i] = '<:B_green:1012673120072646707> '
@@ -392,7 +392,7 @@ module.exports = {
                     }
                     if (charsGuessed[i] === 'z') {
                         reply[i] = '<:Z_green:1012673156462432276> '
-                        alphabetCurr[19] = '\n\u1CBC\u1CBC<:Z_green:1012673156462432276>'
+                        alphabetCurr[19] = '\n⠀⠀⠀<:Z_green:1012673156462432276>'
                     }
                 }
             }
@@ -405,7 +405,7 @@ module.exports = {
                         if (!greenFound[i] && wordsRepeated[counter] > 0) {
                             if (charsGuessed[i] === 'a') {
                                 reply[i] = '<:A_yellow:1012673286506827806> '
-                                alphabetCurr[10] = '\n\u1CBC<:A_yellow:1012673286506827806>'
+                                alphabetCurr[10] = '\n⠀<:A_yellow:1012673286506827806>'
                             }
                             if (charsGuessed[i] === 'b') {
                                 reply[i] = '<:B_yellow:1012673288415223841> '
@@ -505,7 +505,7 @@ module.exports = {
                             }
                             if (charsGuessed[i] === 'z') {
                                 reply[i] = '<:Z_yellow:1012692416043692082> '
-                                alphabetCurr[19] = '\n\u1CBC\u1CBC<:Z_yellow:1012692416043692082>'
+                                alphabetCurr[19] = '\n⠀⠀⠀<:Z_yellow:1012692416043692082>'
                             }
                             wordsRepeated[counter] = wordsRepeated[counter] - 1
                         }
