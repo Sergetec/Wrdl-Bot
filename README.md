@@ -3,9 +3,12 @@
 ## Intro
 Wrdl Bot is a bot that allows you to play the famous game Wordle on any server you like.
 There are 3 colors that will help you throughout the game:
-🟢 | This letter is in the word, in that exact position
-🟡 | This letter is in the word, just in another position
-⚫ | This letter is not in the word
+
+💚 | This letter is in the word, in that exact position
+
+💛 | This letter is in the word, just in another position
+
+🖤 | This letter is not in the word
 
 ❓ The bot utilizes slash commands
 
