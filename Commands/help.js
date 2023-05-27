@@ -29,7 +29,7 @@ module.exports = {
 
         embeds.push(new EmbedBuilder()
             .setTitle('Commands Information')
-            .setDescription('A new game will end automatically after 3 minutes of inactivity or by command. **Either way is a loss for the player.**')
+            .setDescription('A new game will end automatically after **3 minutes** of inactivity or by command. **Either way is a loss for the player.**')
             .setColor('#FF964D')
             .setThumbnail(client.user.avatarURL({ dynamic: true, size: 512 }))
             .addFields({
@@ -54,17 +54,17 @@ module.exports = {
 
         embeds.push(new EmbedBuilder()
             .setTitle('Stats Information')
-            .setDescription('With **Wrdl** you can view your stats or someone else\'s, as well as the leaderboard either on the current server or globally.')
+            .setDescription('With **Wrdl** you can view your stats or someone else\'s, as well as the leaderboard.')
             .setColor('#FF964D')
             .setThumbnail(client.user.avatarURL({ dynamic: true, size: 512 }))
             .addFields({
                 name: '❓ \`/stats\`',
-                value: 'Displays either your or someone else\'s game statistics, either globally or from that server',
+                value: 'Displays either your or someone else\'s game statistics',
                 inline: true,
             })
             .addFields({
                 name: '📜 \`/leaderboard\`',
-                value: 'Displays the current leaderboard either on the server or globally',
+                value: 'Displays the current leaderboard',
                 inline: true,
             })
             .setFooter({
