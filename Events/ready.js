@@ -26,32 +26,40 @@ module.exports = {
 
         //Check for inactive games
         const check = async () => {
-            let dt = new Date().toUTCString()
-            const query = {
-                expires: { $lt: dt },
-            }
-            const results = await gamesSchema.find(query)
-            for (let i = 0; i < results.length; ++i) {
-                let userIDUser = results[i].userID
-                await gamesSchema.deleteMany(query) //delete from games database
-                await expiredGameFound(userIDUser) //update the user in stats database
-                let guildID = results[i].guildID //get the guild id from database
-                let botID = '1011006137690239059'
-                let guild = client.guilds.cache.get(guildID) //cache the guild
-                let ok = guild.members.cache.get(botID) //check if bot is in the guild
-                if (ok) { //if it is, then send a message, otherwise it will go to the nest result
-                    let channel = results[i].channelStarted
-                    const message = new EmbedBuilder()
-                        .setTitle('Wordle Game')
-                        .setColor('#ED4245')
-                        .setDescription(`<@${results[i].userID}>'s game has ended due to inactivity`)
-
-                    await client.channels.cache.get(channel).send({ embeds: [message] })
+            try {
+                let dt = new Date().toUTCString()
+                const query = {
+                    expires: { $lt: dt },
                 }
+                const results = await gamesSchema.find(query)
+                for (let i = 0; i < results.length; ++i) {
+                    let userIDUser = results[i].userID
+                    await gamesSchema.deleteMany(query) //delete from games database
+                    await expiredGameFound(userIDUser) //update the user in stats database
+                    let guildID = results[i].guildID //get the guild id from database
+                    let botID = '1011006137690239059'
+                    let guild = client.guilds.cache.get(guildID) //cache the guild
+                    let ok = guild.members.cache.get(botID) //check if bot is in the guild
+                    if (ok) { //if it is, then send a message, otherwise it will go to the nest result
+                        let channel = results[i].channelStarted
+                        const message = new EmbedBuilder()
+                            .setTitle('Wordle Game')
+                            .setColor('#ED4245')
+                            .setDescription(`<@${results[i].userID}>'s game has ended due to inactivity`)
+
+                        try {
+                            await client.channels.cache.get(channel).send({ embeds: [message] })
+                        } catch (err) {
+                            console.log(err)
+                        }
+                    }
+                }
+                setTimeout(check, 1000 * 10)
+            } catch (err) {
+                console.log(err)
+                setTimeout(check, 1000 * 10)
             }
-            setTimeout(check, 1000 * 30)
         }
-        module.exports = { check }
         await check()
     }
 }
