@@ -77,6 +77,9 @@ module.exports = {
             if (result.language === 'TR') {
                 file = fs.readFileSync('Words/valid_tr.txt', 'utf-8')
             }
+            if (result.language === 'ES') {
+                file = fs.readFileSync('Words/valid_es.txt', 'utf-8')
+            }
             const wordArray = file.split('\n')
             for (let i = 0; i < wordArray.length; ++i) {
                 let word = wordArray[i]
