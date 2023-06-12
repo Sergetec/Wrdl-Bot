@@ -45,4 +45,6 @@ There are 3 colors that will help you throughout the game:
 
 🇹🇷 TR
 
+🇪🇸 ES
+
 ✅ more coming soon, contact me on Discord if you wish to help
