@@ -1,8 +1,9 @@
-const mongoose = require("mongoose")
-const mongoPath = process.env.MONGO_URI
+const mongoose = require('mongoose')
 const { EmbedBuilder, ActivityType } = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
+const { AutoPoster } = require('topgg-autoposter');
+require('dotenv').config()
 
 module.exports = {
     name: 'ready',
@@ -11,23 +12,35 @@ module.exports = {
     async execute(client) {
         console.log('Wrdl Bot online!')
 
-        await mongoose.connect(mongoPath, {
+        await mongoose.connect(process.env.MONGO_URI, {
             keepAlive: true
         }).then(() => {
             console.log('Connected to the database!')
         }).catch((err) => {
             console.log(err)
-        });
+        })
         client.user.setActivity({
-            name: `wordle games | /help`,
-            type: ActivityType.Watching,
+            name: 'wordle games',
+            type: ActivityType.Competing,
         })
         client.user.setStatus('online')
 
-        //Check for inactive games
+        //Check for inactive games / autoposter
+        let postedToday = false //for autoposter
         const check = async () => {
             try {
                 let dt = new Date().toUTCString()
+                let dtToAutopost = new Date()
+                if (dtToAutopost.getHours() >= 0 && dtToAutopost.getMinutes() >= 6) {
+                    postedToday = false //reset the value after the 5 minutes mark
+                }
+                if (dtToAutopost.getHours() === 0 && dtToAutopost.getMinutes() >= 0 && dtToAutopost.getMinutes() <= 5 && !postedToday) {
+                    const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
+                    ap.on('posted', () => {
+                        console.log("✅ Stats updated on top.gg")
+                        postedToday = true //set to true so that it won't post more times
+                    })
+                }
                 const query = {
                     expires: { $lt: dt },
                 }
@@ -39,18 +52,20 @@ module.exports = {
                     let guildID = results[i].guildID //get the guild id from database
                     let botID = '1011006137690239059'
                     let guild = client.guilds.cache.get(guildID) //cache the guild
-                    let ok = guild.members.cache.get(botID) //check if bot is in the guild
-                    if (ok) { //if it is, then send a message, otherwise it will go to the nest result
-                        let channel = results[i].channelStarted
-                        const message = new EmbedBuilder()
-                            .setTitle('Wordle Game')
-                            .setColor('#ED4245')
-                            .setDescription(`<@${results[i].userID}>'s game has ended due to inactivity`)
+                    if (guild) {
+                        let ok = guild.members.cache.get(botID) //check if bot is in the guild
+                        if (ok) { //if it is, then send a message, otherwise it will go to the next result
+                            let channel = results[i].channelStarted
+                            const message = new EmbedBuilder()
+                                .setTitle('Wordle Game')
+                                .setColor('#ED4245')
+                                .setDescription(`<@${results[i].userID}>'s game has ended due to inactivity`)
 
-                        try {
-                            await client.channels.cache.get(channel).send({ embeds: [message] })
-                        } catch (err) {
-                            console.log(err)
+                            try {
+                                await client.channels.cache.get(channel).send({ embeds: [message] })
+                            } catch (err) {
+                                console.log(err)
+                            }
                         }
                     }
                 }
