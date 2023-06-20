@@ -31,7 +31,7 @@ module.exports = {
             try {
                 let dt = new Date().toUTCString()
                 let dtToAutopost = new Date()
-                if (dtToAutopost.getHours() >= 0 && dtToAutopost.getMinutes() >= 6) {
+                if (dtToAutopost.getHours() === 0 && dtToAutopost.getMinutes() >= 6) {
                     postedToday = false //reset the value after the 5 minutes mark
                 }
                 if (dtToAutopost.getHours() === 0 && dtToAutopost.getMinutes() >= 0 && dtToAutopost.getMinutes() <= 5 && !postedToday) {
