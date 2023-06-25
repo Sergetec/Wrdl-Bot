@@ -26,19 +26,14 @@ module.exports = {
         client.user.setStatus('online')
 
         //Check for inactive games / autoposter
-        let postedToday = false //for autoposter
         const check = async () => {
             try {
                 let dt = new Date().toUTCString()
                 let dtToAutopost = new Date()
-                if (dtToAutopost.getHours() >= 0 && dtToAutopost.getMinutes() >= 6) {
-                    postedToday = false //reset the value after the 5 minutes mark
-                }
-                if (dtToAutopost.getHours() === 0 && dtToAutopost.getMinutes() >= 0 && dtToAutopost.getMinutes() <= 5 && !postedToday) {
+                if (dtToAutopost.getHours() === 0 && dtToAutopost.getMinutes() === 0) {
                     const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
                     ap.on('posted', () => {
                         console.log("✅ Stats updated on top.gg")
-                        postedToday = true //set to true so that it won't post more times
                     })
                 }
                 const query = {
