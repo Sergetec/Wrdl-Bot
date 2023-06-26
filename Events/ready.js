@@ -2,12 +2,12 @@ const mongoose = require('mongoose')
 const { EmbedBuilder, ActivityType } = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
-const { AutoPoster } = require('topgg-autoposter');
+const { AutoPoster } = require('topgg-autoposter')
 require('dotenv').config()
 
 module.exports = {
     name: 'ready',
-    description: 'on startup | expired games',
+    description: 'on startup | expired games | autoposter',
     on: true,
     async execute(client) {
         console.log('Wrdl Bot online!')
@@ -25,8 +25,13 @@ module.exports = {
         })
         client.user.setStatus('online')
 
-        //Check for inactive games / autoposter
-        let posted = false
+        //Autoposter
+        const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
+        ap.on('posted', (stats) => {
+            console.log(`✅ Stats updated | ${stats.serverCount}`)
+        })
+
+        //Check for inactive games
         const check = async () => {
             try {
                 let dt = new Date().toUTCString()
@@ -56,19 +61,6 @@ module.exports = {
                                 console.log(err)
                             }
                         }
-                    }
-                }
-                let dtToAutopost = new Date()
-                if (dtToAutopost.getHours() === 23) {
-                    posted = false
-                }
-                if (!posted) {
-                    if (dtToAutopost.getHours() === 0 && dtToAutopost.getMinutes() === 0) {
-                        const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
-                        ap.on('posted', () => {
-                            console.log("✅ Stats updated on top.gg")
-                        })
-                        posted = true
                     }
                 }
                 setTimeout(check, 1000 * 10)
