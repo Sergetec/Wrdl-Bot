@@ -26,16 +26,10 @@ module.exports = {
         client.user.setStatus('online')
 
         //Check for inactive games / autoposter
+        let posted = false
         const check = async () => {
             try {
                 let dt = new Date().toUTCString()
-                let dtToAutopost = new Date()
-                if (dtToAutopost.getHours() === 0 && dtToAutopost.getMinutes() === 0) {
-                    const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
-                    ap.on('posted', () => {
-                        console.log("✅ Stats updated on top.gg")
-                    })
-                }
                 const query = {
                     expires: { $lt: dt },
                 }
@@ -62,6 +56,19 @@ module.exports = {
                                 console.log(err)
                             }
                         }
+                    }
+                }
+                let dtToAutopost = new Date()
+                if (dtToAutopost.getHours() === 23) {
+                    posted = false
+                }
+                if (!posted) {
+                    if (dtToAutopost.getHours() === 0 && dtToAutopost.getMinutes() === 0) {
+                        const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
+                        ap.on('posted', () => {
+                            console.log("✅ Stats updated on top.gg")
+                        })
+                        posted = true
                     }
                 }
                 setTimeout(check, 1000 * 10)
