@@ -1,7 +1,7 @@
 const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
-const fs = require("fs")
+const fs = require("node:fs")
 
 module.exports = {
     name: 'guess',
@@ -79,6 +79,9 @@ module.exports = {
             }
             if (result.language === 'ES') {
                 file = fs.readFileSync('Words/valid_es.txt', 'utf-8')
+            }
+            if (result.language === 'PT') {
+                file = fs.readFileSync('Words/valid_pt.txt', 'utf-8')
             }
             const wordArray = file.split('\n')
             for (let i = 0; i < wordArray.length; ++i) {

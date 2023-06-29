@@ -1,5 +1,5 @@
 const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
-const fs = require('fs')
+const fs = require('node:fs')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
 
@@ -52,6 +52,13 @@ module.exports = {
                 .setEmoji('🇪🇸')
                 .setStyle(ButtonStyle.Primary)
         )
+        row.addComponents(
+            new ButtonBuilder()
+                .setCustomId('PT')
+                .setLabel('Portugal')
+                .setEmoji('🇵🇹')
+                .setStyle(ButtonStyle.Primary)
+        )
 
         //English - selected
         const deadRowEN = new ActionRowBuilder()
@@ -84,6 +91,14 @@ module.exports = {
                 .setCustomId('ES')
                 .setLabel('Spanish')
                 .setEmoji('🇪🇸')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+        )
+        deadRowEN.addComponents(
+            new ButtonBuilder()
+                .setCustomId('PT')
+                .setLabel('Portugal')
+                .setEmoji('🇵🇹')
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
         )
@@ -122,6 +137,14 @@ module.exports = {
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
         )
+        deadRowRO.addComponents(
+            new ButtonBuilder()
+                .setCustomId('PT')
+                .setLabel('Portugal')
+                .setEmoji('🇵🇹')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+        )
 
         //Turkish - selected
         const deadRowTR = new ActionRowBuilder()
@@ -154,6 +177,14 @@ module.exports = {
                 .setCustomId('ES')
                 .setLabel('Spanish')
                 .setEmoji('🇪🇸')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+        )
+        deadRowTR.addComponents(
+            new ButtonBuilder()
+                .setCustomId('PT')
+                .setLabel('Portugal')
+                .setEmoji('🇵🇹')
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
         )
@@ -192,6 +223,57 @@ module.exports = {
                 .setStyle(ButtonStyle.Success)
                 .setDisabled(true)
         )
+        deadRowES.addComponents(
+            new ButtonBuilder()
+                .setCustomId('PT')
+                .setLabel('Portugal')
+                .setEmoji('🇵🇹')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+        )
+
+        //Portugal - selected
+        const deadRowPT = new ActionRowBuilder()
+        deadRowPT.addComponents(
+            new ButtonBuilder()
+                .setCustomId('EN')
+                .setLabel('English')
+                .setEmoji('🇬🇧')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+        )
+        deadRowPT.addComponents(
+            new ButtonBuilder()
+                .setCustomId('RO')
+                .setLabel('Romanian')
+                .setEmoji('🇷🇴')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+        )
+        deadRowPT.addComponents(
+            new ButtonBuilder()
+                .setCustomId('TR')
+                .setLabel('Turkish')
+                .setEmoji('🇹🇷')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+        )
+        deadRowPT.addComponents(
+            new ButtonBuilder()
+                .setCustomId('ES')
+                .setLabel('Spanish')
+                .setEmoji('🇪🇸')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+        )
+        deadRowPT.addComponents(
+            new ButtonBuilder()
+                .setCustomId('PT')
+                .setLabel('Portugal')
+                .setEmoji('🇵🇹')
+                .setStyle(ButtonStyle.Success)
+                .setDisabled(true)
+        )
 
         //Time expired
         const deadRowAll = new ActionRowBuilder()
@@ -227,13 +309,21 @@ module.exports = {
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
         )
+        deadRowAll.addComponents(
+            new ButtonBuilder()
+                .setCustomId('PT')
+                .setLabel('Portugal')
+                .setEmoji('🇵🇹')
+                .setStyle(ButtonStyle.Primary)
+                .setDisabled(true)
+        )
 
         const message = new EmbedBuilder()
             .setTitle('Wordle Game')
             .setColor('#FF964D')
             .setDescription('❗ Choose your language')
         await interaction.reply({ embeds: [message], components: [row] })
-        let ENGame = false, ROGame = false, TRGame = false, ESGame = false
+        let ENGame = false, ROGame = false, TRGame = false, ESGame = false, PTGame = false
         let collector
         const filter = (interaction) => interaction.user.id === userID
         const time = 1000 * 30
@@ -243,7 +333,7 @@ module.exports = {
             if (!btnInt) {
                 return
             }
-            if (btnInt.customId !== 'EN' && btnInt.customId !== 'RO' && btnInt.customId !== 'TR' && btnInt.customId !== 'ES') {
+            if (btnInt.customId !== 'EN' && btnInt.customId !== 'RO' && btnInt.customId !== 'TR' && btnInt.customId !== 'ES' && btnInt.customId !== 'PT') {
                 return
             }
             await btnInt.deferUpdate()
@@ -259,6 +349,9 @@ module.exports = {
                     break
                 case 'ES':
                     ESGame = true
+                    break
+                case 'PT':
+                    PTGame = true
                     break
             }
             collector.on('end', async () => {
@@ -299,6 +392,14 @@ module.exports = {
                 .addFields({
                     name: 'Juego iniciado',
                     value: '👉 Utiliza \`/guess\` para hacer tus conjetura',
+                })
+
+            const PTMessage = new EmbedBuilder()
+                .setTitle('Wordle Game')
+                .setColor('#57F287')
+                .addFields({
+                    name: 'Jogo iniciado',
+                    value: '👉 Utilize \`/guess\` para dar o seu palpite',
                 })
 
             let schema
@@ -418,6 +519,26 @@ module.exports = {
                 })
                 await schema.save();
             }
+            if (PTGame) {
+                await interaction.editReply({ embeds: [PTMessage], components: [deadRowPT] })
+                let word = randomWord_PT()
+
+                //Games database
+                let dt = new Date()
+                dt = new Date(dt.getTime() + 3 * 60 * 1000).toUTCString()
+                schema = await gamesSchema.create({
+                    guildID: guildID,
+                    channelStarted: channel,
+                    userID: userID,
+                    word: word,
+                    guesses: '0',
+                    replyMessage: '\n',
+                    alphabet: alphabetLetters,
+                    language: 'PT',
+                    expires: dt,
+                })
+                await schema.save();
+            }
 
             schema = await statsSchema.findOne(query)
             if (schema) {
@@ -480,6 +601,16 @@ function randomWord_TR() {
 
 function randomWord_ES() {
     const file = fs.readFileSync('Words/words_es.txt', 'utf-8')
+    const wordArray = file.split('\n')
+
+    let randomWord
+    let rand = Math.floor(Math.random() * wordArray.length)
+    randomWord = wordArray[rand]
+    return randomWord
+}
+
+function randomWord_PT() {
+    const file = fs.readFileSync('Words/words_pt.txt', 'utf-8')
     const wordArray = file.split('\n')
 
     let randomWord
