@@ -55,7 +55,7 @@ module.exports = {
         row.addComponents(
             new ButtonBuilder()
                 .setCustomId('PT')
-                .setLabel('Portugal')
+                .setLabel('Portuguese')
                 .setEmoji('🇵🇹')
                 .setStyle(ButtonStyle.Primary)
         )
@@ -97,7 +97,7 @@ module.exports = {
         deadRowEN.addComponents(
             new ButtonBuilder()
                 .setCustomId('PT')
-                .setLabel('Portugal')
+                .setLabel('Portuguese')
                 .setEmoji('🇵🇹')
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
@@ -140,7 +140,7 @@ module.exports = {
         deadRowRO.addComponents(
             new ButtonBuilder()
                 .setCustomId('PT')
-                .setLabel('Portugal')
+                .setLabel('Portuguese')
                 .setEmoji('🇵🇹')
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
@@ -183,7 +183,7 @@ module.exports = {
         deadRowTR.addComponents(
             new ButtonBuilder()
                 .setCustomId('PT')
-                .setLabel('Portugal')
+                .setLabel('Portuguese')
                 .setEmoji('🇵🇹')
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
@@ -226,13 +226,13 @@ module.exports = {
         deadRowES.addComponents(
             new ButtonBuilder()
                 .setCustomId('PT')
-                .setLabel('Portugal')
+                .setLabel('Portuguese')
                 .setEmoji('🇵🇹')
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
         )
 
-        //Portugal - selected
+        //Portuguese - selected
         const deadRowPT = new ActionRowBuilder()
         deadRowPT.addComponents(
             new ButtonBuilder()
@@ -269,7 +269,7 @@ module.exports = {
         deadRowPT.addComponents(
             new ButtonBuilder()
                 .setCustomId('PT')
-                .setLabel('Portugal')
+                .setLabel('Portuguese')
                 .setEmoji('🇵🇹')
                 .setStyle(ButtonStyle.Success)
                 .setDisabled(true)
@@ -312,7 +312,7 @@ module.exports = {
         deadRowAll.addComponents(
             new ButtonBuilder()
                 .setCustomId('PT')
-                .setLabel('Portugal')
+                .setLabel('Portuguese')
                 .setEmoji('🇵🇹')
                 .setStyle(ButtonStyle.Primary)
                 .setDisabled(true)
