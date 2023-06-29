@@ -39,12 +39,14 @@ There are 3 colors that will help you throughout the game:
 - **`/leaderboard` Displays the current leaderboard**
 
 ## Supported Languages
-🇬🇧 EN
+🇬🇧 English
 
-🇷🇴 RO
+🇷🇴 Romanian
 
-🇹🇷 TR
+🇹🇷 Turkish
 
-🇪🇸 ES
+🇪🇸 Spanish
+
+🇵🇹 Portuguese
 
 ✅ more coming soon, contact me on Discord if you wish to help
