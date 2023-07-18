@@ -69,7 +69,7 @@ module.exports = {
 **6** ${Strings.sixGuessString} \`${sixGuess}\`
                     
                     
-[Add Wrdl to your server!](https://discord.com/api/oauth2/authorize?client_id=1011006137690239059&permissions=277025721344&scope=applications.commands%20bot)`)
+[Vote for me!](https://top.gg/bot/1011006137690239059/vote)`)
 
             return await interaction.reply({ embeds: [message] })
         } else {
