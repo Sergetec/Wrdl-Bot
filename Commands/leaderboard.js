@@ -10,7 +10,7 @@ module.exports = {
         //This will first cache all the results, sort descending based on gamesWon, and will limit the results to 10
         //So that it will not exceed the memory limit
         const sort = { gamesWon: -1 }
-        const results = await statsSchema.find().sort(sort).limit(10)
+        const results = await statsSchema.find({ userID: { $ne: '333664530582208513' } }).sort(sort).limit(10)
         await getTop(client, interaction, results)
     }
 }
@@ -42,7 +42,7 @@ async function getTop(client, interaction, results) {
     }
     const message = new EmbedBuilder()
         .setTitle(`↗️ LEADERBOARD ↗️`)
-        .setColor('#0080FF')
+        .setColor('#FF964D')
         .addFields({
             name: 'Top players',
             value: `${top}`,
