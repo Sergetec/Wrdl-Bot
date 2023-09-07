@@ -49,4 +49,6 @@ There are 3 colors that will help you throughout the game:
 
 🇵🇹 Portuguese
 
+🇫🇷 French
+
 ✅ more coming soon, contact me on Discord if you wish to help

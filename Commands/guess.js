@@ -67,22 +67,7 @@ module.exports = {
             //Check for valid word
             let found
             let auxChars
-            let file
-            if (result.language === 'EN') {
-                file = fs.readFileSync('Words/valid_en.txt', 'utf-8')
-            }
-            if (result.language === 'RO') {
-                file = fs.readFileSync('Words/valid_ro.txt', 'utf-8')
-            }
-            if (result.language === 'TR') {
-                file = fs.readFileSync('Words/valid_tr.txt', 'utf-8')
-            }
-            if (result.language === 'ES') {
-                file = fs.readFileSync('Words/valid_es.txt', 'utf-8')
-            }
-            if (result.language === 'PT') {
-                file = fs.readFileSync('Words/valid_pt.txt', 'utf-8')
-            }
+            let file = fs.readFileSync(`Words/valid_${result.language.toLowerCase()}.txt`, 'utf-8')
             const wordArray = file.split('\n')
             for (let i = 0; i < wordArray.length; ++i) {
                 let word = wordArray[i]

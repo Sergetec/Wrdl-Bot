@@ -1,4 +1,12 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const {
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+    StringSelectMenuBuilder,
+    StringSelectMenuOptionBuilder,
+    ComponentType
+} = require('discord.js')
 const fs = require('node:fs')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
@@ -23,345 +31,89 @@ module.exports = {
             return await interaction.reply({ embeds: [message], ephemeral: true })
         }
 
-        const row = new ActionRowBuilder()
-        row.addComponents(
-            new ButtonBuilder()
-                .setCustomId('EN')
-                .setLabel('English')
-                .setEmoji('🇬🇧')
-                .setStyle(ButtonStyle.Primary)
-        )
-        row.addComponents(
-            new ButtonBuilder()
-                .setCustomId('RO')
-                .setLabel('Romanian')
-                .setEmoji('🇷🇴')
-                .setStyle(ButtonStyle.Primary)
-        )
-        row.addComponents(
-            new ButtonBuilder()
-                .setCustomId('TR')
-                .setLabel('Turkish')
-                .setEmoji('🇹🇷')
-                .setStyle(ButtonStyle.Primary)
-        )
-        row.addComponents(
-            new ButtonBuilder()
-                .setCustomId('ES')
-                .setLabel('Spanish')
-                .setEmoji('🇪🇸')
-                .setStyle(ButtonStyle.Primary)
-        )
-        row.addComponents(
-            new ButtonBuilder()
-                .setCustomId('PT')
-                .setLabel('Portuguese')
-                .setEmoji('🇵🇹')
-                .setStyle(ButtonStyle.Primary)
-        )
+        const languages = [
+            {
+                label: 'English',
+                description: 'English language',
+                value: 'en',
+                emoji: '🇬🇧'
+            },
+            {
+                label: 'Romanian',
+                description: 'Romanian language',
+                value: 'ro',
+                emoji: '🇷🇴',
+            },
+            {
+                label: 'Turkish',
+                description: 'Turkish language',
+                value: 'tr',
+                emoji: '🇹🇷',
+            },
+            {
+                label: 'Spanish',
+                description: 'Spanish language',
+                value: 'es',
+                emoji: '🇪🇸'
+            },
+            {
+                label: 'Portuguese',
+                description: 'Portuguese language',
+                value: 'pt',
+                emoji: '🇵🇹'
+            },
+            {
+                label: 'French',
+                description: 'French language',
+                value: 'fr',
+                emoji: '🇫🇷',
+            }]
 
-        //English - selected
-        const deadRowEN = new ActionRowBuilder()
-        deadRowEN.addComponents(
-            new ButtonBuilder()
-                .setCustomId('EN')
-                .setLabel('English')
-                .setEmoji('🇬🇧')
-                .setStyle(ButtonStyle.Success)
-                .setDisabled(true)
-        )
-        deadRowEN.addComponents(
-            new ButtonBuilder()
-                .setCustomId('RO')
-                .setLabel('Romanian')
-                .setEmoji('🇷🇴')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowEN.addComponents(
-            new ButtonBuilder()
-                .setCustomId('TR')
-                .setLabel('Turkish')
-                .setEmoji('🇹🇷')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowEN.addComponents(
-            new ButtonBuilder()
-                .setCustomId('ES')
-                .setLabel('Spanish')
-                .setEmoji('🇪🇸')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowEN.addComponents(
-            new ButtonBuilder()
-                .setCustomId('PT')
-                .setLabel('Portuguese')
-                .setEmoji('🇵🇹')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
+        const menu = new StringSelectMenuBuilder()
+            .setCustomId('languages')
+            .setMinValues(1)
+            .setMaxValues(1)
+            .setPlaceholder('Select a language...')
+            .addOptions(languages.map((language) =>
+                    new StringSelectMenuOptionBuilder()
+                        .setLabel(language.label)
+                        .setDescription(language.description)
+                        .setValue(language.value)
+                        .setEmoji(language.emoji)
+                )
+            );
 
-        //Romanian - selected
-        const deadRowRO = new ActionRowBuilder()
-        deadRowRO.addComponents(
-            new ButtonBuilder()
-                .setCustomId('EN')
-                .setLabel('English')
-                .setEmoji('🇬🇧')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowRO.addComponents(
-            new ButtonBuilder()
-                .setCustomId('RO')
-                .setLabel('Romanian')
-                .setEmoji('🇷🇴')
-                .setStyle(ButtonStyle.Success)
-                .setDisabled(true)
-        )
-        deadRowRO.addComponents(
-            new ButtonBuilder()
-                .setCustomId('TR')
-                .setLabel('Turkish')
-                .setEmoji('🇹🇷')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowRO.addComponents(
-            new ButtonBuilder()
-                .setCustomId('ES')
-                .setLabel('Spanish')
-                .setEmoji('🇪🇸')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowRO.addComponents(
-            new ButtonBuilder()
-                .setCustomId('PT')
-                .setLabel('Portuguese')
-                .setEmoji('🇵🇹')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-
-        //Turkish - selected
-        const deadRowTR = new ActionRowBuilder()
-        deadRowTR.addComponents(
-            new ButtonBuilder()
-                .setCustomId('EN')
-                .setLabel('English')
-                .setEmoji('🇬🇧')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowTR.addComponents(
-            new ButtonBuilder()
-                .setCustomId('RO')
-                .setLabel('Romanian')
-                .setEmoji('🇷🇴')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowTR.addComponents(
-            new ButtonBuilder()
-                .setCustomId('TR')
-                .setLabel('Turkish')
-                .setEmoji('🇹🇷')
-                .setStyle(ButtonStyle.Success)
-                .setDisabled(true)
-        )
-        deadRowTR.addComponents(
-            new ButtonBuilder()
-                .setCustomId('ES')
-                .setLabel('Spanish')
-                .setEmoji('🇪🇸')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowTR.addComponents(
-            new ButtonBuilder()
-                .setCustomId('PT')
-                .setLabel('Portuguese')
-                .setEmoji('🇵🇹')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-
-        //Spanish - selected
-        const deadRowES = new ActionRowBuilder()
-        deadRowES.addComponents(
-            new ButtonBuilder()
-                .setCustomId('EN')
-                .setLabel('English')
-                .setEmoji('🇬🇧')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowES.addComponents(
-            new ButtonBuilder()
-                .setCustomId('RO')
-                .setLabel('Romanian')
-                .setEmoji('🇷🇴')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowES.addComponents(
-            new ButtonBuilder()
-                .setCustomId('TR')
-                .setLabel('Turkish')
-                .setEmoji('🇹🇷')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowES.addComponents(
-            new ButtonBuilder()
-                .setCustomId('ES')
-                .setLabel('Spanish')
-                .setEmoji('🇪🇸')
-                .setStyle(ButtonStyle.Success)
-                .setDisabled(true)
-        )
-        deadRowES.addComponents(
-            new ButtonBuilder()
-                .setCustomId('PT')
-                .setLabel('Portuguese')
-                .setEmoji('🇵🇹')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-
-        //Portuguese - selected
-        const deadRowPT = new ActionRowBuilder()
-        deadRowPT.addComponents(
-            new ButtonBuilder()
-                .setCustomId('EN')
-                .setLabel('English')
-                .setEmoji('🇬🇧')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowPT.addComponents(
-            new ButtonBuilder()
-                .setCustomId('RO')
-                .setLabel('Romanian')
-                .setEmoji('🇷🇴')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowPT.addComponents(
-            new ButtonBuilder()
-                .setCustomId('TR')
-                .setLabel('Turkish')
-                .setEmoji('🇹🇷')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowPT.addComponents(
-            new ButtonBuilder()
-                .setCustomId('ES')
-                .setLabel('Spanish')
-                .setEmoji('🇪🇸')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowPT.addComponents(
-            new ButtonBuilder()
-                .setCustomId('PT')
-                .setLabel('Portuguese')
-                .setEmoji('🇵🇹')
-                .setStyle(ButtonStyle.Success)
-                .setDisabled(true)
-        )
-
-        //Time expired
-        const deadRowAll = new ActionRowBuilder()
-        deadRowAll.addComponents(
-            new ButtonBuilder()
-                .setCustomId('EN')
-                .setLabel('English')
-                .setEmoji('🇬🇧')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowAll.addComponents(
-            new ButtonBuilder()
-                .setCustomId('RO')
-                .setLabel('Romanian')
-                .setEmoji('🇷🇴')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowAll.addComponents(
-            new ButtonBuilder()
-                .setCustomId('TR')
-                .setLabel('Turkish')
-                .setEmoji('🇹🇷')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowAll.addComponents(
-            new ButtonBuilder()
-                .setCustomId('ES')
-                .setLabel('Spanish')
-                .setEmoji('🇪🇸')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
-        deadRowAll.addComponents(
-            new ButtonBuilder()
-                .setCustomId('PT')
-                .setLabel('Portuguese')
-                .setEmoji('🇵🇹')
-                .setStyle(ButtonStyle.Primary)
-                .setDisabled(true)
-        )
+        const actionRow = new ActionRowBuilder().addComponents(menu)
 
         const message = new EmbedBuilder()
             .setTitle('Wordle Game')
             .setColor('#FF964D')
             .setDescription('❗ Choose your language')
-        await interaction.reply({ embeds: [message], components: [row] })
-        let ENGame = false, ROGame = false, TRGame = false, ESGame = false, PTGame = false
-        let collector
+        const reply = await interaction.reply({ embeds: [message], components: [actionRow] })
+        let ENGame = false, ROGame = false, TRGame = false, ESGame = false, PTGame = false, FRGame = false
         const filter = (interaction) => interaction.user.id === userID
-        const time = 1000 * 30
+        const time = 1000 * 30 //30 seconds
 
-        collector = interaction.channel.createMessageComponentCollector({ filter, max: 1, time })
-        collector.on('collect', async (btnInt) => {
-            if (!btnInt) {
-                return
+        const collector = reply.createMessageComponentCollector({
+            filter: filter,
+            max: 1,
+            time: time
+        })
+        collector.on('collect', async (menuInt) => {
+            await menuInt.deferUpdate()
+            if (menuInt.values.includes('en')) {
+                ENGame = true
+            } else if (menuInt.values.includes('ro')) {
+                ROGame = true
+            } else if (menuInt.values.includes('tr')) {
+                TRGame = true
+            } else if (menuInt.values.includes('es')) {
+                ESGame = true
+            } else if (menuInt.values.includes('pt')) {
+                PTGame = true
+            } else if (menuInt.values.includes('fr')) {
+                FRGame = true
             }
-            if (btnInt.customId !== 'EN' && btnInt.customId !== 'RO' && btnInt.customId !== 'TR' && btnInt.customId !== 'ES' && btnInt.customId !== 'PT') {
-                return
-            }
-            await btnInt.deferUpdate()
-            switch (btnInt.customId) {
-                case 'EN':
-                    ENGame = true
-                    break
-                case 'RO':
-                    ROGame = true
-                    break
-                case 'TR':
-                    TRGame = true
-                    break
-                case 'ES':
-                    ESGame = true
-                    break
-                case 'PT':
-                    PTGame = true
-                    break
-            }
-            collector.on('end', async () => {
-                const messageExpired = new EmbedBuilder()
-                    .setTitle('Wordle Game')
-                    .setColor('#ED4245')
-                    .setDescription('❗ Time has expired')
-                return await interaction.editReply({ embeds: [messageExpired], components: [deadRowAll] })
-            })
-
             const ROMessage = new EmbedBuilder()
                 .setTitle('Wordle Game')
                 .setColor('#57F287')
@@ -402,6 +154,14 @@ module.exports = {
                     value: '👉 Utilize \`/guess\` para dar o seu palpite',
                 })
 
+            const FRMessage = new EmbedBuilder()
+                .setTitle('Wordle Game')
+                .setColor('#57F287')
+                .addFields({
+                    name: 'Le jeu a commencé',
+                    value: '👉 Utilisez \`/guess\` pour faire votre supposition',
+                })
+
             let schema
 
             //Alphabet/keyboard at the bottom
@@ -439,8 +199,8 @@ module.exports = {
                 alphabetLetters += alphabetGray[i]
             }
             if (ENGame) {
-                await interaction.editReply({ embeds: [ENMessage], components: [deadRowEN] })
-                let word = randomWord_EN()
+                await interaction.editReply({ embeds: [ENMessage], components: [] })
+                let word = randomWord('en')
 
                 //Games database
                 let expires1 = new Date()
@@ -457,10 +217,9 @@ module.exports = {
                     expires: dt,
                 })
                 await schema.save();
-            }
-            if (ROGame) {
-                await interaction.editReply({ embeds: [ROMessage], components: [deadRowRO] })
-                let word = randomWord_RO()
+            } else if (ROGame) {
+                await interaction.editReply({ embeds: [ROMessage], components: [] })
+                let word = randomWord('ro')
 
                 //Games database
                 let expires1 = new Date()
@@ -477,10 +236,9 @@ module.exports = {
                     expires: dt,
                 })
                 await schema.save();
-            }
-            if (TRGame) {
-                await interaction.editReply({ embeds: [TRMessage], components: [deadRowTR] })
-                let word = randomWord_TR()
+            } else if (TRGame) {
+                await interaction.editReply({ embeds: [TRMessage], components: [] })
+                let word = randomWord('tr')
 
                 //Games database
                 let dt = new Date()
@@ -497,11 +255,9 @@ module.exports = {
                     expires: dt,
                 })
                 await schema.save();
-            }
-
-            if (ESGame) {
-                await interaction.editReply({ embeds: [ESMessage], components: [deadRowES] })
-                let word = randomWord_ES()
+            } else if (ESGame) {
+                await interaction.editReply({ embeds: [ESMessage], components: [] })
+                let word = randomWord('es')
 
                 //Games database
                 let dt = new Date()
@@ -518,10 +274,28 @@ module.exports = {
                     expires: dt,
                 })
                 await schema.save();
-            }
-            if (PTGame) {
-                await interaction.editReply({ embeds: [PTMessage], components: [deadRowPT] })
-                let word = randomWord_PT()
+            } else if (PTGame) {
+                await interaction.editReply({ embeds: [PTMessage], components: [] })
+                let word = randomWord('pt')
+
+                //Games database
+                let dt = new Date()
+                dt = new Date(dt.getTime() + 3 * 60 * 1000).toUTCString()
+                schema = await gamesSchema.create({
+                    guildID: guildID,
+                    channelStarted: channel,
+                    userID: userID,
+                    word: word,
+                    guesses: '0',
+                    replyMessage: '\n',
+                    alphabet: alphabetLetters,
+                    language: 'FR',
+                    expires: dt,
+                })
+                await schema.save();
+            } else if (FRGame) {
+                await interaction.editReply({ embeds: [FRMessage], components: [] })
+                let word = randomWord('fr')
 
                 //Games database
                 let dt = new Date()
@@ -566,51 +340,20 @@ module.exports = {
                 await schema.save()
             }
         })
+        collector.on('end', async (collected) => {
+            if (collected.size === 0) {
+                const messageExpired = new EmbedBuilder()
+                    .setTitle('Wordle Game')
+                    .setColor('#ED4245')
+                    .setDescription('❗ Time has expired')
+                return await interaction.editReply({ embeds: [messageExpired], components: [] })
+            }
+        })
     }
 }
 
-function randomWord_EN() {
-    const file = fs.readFileSync('Words/words_en.txt', 'utf-8')
-    const wordArray = file.split('\n')
-
-    let randomWord
-    let rand = Math.floor(Math.random() * wordArray.length)
-    randomWord = wordArray[rand]
-    return randomWord
-}
-
-function randomWord_RO() {
-    const file = fs.readFileSync('Words/words_ro.txt', 'utf-8')
-    const wordArray = file.split('\n')
-
-    let randomWord
-    let rand = Math.floor(Math.random() * wordArray.length)
-    randomWord = wordArray[rand]
-    return randomWord
-}
-
-function randomWord_TR() {
-    const file = fs.readFileSync('Words/words_tr.txt', 'utf-8')
-    const wordArray = file.split('\n')
-
-    let randomWord
-    let rand = Math.floor(Math.random() * wordArray.length)
-    randomWord = wordArray[rand]
-    return randomWord
-}
-
-function randomWord_ES() {
-    const file = fs.readFileSync('Words/words_es.txt', 'utf-8')
-    const wordArray = file.split('\n')
-
-    let randomWord
-    let rand = Math.floor(Math.random() * wordArray.length)
-    randomWord = wordArray[rand]
-    return randomWord
-}
-
-function randomWord_PT() {
-    const file = fs.readFileSync('Words/words_pt.txt', 'utf-8')
+function randomWord(op) {
+    const file = fs.readFileSync(`Words/words_${op}.txt`, 'utf-8')
     const wordArray = file.split('\n')
 
     let randomWord
