@@ -1,7 +1,10 @@
-const { EmbedBuilder, ApplicationCommandOptionType } = require('discord.js')
+const {
+    EmbedBuilder,
+    ApplicationCommandOptionType,
+} = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
-const fs = require("node:fs")
+const fs = require('node:fs')
 
 module.exports = {
     name: 'guess',

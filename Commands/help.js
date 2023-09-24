@@ -1,4 +1,9 @@
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js')
+const {
+    EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+} = require('discord.js')
 
 module.exports = {
     name: 'help',
@@ -22,9 +27,6 @@ module.exports = {
                 value: 'Displays information about the game, rules and how to play it',
                 inline: true,
             })
-            .setFooter({
-                text: 'Support Contact: Sergetec#6803'
-            })
         )
 
         embeds.push(new EmbedBuilder()
@@ -47,9 +49,6 @@ module.exports = {
                 value: 'Quit your current game, you will be given the choice of quitting the game or continuing',
                 inline: true,
             })
-            .setFooter({
-                text: 'Support Contact: Sergetec#6803'
-            })
         )
 
         embeds.push(new EmbedBuilder()
@@ -66,9 +65,6 @@ module.exports = {
                 name: '📜 \`/leaderboard\`',
                 value: 'Displays the current leaderboard',
                 inline: true,
-            })
-            .setFooter({
-                text: 'Support Contact: Sergetec#6803'
             })
         )
 

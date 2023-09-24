@@ -1,4 +1,6 @@
-const { EmbedBuilder } = require('discord.js')
+const {
+    EmbedBuilder
+} = require('discord.js')
 const statsSchema = require('../Models/statsSchema')
 
 module.exports = {

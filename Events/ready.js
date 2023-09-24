@@ -1,8 +1,13 @@
 const mongoose = require('mongoose')
-const { EmbedBuilder, ActivityType } = require('discord.js')
+const {
+    EmbedBuilder,
+    ActivityType,
+} = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
-const { AutoPoster } = require('topgg-autoposter')
+const {
+    AutoPoster
+} = require('topgg-autoposter')
 require('dotenv').config()
 
 module.exports = {
