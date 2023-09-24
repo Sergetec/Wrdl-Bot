@@ -1,11 +1,8 @@
 const {
     EmbedBuilder,
     ActionRowBuilder,
-    ButtonBuilder,
-    ButtonStyle,
     StringSelectMenuBuilder,
     StringSelectMenuOptionBuilder,
-    ComponentType
 } = require('discord.js')
 const fs = require('node:fs')
 const gamesSchema = require('../Models/gamesSchema')
@@ -67,7 +64,14 @@ module.exports = {
                 description: 'French language',
                 value: 'fr',
                 emoji: '🇫🇷',
-            }]
+            },
+            {
+                label: 'Italian',
+                description: 'Italian language',
+                value: 'it',
+                emoji: '🇮🇹',
+            },
+        ]
 
         const menu = new StringSelectMenuBuilder()
             .setCustomId('languages')
@@ -90,7 +94,7 @@ module.exports = {
             .setColor('#FF964D')
             .setDescription('❗ Choose your language')
         const reply = await interaction.reply({ embeds: [message], components: [actionRow] })
-        let ENGame = false, ROGame = false, TRGame = false, ESGame = false, PTGame = false, FRGame = false
+        let ENGame = false, ROGame = false, TRGame = false, ESGame = false, PTGame = false, FRGame = false, ITGame = false
         const filter = (interaction) => interaction.user.id === userID
         const time = 1000 * 30 //30 seconds
 
@@ -113,6 +117,8 @@ module.exports = {
                 PTGame = true
             } else if (menuInt.values.includes('fr')) {
                 FRGame = true
+            } else if (menuInt.values.includes('it')) {
+                ITGame = true
             }
             const ROMessage = new EmbedBuilder()
                 .setTitle('Wordle Game')
@@ -160,6 +166,14 @@ module.exports = {
                 .addFields({
                     name: 'Le jeu a commencé',
                     value: '👉 Utilisez \`/guess\` pour faire votre supposition',
+                })
+
+            const ITMessage = new EmbedBuilder()
+                .setTitle('Wordle Game')
+                .setColor('#57F287')
+                .addFields({
+                    name: 'Partita iniziata',
+                    value: '👉 Usare \`/guess\` per fare la propria ipotesi',
                 })
 
             let schema
@@ -213,7 +227,7 @@ module.exports = {
                     guesses: '0',
                     replyMessage: '\n',
                     alphabet: alphabetLetters,
-                    language: 'EN',
+                    language: 'en',
                     expires: dt,
                 })
                 await schema.save();
@@ -232,7 +246,7 @@ module.exports = {
                     guesses: '0',
                     replyMessage: '\n',
                     alphabet: alphabetLetters,
-                    language: 'RO',
+                    language: 'ro',
                     expires: dt,
                 })
                 await schema.save();
@@ -251,7 +265,7 @@ module.exports = {
                     guesses: '0',
                     replyMessage: '\n',
                     alphabet: alphabetLetters,
-                    language: 'TR',
+                    language: 'tr',
                     expires: dt,
                 })
                 await schema.save();
@@ -270,7 +284,7 @@ module.exports = {
                     guesses: '0',
                     replyMessage: '\n',
                     alphabet: alphabetLetters,
-                    language: 'ES',
+                    language: 'es',
                     expires: dt,
                 })
                 await schema.save();
@@ -289,7 +303,7 @@ module.exports = {
                     guesses: '0',
                     replyMessage: '\n',
                     alphabet: alphabetLetters,
-                    language: 'FR',
+                    language: 'fr',
                     expires: dt,
                 })
                 await schema.save();
@@ -308,7 +322,26 @@ module.exports = {
                     guesses: '0',
                     replyMessage: '\n',
                     alphabet: alphabetLetters,
-                    language: 'PT',
+                    language: 'pt',
+                    expires: dt,
+                })
+                await schema.save();
+            } else if (ITGame) {
+                await interaction.editReply({ embeds: [ITMessage], components: [] })
+                let word = randomWord('it')
+
+                //Games database
+                let dt = new Date()
+                dt = new Date(dt.getTime() + 3 * 60 * 1000).toUTCString()
+                schema = await gamesSchema.create({
+                    guildID: guildID,
+                    channelStarted: channel,
+                    userID: userID,
+                    word: word,
+                    guesses: '0',
+                    replyMessage: '\n',
+                    alphabet: alphabetLetters,
+                    language: 'it',
                     expires: dt,
                 })
                 await schema.save();
