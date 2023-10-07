@@ -56,7 +56,8 @@ module.exports = {
                         let ok = guild.members.cache.get(botID) //check if bot is in the guild
                         if (ok) { //if it is, then send a message, otherwise it will go to the next result
                             let channel = results[i].channelStarted
-                            if (guild.members.me.permissionsIn(channel).has(PermissionsBitField.Flags.SendMessages)) { //if bot has permission to send message
+                            //if bot has permission to send message & view the channel
+                            if (guild.members.me.permissionsIn(channel).has(PermissionsBitField.Flags.SendMessages && PermissionsBitField.Flags.ViewChannel)) {
                                 await sendGameEndedMessage(results[i], channel, client)
                             }
                         }
@@ -87,7 +88,7 @@ async function sendGameEndedMessage(result, channel, client) {
     const message = new EmbedBuilder()
         .setTitle('Wordle Game')
         .setColor('#ED4245')
-        .setDescription(`<@${result.userID}>'s game has ended due to inactivity`)
+        .setDescription(`❗ <@${result.userID}>'s game has ended due to inactivity`)
 
     try {
         await client.channels.cache.get(channel).send({ embeds: [message] })
