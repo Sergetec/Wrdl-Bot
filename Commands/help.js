@@ -15,7 +15,7 @@ module.exports = {
         embeds.push(new EmbedBuilder()
             .setTitle('General Information')
             .setDescription('**Wrdl** is a bot that allows you to play the famous game wordle on any server you like.')
-            .setColor('#FF964D')
+            .setColor('#57F287')
             .setThumbnail(client.user.avatarURL({ dynamic: true, size: 512 }))
             .addFields({
                 name: '❓ \`/help\`',
@@ -32,7 +32,7 @@ module.exports = {
         embeds.push(new EmbedBuilder()
             .setTitle('Commands Information')
             .setDescription('A new game will end automatically after **3 minutes** of inactivity or by command. **Either way is a loss for the player.**')
-            .setColor('#FF964D')
+            .setColor('#57F287')
             .setThumbnail(client.user.avatarURL({ dynamic: true, size: 512 }))
             .addFields({
                 name: '🚩 \`/start\`',
@@ -54,7 +54,7 @@ module.exports = {
         embeds.push(new EmbedBuilder()
             .setTitle('Stats Information')
             .setDescription('With **Wrdl** you can view your stats or someone else\'s, as well as the leaderboard.')
-            .setColor('#FF964D')
+            .setColor('#57F287')
             .setThumbnail(client.user.avatarURL({ dynamic: true, size: 512 }))
             .addFields({
                 name: '❓ \`/stats\`',

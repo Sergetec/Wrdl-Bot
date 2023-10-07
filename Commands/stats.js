@@ -78,7 +78,7 @@ module.exports = {
         } else {
             const message = new EmbedBuilder()
                 .setTitle(`📊 WRDL STATISTICS 📊`)
-                .setColor('#ED4245')
+                .setColor('#57F287')
                 .setThumbnail(user.avatarURL({ dynamic: true, size: 512 }))
                 .setDescription(`❓ <@${user.id}> haven\'t played a game yet.`)
 

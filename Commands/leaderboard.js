@@ -44,7 +44,7 @@ async function getTop(client, interaction, results) {
     }
     const message = new EmbedBuilder()
         .setTitle(`↗️ LEADERBOARD ↗️`)
-        .setColor('#FF964D')
+        .setColor('#57F287')
         .addFields({
             name: 'Top players',
             value: `${top}`,
