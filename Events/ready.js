@@ -55,15 +55,8 @@ module.exports = {
                         let ok = guild.members.cache.get(botID) //check if bot is in the guild
                         if (ok) { //if it is, then send a message, otherwise it will go to the next result
                             let channel = results[i].channelStarted
-                            const message = new EmbedBuilder()
-                                .setTitle('Wordle Game')
-                                .setColor('#ED4245')
-                                .setDescription(`<@${results[i].userID}>'s game has ended due to inactivity`)
-
-                            try {
-                                await client.channels.cache.get(channel).send({ embeds: [message] })
-                            } catch (err) {
-                                console.log(err)
+                            if (guild.members.me.permissionsIn(channel).has('SEND_MESSAGES')) { //if bot has permission to send message
+                                await sendGameEndedMessage(results[i], client)
                             }
                         }
                     }
@@ -87,4 +80,17 @@ async function expiredGameFound(userIDUser) {
     schema.winRate = Math.trunc(schema.gamesWon / schema.gamesTotal * 100)
     schema.currentStreak = 0
     await schema.save()
+}
+
+async function sendGameEndedMessage(result, client) {
+    const message = new EmbedBuilder()
+        .setTitle('Wordle Game')
+        .setColor('#ED4245')
+        .setDescription(`<@${result.userID}>'s game has ended due to inactivity`)
+
+    try {
+        await client.channels.cache.get(channel).send({ embeds: [message] })
+    } catch (err) {
+        console.log(err)
+    }
 }
