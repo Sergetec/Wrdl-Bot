@@ -57,7 +57,7 @@ module.exports = {
                         if (ok) { //if it is, then send a message, otherwise it will go to the next result
                             let channel = results[i].channelStarted
                             //if bot has permission to send message & view the channel
-                            if (guild.members.me.permissionsIn(channel).has(PermissionsBitField.Flags.SendMessages && PermissionsBitField.Flags.ViewChannel)) {
+                            if (guild.members.me.permissionsIn(channel).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel])) {
                                 await sendGameEndedMessage(results[i], channel, client)
                             }
                         }
