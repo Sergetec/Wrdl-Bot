@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 const {
     EmbedBuilder,
     ActivityType,
+    PermissionsBitField,
 } = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
@@ -55,7 +56,7 @@ module.exports = {
                         let ok = guild.members.cache.get(botID) //check if bot is in the guild
                         if (ok) { //if it is, then send a message, otherwise it will go to the next result
                             let channel = results[i].channelStarted
-                            if (guild.members.me.permissionsIn(channel).has('SEND_MESSAGES')) { //if bot has permission to send message
+                            if (guild.members.me.permissionsIn(channel).has(PermissionsBitField.Flags.SendMessages)) { //if bot has permission to send message
                                 await sendGameEndedMessage(results[i], channel, client)
                             }
                         }
