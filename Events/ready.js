@@ -52,7 +52,7 @@ module.exports = {
                     let guildID = results[i].guildID //get the guild id from database
                     let botID = '1011006137690239059'
                     let guild = client.guilds.cache.get(guildID) //cache the guild
-                    if (guild) {
+                    if (guild.available) {
                         let ok = guild.members.cache.get(botID) //check if bot is in the guild
                         if (ok) { //if it is, then send a message, otherwise it will go to the next result
                             let channel = results[i].channelStarted

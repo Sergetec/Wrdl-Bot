@@ -11,7 +11,7 @@ module.exports = {
         let channelToSend = ""
         guild.channels.cache.forEach((channel) => {
             if (channel.type === ChannelType.GuildText && channelToSend === "") {
-                if (channel.permissionsFor(guild.members.me).has(PermissionsBitField.Flags.SendMessages) && channel.permissionsFor(guild.members.me).has(PermissionsBitField.Flags.ViewChannel)) {
+                if (guild.members.me.permissionsIn(channel.id).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel])) {
                     channelToSend = channel
                 }
             }
