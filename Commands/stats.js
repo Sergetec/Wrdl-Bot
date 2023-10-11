@@ -1,7 +1,24 @@
 const {
     EmbedBuilder,
     ApplicationCommandOptionType,
+    AttachmentBuilder,
 } = require('discord.js')
+const { Canvas,
+    GlobalFonts,
+} = require("@napi-rs/canvas")
+
+const GREEN = '#5c8d4d'
+const GRAY = '#3a3a3c'
+const LIGHT_GRAY = '#818384'
+const WHITE = '#ffffff'
+GlobalFonts.registerFromPath('../Fonts/ARLRDBD.ttf', 'Arial Rounded MT Bold')
+GlobalFonts.registerFromPath('../Fonts/micross.ttf', 'Microsoft Sans Serif')
+const FONT_FAMILY_ARIAL_ROUNDED = 'Arial Rounded MT Bold'
+const FONT_FAMILY_SANS_SERIF = 'Microsoft Sans Serif'
+
+const canvas = new Canvas(600, 400)
+const context = canvas.getContext("2d")
+
 const statsSchema = require('../Models/statsSchema')
 
 module.exports = {
@@ -20,16 +37,8 @@ module.exports = {
         const userID = user.id
 
         let currentStreak = 0, maxStreak = 0
-        let gamesTotal = 0, gamesWon = 0, gamesLost = 0, winRate = 0
+        let gamesTotal = 0, gamesWon = 0, gamesLost = 0, winRate = ""
         let oneGuess = 0, twoGuess = 0, threeGuess = 0, fourGuess = 0, fiveGuess = 0, sixGuess = 0
-        let Strings = {
-            oneGuessString: '',
-            twoGuessString: '',
-            threeGuessString: '',
-            fourGuessString: '',
-            fiveGuessString: '',
-            sixGuessString: '',
-        }
         const query = {
             userID: userID,
         }
@@ -47,34 +56,60 @@ module.exports = {
             maxStreak = Math.max(maxStreak, results.maxStreak)
             currentStreak = results.currentStreak
             winRate = results.winRate
-            getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGuess, sixGuess, Strings)
 
-            const message = new EmbedBuilder()
-                .setTitle(`📊 WRDL STATISTICS 📊`)
-                .setColor('#57F287')
-                .setThumbnail(user.avatarURL({ dynamic: true, size: 512 }))
-                .setDescription(`
-                    👤 **<@${user.id}>
-                    
-🌍 Total Games: \`${gamesTotal}\`
-🎉 Words Solved: \`${gamesWon}\`
-📈 Words Unsolved: \`${gamesLost}\`
-📝 WinRate: \`${winRate}%\`
-🔥 Highest Streak: \`${maxStreak}\`
-🔥 Current Streak: \`${currentStreak}\`**
-                    
-**Guess Distribution**
-**1** ${Strings.oneGuessString} \`${oneGuess}\`
-**2** ${Strings.twoGuessString} \`${twoGuess}\`
-**3** ${Strings.threeGuessString} \`${threeGuess}\`
-**4** ${Strings.fourGuessString} \`${fourGuess}\`
-**5** ${Strings.fiveGuessString} \`${fiveGuess}\`
-**6** ${Strings.sixGuessString} \`${sixGuess}\`
-                    
-                    
-[Vote for me!](https://top.gg/bot/1011006137690239059/vote)`)
+            context.fillStyle = GRAY
+            context.fillRect(0, 0, canvas.width, canvas.height)
+            const statOffset = 250
+            renderStat(gamesTotal, "Total Games\n", canvas.width / 2 - statOffset)
+            renderStat(gamesWon, "Words Solved\n", canvas.width / 2 - (statOffset * 3) / 5)
+            renderStat(gamesLost, "Words Unsolved\n", canvas.width / 2 - statOffset / 5)
+            renderStat(winRate + "%", "Winning Rate\n", canvas.width / 2 + statOffset / 5)
+            renderStat(currentStreak, "Current Streak\n", canvas.width / 2 + (statOffset * 3) / 5)
+            renderStat(maxStreak, "Best Streak\n", canvas.width / 2 + statOffset)
+            context.fillStyle = WHITE
+            context.font = `bold 26px ${FONT_FAMILY_ARIAL_ROUNDED}`
+            context.fillText("GUESS DISTRIBUTION", canvas.width / 2, 195)
 
-            return await interaction.reply({ embeds: [message] })
+            // Distance from edge of bars to the vertical center.
+            const barOffset = 250
+            // Space reserved for the bar labels
+            const labelSpace = 12
+            const bars = [results.oneGuess, results.twoGuess, results.threeGuess, results.fourGuess, results.fiveGuess, results.sixGuess]
+            const max = Math.max(...bars)
+            const scale = (barOffset * 2 - labelSpace) / max
+
+            for (let i = 0; i < bars.length; ++i) {
+                const y = 250 + i * 23
+                context.fillStyle = bars[i] === 0 ? LIGHT_GRAY : GREEN
+                context.fillRect(
+                    canvas.width / 2 - barOffset + labelSpace,
+                    y,
+                    Math.max(bars[i] * scale, 45),
+                    18
+                )
+
+                context.fillStyle = WHITE
+                context.textAlign = "left"
+                context.font = `bold 16px ${FONT_FAMILY_SANS_SERIF}`
+                context.fillText(`${i + 1}`, canvas.width / 2 - barOffset, y + 2)
+
+                context.textAlign = "right"
+                context.fillText(
+                    `${bars[i]}`,
+                    Math.max(
+                        canvas.width / 2 - barOffset + labelSpace + bars[i] * scale - 8,
+                        canvas.width / 2 - barOffset + labelSpace + 37
+                    ),
+                    y + 2
+                )
+            }
+
+            const file = new AttachmentBuilder(await canvas.encode('webp'), { name: 'stats.png' })
+            const embed = new EmbedBuilder()
+                .setImage('attachment://stats.png')
+                .setTitle(`${user.displayName}'s wordle stats`)
+                .setColor(GREEN)
+            return await interaction.reply({ embeds: [embed], files: [file] })
         } else {
             const message = new EmbedBuilder()
                 .setTitle(`📊 WRDL STATISTICS 📊`)
@@ -87,235 +122,18 @@ module.exports = {
     }
 }
 
-function getGuessDistribution(oneGuess, twoGuess, threeGuess, fourGuess, fiveGuess, sixGuess, Strings) {
-    let maxi = Math.max(oneGuess, twoGuess, threeGuess, fourGuess, fiveGuess, sixGuess)
-    let oneGuessPercent = oneGuess / maxi * 100
-    let twoGuessPercent = twoGuess / maxi * 100
-    let threeGuessPercent = threeGuess / maxi * 100
-    let fourGuessPercent = fourGuess / maxi * 100
-    let fiveGuessPercent = fiveGuess / maxi * 100
-    let sixGuessPercent = sixGuess / maxi * 100
-    let counter = 7
+function renderStat(value, label, x) {
+    context.textBaseline = "top"
+    context.textAlign = "center"
+    context.fillStyle = WHITE
 
-    //ONE
-    if (oneGuessPercent >= 14) {
-        let intreg = oneGuessPercent / 14
-        oneGuessPercent /= 14
-        //afisare
-        for (let i = 1; i <= intreg; ++i) {
-            Strings.oneGuessString += '<:Bar4:1066803417072287856>'
-        }
-        oneGuessPercent -= intreg
-        counter -= intreg
-    }
-    if (oneGuessPercent >= 7) {
-        let jumatati = oneGuessPercent / 7
-        oneGuessPercent /= 7
-        //afisare
-        for (let i = 1; i <= jumatati; ++i) {
-            Strings.oneGuessString += '<:Bar2:1066803412219482123>'
-        }
-        oneGuessPercent -= jumatati
-        counter -= jumatati
-    }
-    if (oneGuessPercent >= 3.5) {
-        let sferturi = oneGuessPercent / 3.5
-        // oneGuessPercent /= 3.5
-        //afisare
-        for (let i = 1; i <= sferturi; ++i) {
-            Strings.oneGuessString += '<:Bar1:1066803409417670676>'
-        }
-        // oneGuessPercent -= sferturi
-        counter -= sferturi
-    }
-    counter = Math.ceil(counter)
-    for (let i = 1; i <= counter; ++i) {
-        Strings.oneGuessString += '<:BarDark:1066831537812815965>'
-    }
-    counter = 7
+    context.font = `bold 26px ${FONT_FAMILY_SANS_SERIF}`
+    context.fillText(`${value}`, x, 26)
 
-    //TWO
-    if (twoGuessPercent >= 14) {
-        let intreg = twoGuessPercent / 14
-        twoGuessPercent /= 14
-        //afisare
-        for (let i = 1; i <= intreg; ++i) {
-            Strings.twoGuessString += '<:Bar4:1066803417072287856>'
-        }
-        twoGuessPercent -= intreg
-        counter -= intreg
+    context.font = `normal 12px ${FONT_FAMILY_ARIAL_ROUNDED}`
+    let y = 60
+    for (const row of label.split("\n")) {
+        context.fillText(row, x, y)
+        y += 15
     }
-    if (twoGuessPercent >= 7) {
-        let jumatati = twoGuessPercent / 7
-        twoGuessPercent /= 7
-        //afisare
-        for (let i = 1; i <= jumatati; ++i) {
-            Strings.twoGuessString += '<:Bar2:1066803412219482123>'
-        }
-        twoGuessPercent -= jumatati
-        counter -= jumatati
-    }
-    if (twoGuessPercent >= 3.5) {
-        let sferturi = twoGuessPercent / 3.5
-        // twoGuessPercent /= 3.5
-        //afisare
-        for (let i = 1; i <= sferturi; ++i) {
-            Strings.twoGuessString += '<:Bar1:1066803409417670676>'
-        }
-        // twoGuessPercent -= sferturi
-        counter -= sferturi
-    }
-    counter = Math.ceil(counter)
-    for (let i = 1; i <= counter; ++i) {
-        Strings.twoGuessString += '<:BarDark:1066831537812815965>'
-    }
-    counter = 7
-
-    //THREE
-    if (threeGuessPercent >= 14) {
-        let intreg = threeGuessPercent / 14
-        threeGuessPercent /= 14
-        //afisare
-        for (let i = 1; i <= intreg; ++i) {
-            Strings.threeGuessString += '<:Bar4:1066803417072287856>'
-        }
-        threeGuessPercent -= intreg
-        counter -= intreg
-    }
-    if (threeGuessPercent >= 7) {
-        let jumatati = threeGuessPercent / 7
-        threeGuessPercent /= 7
-        //afisare
-        for (let i = 1; i <= jumatati; ++i) {
-            Strings.threeGuessString += '<:Bar2:1066803412219482123>'
-        }
-        threeGuessPercent -= jumatati
-        counter -= jumatati
-    }
-    if (threeGuessPercent >= 3.5) {
-        let sferturi = threeGuessPercent / 3.5
-        // threeGuessPercent /= 3.5
-        //afisare
-        for (let i = 1; i <= sferturi; ++i) {
-            Strings.threeGuessString += '<:Bar1:1066803409417670676>'
-        }
-        // threeGuessPercent -= sferturi
-        counter -= sferturi
-    }
-    counter = Math.ceil(counter)
-    for (let i = 1; i <= counter; ++i) {
-        Strings.threeGuessString += '<:BarDark:1066831537812815965>'
-    }
-    counter = 7
-
-    //FOUR
-    if (fourGuessPercent >= 14) {
-        let intreg = fourGuessPercent / 14
-        fourGuessPercent /= 14
-        //afisare
-        for (let i = 1; i <= intreg; ++i) {
-            Strings.fourGuessString += '<:Bar4:1066803417072287856>'
-        }
-        fourGuessPercent -= intreg
-        counter -= intreg
-    }
-    if (fourGuessPercent >= 7) {
-        let jumatati = fourGuessPercent / 7
-        fourGuessPercent /= 7
-        //afisare
-        for (let i = 1; i <= jumatati; ++i) {
-            Strings.fourGuessString += '<:Bar2:1066803412219482123>'
-        }
-        fourGuessPercent -= jumatati
-        counter -= jumatati
-    }
-    if (fourGuessPercent >= 3.5) {
-        let sferturi = fourGuessPercent / 3.5
-        // fourGuessPercent /= 3.5
-        //afisare
-        for (let i = 1; i <= sferturi; ++i) {
-            Strings.fourGuessString += '<:Bar1:1066803409417670676>'
-        }
-        // fourGuessPercent -= sferturi
-        counter -= sferturi
-    }
-    counter = Math.ceil(counter)
-    for (let i = 1; i <= counter; ++i) {
-        Strings.fourGuessString += '<:BarDark:1066831537812815965>'
-    }
-    counter = 7
-
-    //FIVE
-    if (fiveGuessPercent >= 14) {
-        let intreg = fiveGuessPercent / 14
-        fiveGuessPercent /= 14
-        //afisare
-        for (let i = 1; i <= intreg; ++i) {
-            Strings.fiveGuessString += '<:Bar4:1066803417072287856>'
-        }
-        fiveGuessPercent -= intreg
-        counter -= intreg
-    }
-    if (fiveGuessPercent >= 7) {
-        let jumatati = fiveGuessPercent / 7
-        fiveGuessPercent /= 7
-        //afisare
-        for (let i = 1; i <= jumatati; ++i) {
-            Strings.fiveGuessString += '<:Bar2:1066803412219482123>'
-        }
-        fiveGuessPercent -= jumatati
-        counter -= jumatati
-    }
-    if (fiveGuessPercent >= 3.5) {
-        let sferturi = fiveGuessPercent / 3.5
-        // fiveGuessPercent /= 3.5
-        //afisare
-        for (let i = 1; i <= sferturi; ++i) {
-            Strings.fiveGuessString += '<:Bar1:1066803409417670676>'
-        }
-        // fiveGuessPercent -= sferturi
-        counter -= sferturi
-    }
-    counter = Math.ceil(counter)
-    for (let i = 1; i <= counter; ++i) {
-        Strings.fiveGuessString += '<:BarDark:1066831537812815965>'
-    }
-    counter = 7
-
-    //SIX
-    if (sixGuessPercent >= 14) {
-        let intreg = sixGuessPercent / 14
-        sixGuessPercent /= 14
-        //afisare
-        for (let i = 1; i <= intreg; ++i) {
-            Strings.sixGuessString += '<:Bar4:1066803417072287856>'
-        }
-        sixGuessPercent -= intreg
-        counter -= intreg
-    }
-    if (sixGuessPercent >= 7) {
-        let jumatati = sixGuessPercent / 7
-        sixGuessPercent /= 7
-        //afisare
-        for (let i = 1; i <= jumatati; ++i) {
-            Strings.sixGuessString += '<:Bar2:1066803412219482123>'
-        }
-        sixGuessPercent -= jumatati
-        counter -= jumatati
-    }
-    if (sixGuessPercent >= 3.5) {
-        let sferturi = sixGuessPercent / 3.5
-        // sixGuessPercent /= 3.5
-        //afisare
-        for (let i = 1; i <= sferturi; ++i) {
-            Strings.sixGuessString += '<:Bar1:1066803409417670676>'
-        }
-        // sixGuessPercent -= sferturi
-        counter -= sferturi
-    }
-    counter = Math.ceil(counter)
-    for (let i = 1; i <= counter; ++i) {
-        Strings.sixGuessString += '<:BarDark:1066831537812815965>'
-    }
-    // counter = 7
 }
