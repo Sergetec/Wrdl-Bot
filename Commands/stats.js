@@ -11,9 +11,9 @@ const GREEN = '#5c8d4d'
 const GRAY = '#3a3a3c'
 const LIGHT_GRAY = '#818384'
 const WHITE = '#ffffff'
-GlobalFonts.registerFromPath('../Fonts/ARLRDBD.ttf', 'Arial Rounded MT Bold')
-GlobalFonts.registerFromPath('../Fonts/micross.ttf', 'Microsoft Sans Serif')
-const FONT_FAMILY_ARIAL_ROUNDED = 'Arial Rounded MT Bold'
+// GlobalFonts.registerFromPath('../Fonts/ARLRDBD.ttf', 'Arial Rounded MT Bold')
+// GlobalFonts.registerFromPath('../Fonts/micross.ttf', 'Microsoft Sans Serif')
+const FONT_FAMILY_ARIAL_ROUNDED = 'Arial'
 const FONT_FAMILY_SANS_SERIF = 'Microsoft Sans Serif'
 
 const canvas = new Canvas(600, 400)
