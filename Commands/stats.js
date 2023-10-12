@@ -4,16 +4,16 @@ const {
     AttachmentBuilder,
 } = require('discord.js')
 const { Canvas,
-    GlobalFonts,
-} = require("@napi-rs/canvas")
+    registerFont,
+} = require("canvas")
 
 const GREEN = '#5c8d4d'
 const GRAY = '#3a3a3c'
 const LIGHT_GRAY = '#818384'
 const WHITE = '#ffffff'
-GlobalFonts.registerFromPath('./Dortmund-ExtraBold.otf', 'Dortmund ExtraBold')
-GlobalFonts.registerFromPath('./Dortmund-ExtraBold.otf', 'Dortmund ExtraBold')
-const FONT_FAMILY_ARIAL_ROUNDED = 'Arial Rounded MT Bold'
+registerFont('./Fonts/micross.ttf', { family: 'Microsoft Sans Serif' })
+// registerFont('./Fonts/ARLRDBD.ttf', { family: 'Arial Rounded MT Bold'} )
+const FONT_FAMILY_ARIAL_ROUNDED = 'Microsoft Sans Serif'
 const FONT_FAMILY_SANS_SERIF = 'Microsoft Sans Serif'
 
 const canvas = new Canvas(600, 400)
@@ -57,7 +57,6 @@ module.exports = {
             currentStreak = results.currentStreak
             winRate = results.winRate
 
-            console.log(GlobalFonts.families)
             context.fillStyle = GRAY
             context.fillRect(0, 0, canvas.width, canvas.height)
             const statOffset = 250
@@ -68,7 +67,7 @@ module.exports = {
             renderStat(currentStreak, "Current Streak\n", canvas.width / 2 + (statOffset * 3) / 5)
             renderStat(maxStreak, "Best Streak\n", canvas.width / 2 + statOffset)
             context.fillStyle = WHITE
-            context.font = '26px Arial Rounded MT Bold'
+            context.font = `26px ${FONT_FAMILY_ARIAL_ROUNDED}`
             context.fillText("GUESS DISTRIBUTION", canvas.width / 2, 195)
 
             // Distance from edge of bars to the vertical center.
@@ -91,7 +90,7 @@ module.exports = {
 
                 context.fillStyle = WHITE
                 context.textAlign = "left"
-                context.font = `16px ${FONT_FAMILY_SANS_SERIF}`
+                context.font = `bold 16px ${FONT_FAMILY_SANS_SERIF}`
                 context.fillText(`${i + 1}`, canvas.width / 2 - barOffset, y + 2)
 
                 context.textAlign = "right"
@@ -105,7 +104,7 @@ module.exports = {
                 )
             }
 
-            const file = new AttachmentBuilder(await canvas.encode('webp'), { name: 'stats.png' })
+            const file = new AttachmentBuilder(await canvas.toBuffer(), { name: 'stats.png' })
             const embed = new EmbedBuilder()
                 .setImage('attachment://stats.png')
                 .setTitle(`${user.displayName}'s wordle stats`)
@@ -128,7 +127,7 @@ function renderStat(value, label, x) {
     context.textAlign = "center"
     context.fillStyle = WHITE
 
-    context.font = `26px ${FONT_FAMILY_SANS_SERIF}`
+    context.font = `bold 26px ${FONT_FAMILY_SANS_SERIF}`
     context.fillText(`${value}`, x, 26)
 
     context.font = `12px ${FONT_FAMILY_ARIAL_ROUNDED}`
