@@ -11,8 +11,8 @@ const GREEN = '#5c8d4d'
 const GRAY = '#3a3a3c'
 const LIGHT_GRAY = '#818384'
 const WHITE = '#ffffff'
-GlobalFonts.registerFromPath('./ARLRDBD.ttf', "Arial Rounded MT Bold")
-GlobalFonts.registerFromPath('./micross.ttf', 'Microsoft Sans Serif')
+GlobalFonts.registerFromPath('./Dortmund-ExtraBold.otf', 'Dortmund ExtraBold')
+GlobalFonts.registerFromPath('./Dortmund-ExtraBold.otf', 'Dortmund ExtraBold')
 const FONT_FAMILY_ARIAL_ROUNDED = 'Arial Rounded MT Bold'
 const FONT_FAMILY_SANS_SERIF = 'Microsoft Sans Serif'
 
