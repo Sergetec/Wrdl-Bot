@@ -68,7 +68,7 @@ module.exports = {
             renderStat(currentStreak, "Current Streak\n", canvas.width / 2 + (statOffset * 3) / 5)
             renderStat(maxStreak, "Best Streak\n", canvas.width / 2 + statOffset)
             context.fillStyle = WHITE
-            context.font = `26px ${FONT_FAMILY_ARIAL_ROUNDED}`
+            context.font = '26px Arial Rounded MT Bold'
             context.fillText("GUESS DISTRIBUTION", canvas.width / 2, 195)
 
             // Distance from edge of bars to the vertical center.
