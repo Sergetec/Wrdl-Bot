@@ -13,7 +13,7 @@ const LIGHT_GRAY = '#818384'
 const WHITE = '#ffffff'
 GlobalFonts.registerFromPath('../Fonts/ARLRDBD.ttf', 'Arial Rounded MT Bold')
 GlobalFonts.registerFromPath('../Fonts/micross.ttf', 'Microsoft Sans Serif')
-const FONT_FAMILY_ARIAL_ROUNDED = 'Arial'
+const FONT_FAMILY_ARIAL_ROUNDED = 'Arial Rounded MT Bold'
 const FONT_FAMILY_SANS_SERIF = 'Microsoft Sans Serif'
 
 const canvas = new Canvas(600, 400)
@@ -68,7 +68,7 @@ module.exports = {
             renderStat(currentStreak, "Current Streak\n", canvas.width / 2 + (statOffset * 3) / 5)
             renderStat(maxStreak, "Best Streak\n", canvas.width / 2 + statOffset)
             context.fillStyle = WHITE
-            context.font = `bold 26px ${FONT_FAMILY_ARIAL_ROUNDED}`
+            context.font = `26px ${FONT_FAMILY_ARIAL_ROUNDED}`
             context.fillText("GUESS DISTRIBUTION", canvas.width / 2, 195)
 
             // Distance from edge of bars to the vertical center.
@@ -91,7 +91,7 @@ module.exports = {
 
                 context.fillStyle = WHITE
                 context.textAlign = "left"
-                context.font = `bold 16px ${FONT_FAMILY_SANS_SERIF}`
+                context.font = `16px ${FONT_FAMILY_SANS_SERIF}`
                 context.fillText(`${i + 1}`, canvas.width / 2 - barOffset, y + 2)
 
                 context.textAlign = "right"
@@ -128,10 +128,10 @@ function renderStat(value, label, x) {
     context.textAlign = "center"
     context.fillStyle = WHITE
 
-    context.font = `bold 26px ${FONT_FAMILY_SANS_SERIF}`
+    context.font = `26px ${FONT_FAMILY_SANS_SERIF}`
     context.fillText(`${value}`, x, 26)
 
-    context.font = `normal 12px ${FONT_FAMILY_ARIAL_ROUNDED}`
+    context.font = `12px ${FONT_FAMILY_ARIAL_ROUNDED}`
     let y = 60
     for (const row of label.split("\n")) {
         context.fillText(row, x, y)
