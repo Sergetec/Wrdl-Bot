@@ -6,13 +6,14 @@ const {
 const { Canvas,
     registerFont,
     loadImage,
-} = require("canvas")
+} = require('canvas')
 
 const GREEN = '#5c8d4d'
-const GRAY = '#3a3a3c'
 const DARK_GRAY = '#313030'
 const WHITE = '#ffffff'
+registerFont('./Fonts/Exo-Bold.ttf', { family: 'Exo' })
 registerFont('./Fonts/ARLRDBD.ttf', { family: 'Arial Rounded MT Bold' })
+const FONT_FAMILY_EXO = 'Exo'
 const FONT_FAMILY_ARIAL_ROUNDED = 'Arial Rounded MT Bold'
 
 const canvas = new Canvas(600, 400)
@@ -56,23 +57,25 @@ module.exports = {
             currentStreak = results.currentStreak
             winRate = results.winRate
 
-            context.fillStyle = GRAY
-            context.fillRect(0, 0, canvas.width, canvas.height)
+            let background = await loadImage('./Images/background1.png')
+            context.drawImage(background, 0, 0, 600, 400)
             const statOffset = 250
             let image = await loadImage('./Images/globe_showing_americas_color.png')
-            renderStat(gamesTotal, "Total Games\n", canvas.width / 2 - statOffset, image, 40)
+            renderStat(gamesTotal, "Total\nGames", canvas.width / 2 - statOffset, image, 40)
             image = await loadImage('./Images/party_popper_color.png')
-            renderStat(gamesWon, "Words Solved\n", canvas.width / 2 - (statOffset * 3) / 5, image, 140)
+            renderStat(gamesWon, "Words\nSolved", canvas.width / 2 - (statOffset * 3) / 5, image, 140)
             image = await loadImage('./Images/chart_decreasing_color.png')
-            renderStat(gamesLost, "Words Unsolved\n", canvas.width / 2 - statOffset / 5, image, 240)
+            renderStat(gamesLost, "Words\nUnsolved", canvas.width / 2 - statOffset / 5, image, 240)
             image = await loadImage('./Images/memo_color.png')
-            renderStat(winRate + "%", "Winning Rate\n", canvas.width / 2 + statOffset / 5, image, 340)
+            renderStat(winRate + "%", "Winning\nRate", canvas.width / 2 + statOffset / 5, image, 340)
             image = await loadImage('./Images/fire_color.png')
-            renderStat(currentStreak, "Current Streak\n", canvas.width / 2 + (statOffset * 3) / 5, image, 440)
+            renderStat(currentStreak, "Current\nStreak", canvas.width / 2 + (statOffset * 3) / 5, image, 440)
             image = await loadImage('./Images/fire_color.png')
-            renderStat(maxStreak, "Best Streak\n", canvas.width / 2 + statOffset, image, 540)
+            renderStat(maxStreak, "Best\nStreak", canvas.width / 2 + statOffset, image, 540)
+            image = await loadImage('./Images/sparkles_color.png')
+            context.drawImage(image, 555, 95, 15, 15)
             context.fillStyle = WHITE
-            context.font = `bold 26px ${FONT_FAMILY_ARIAL_ROUNDED}`
+            context.font = `bold 26px ${FONT_FAMILY_EXO}`
             context.fillText("GUESS DISTRIBUTION", canvas.width / 2, 195)
 
             // Distance from edge of bars to the vertical center.
@@ -138,10 +141,9 @@ module.exports = {
             return await interaction.reply({ embeds: [embed], files: [file] })
         } else {
             const message = new EmbedBuilder()
-                .setTitle(`📊 WRDL STATISTICS 📊`)
                 .setColor('#ED4245')
-                .setThumbnail(user.avatarURL({ dynamic: true, size: 512 }))
-                .setDescription(`❓ <@${user.id}> haven\'t played a game yet`)
+                .setAuthor({ name: `${user.displayName}'s wordle stats`, iconURL: `${user.displayAvatarURL({ dynamic: true })}` })
+                .setDescription(`❓ ${user.displayName} hasn\'t played a game yet`)
 
             return await interaction.reply({ embeds: [message] })
         }
@@ -149,15 +151,15 @@ module.exports = {
 }
 
 function renderStat(value, label, x, i, ix) {
-    context.drawImage(i, ix, 86, 20, 20)
+    context.drawImage(i, ix, 101, 20, 20)
     context.textBaseline = "top"
     context.textAlign = "center"
     context.fillStyle = WHITE
 
-    context.font = `bold 26px ${FONT_FAMILY_ARIAL_ROUNDED}`
+    context.font = `bold 26px ${FONT_FAMILY_EXO}`
     context.fillText(`${value}`, x, 26)
 
-    context.font = `bold 12px ${FONT_FAMILY_ARIAL_ROUNDED}`
+    context.font = `bold 14px ${FONT_FAMILY_EXO}`
     let y = 60
     for (const row of label.split("\n")) {
         context.fillText(row, x, y)

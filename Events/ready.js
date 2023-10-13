@@ -32,10 +32,10 @@ module.exports = {
         client.user.setStatus('online')
 
         //Autoposter
-        // const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
-        // ap.on('posted', (stats) => {
-        //     console.log(`✅ Stats updated | ${stats.serverCount} servers`)
-        // })
+        const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
+        ap.on('posted', (stats) => {
+            console.log(`✅ Stats updated | ${stats.serverCount} servers`)
+        })
 
         //Check for inactive games
         const check = async () => {
@@ -52,7 +52,7 @@ module.exports = {
                     let guildID = results[i].guildID //get the guild id from database
                     let botID = '1011006137690239059'
                     let guild = client.guilds.cache.get(guildID) //cache the guild
-                    if (guild.available) {
+                    if (guild) {
                         let ok = guild.members.cache.get(botID) //check if bot is in the guild
                         if (ok) { //if it is, then send a message, otherwise it will go to the next result
                             let channel = results[i].channelStarted
