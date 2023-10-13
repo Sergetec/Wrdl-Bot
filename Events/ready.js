@@ -32,10 +32,10 @@ module.exports = {
         client.user.setStatus('online')
 
         //Autoposter
-        const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
-        ap.on('posted', (stats) => {
-            console.log(`✅ Stats updated | ${stats.serverCount} servers`)
-        })
+        // const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
+        // ap.on('posted', (stats) => {
+        //     console.log(`✅ Stats updated | ${stats.serverCount} servers`)
+        // })
 
         //Check for inactive games
         const check = async () => {
