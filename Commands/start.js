@@ -303,7 +303,7 @@ module.exports = {
                     guesses: '0',
                     replyMessage: '\n',
                     alphabet: alphabetLetters,
-                    language: 'fr',
+                    language: 'pt',
                     expires: dt,
                 })
                 await schema.save();
@@ -322,7 +322,7 @@ module.exports = {
                     guesses: '0',
                     replyMessage: '\n',
                     alphabet: alphabetLetters,
-                    language: 'pt',
+                    language: 'fr',
                     expires: dt,
                 })
                 await schema.save();
