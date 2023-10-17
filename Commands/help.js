@@ -5,6 +5,8 @@ const {
     ButtonStyle,
 } = require('discord.js')
 
+const GREEN = '#5c8d4d'
+
 module.exports = {
     name: 'help',
     description: 'Display information about the commands',
@@ -15,7 +17,7 @@ module.exports = {
         embeds.push(new EmbedBuilder()
             .setTitle('General Information')
             .setDescription('**Wrdl** is a bot that allows you to play the famous game wordle on any server you like.')
-            .setColor('#57F287')
+            .setColor(GREEN)
             .setThumbnail(client.user.avatarURL({ dynamic: true, size: 512 }))
             .addFields({
                 name: '❓ \`/help\`',
@@ -32,7 +34,7 @@ module.exports = {
         embeds.push(new EmbedBuilder()
             .setTitle('Commands Information')
             .setDescription('A new game will end automatically after **3 minutes** of inactivity or by command. **Either way is a loss for the player.**')
-            .setColor('#57F287')
+            .setColor(GREEN)
             .setThumbnail(client.user.avatarURL({ dynamic: true, size: 512 }))
             .addFields({
                 name: '🚩 \`/start\`',
@@ -54,7 +56,7 @@ module.exports = {
         embeds.push(new EmbedBuilder()
             .setTitle('Stats Information')
             .setDescription('With **Wrdl** you can view your stats or someone else\'s, as well as the leaderboard.')
-            .setColor('#57F287')
+            .setColor(GREEN)
             .setThumbnail(client.user.avatarURL({ dynamic: true, size: 512 }))
             .addFields({
                 name: '❓ \`/stats\`',

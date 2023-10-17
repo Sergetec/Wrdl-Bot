@@ -6,6 +6,8 @@ const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
 const fs = require('node:fs')
 
+const GREEN = '#5c8d4d'
+
 module.exports = {
     name: 'guess',
     description: 'Make your guess',
@@ -537,7 +539,7 @@ module.exports = {
                 await gamesSchema.deleteMany(query2)
                 const message = new EmbedBuilder()
                     .setTitle(`Wordle Game`)
-                    .setColor('#57F287')
+                    .setColor(GREEN)
                     .setDescription(
                         `🎉 You won 🎉
                         The word was **${wordToGuess}**

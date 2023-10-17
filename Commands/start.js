@@ -8,6 +8,8 @@ const fs = require('node:fs')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
 
+const GREEN = '#5c8d4d'
+
 module.exports = {
     name: 'start',
     description: 'Start a new game',
@@ -122,7 +124,7 @@ module.exports = {
             }
             const ROMessage = new EmbedBuilder()
                 .setTitle('Wordle Game')
-                .setColor('#57F287')
+                .setColor(GREEN)
                 .addFields({
                     name: 'Joc început',
                     value: '👉 Folosește \`/guess\` pentru a ghici cuvântul',
@@ -130,7 +132,7 @@ module.exports = {
 
             const ENMessage = new EmbedBuilder()
                 .setTitle('Wordle Game')
-                .setColor('#57F287')
+                .setColor(GREEN)
                 .addFields({
                     name: 'Game started',
                     value: '👉 Use \`/guess\` to make your guess',
@@ -138,7 +140,7 @@ module.exports = {
 
             const TRMessage = new EmbedBuilder()
                 .setTitle('Wordle Game')
-                .setColor('#57F287')
+                .setColor(GREEN)
                 .addFields({
                     name: 'Oyun başladı',
                     value: '👉 Tahmininizi yapmak için \`/guess\` kullanın',
@@ -146,7 +148,7 @@ module.exports = {
 
             const ESMessage = new EmbedBuilder()
                 .setTitle('Wordle Game')
-                .setColor('#57F287')
+                .setColor(GREEN)
                 .addFields({
                     name: 'Juego iniciado',
                     value: '👉 Utiliza \`/guess\` para hacer tus conjetura',
@@ -154,7 +156,7 @@ module.exports = {
 
             const PTMessage = new EmbedBuilder()
                 .setTitle('Wordle Game')
-                .setColor('#57F287')
+                .setColor(GREEN)
                 .addFields({
                     name: 'Jogo iniciado',
                     value: '👉 Utilize \`/guess\` para dar o seu palpite',
@@ -162,7 +164,7 @@ module.exports = {
 
             const FRMessage = new EmbedBuilder()
                 .setTitle('Wordle Game')
-                .setColor('#57F287')
+                .setColor(GREEN)
                 .addFields({
                     name: 'Le jeu a commencé',
                     value: '👉 Utilisez \`/guess\` pour faire votre supposition',
@@ -170,7 +172,7 @@ module.exports = {
 
             const ITMessage = new EmbedBuilder()
                 .setTitle('Wordle Game')
-                .setColor('#57F287')
+                .setColor(GREEN)
                 .addFields({
                     name: 'Partita iniziata',
                     value: '👉 Usare \`/guess\` per fare la propria ipotesi',
