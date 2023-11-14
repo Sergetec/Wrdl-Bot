@@ -73,6 +73,12 @@ module.exports = {
                 value: 'it',
                 emoji: '🇮🇹',
             },
+            {
+                label: 'Hungarian',
+                description: 'Hungarian language',
+                value: 'hu',
+                emoji: '🇭🇺',
+            },
         ]
 
         const menu = new StringSelectMenuBuilder()
@@ -96,7 +102,7 @@ module.exports = {
             .setColor('#FF964D')
             .setDescription('❗ Choose your language')
         const reply = await interaction.reply({ embeds: [message], components: [actionRow] })
-        let ENGame = false, ROGame = false, TRGame = false, ESGame = false, PTGame = false, FRGame = false, ITGame = false
+        let ENGame = false, ROGame = false, TRGame = false, ESGame = false, PTGame = false, FRGame = false, ITGame = false, HUGame = false
         const filter = (interaction) => interaction.user.id === userID
         const time = 1000 * 30 //30 seconds
 
@@ -121,6 +127,8 @@ module.exports = {
                 FRGame = true
             } else if (menuInt.values.includes('it')) {
                 ITGame = true
+            } else if (menuInt.values.includes('hu')) {
+                HUGame = true
             }
             const ROMessage = new EmbedBuilder()
                 .setTitle('Wordle Game')
@@ -176,6 +184,14 @@ module.exports = {
                 .addFields({
                     name: 'Partita iniziata',
                     value: '👉 Usare \`/guess\` per fare la propria ipotesi',
+                })
+
+            const HUMessage = new EmbedBuilder()
+                .setTitle('Wordle Game')
+                .setColor(GREEN)
+                .addFields({
+                    name: 'A játék elkezdődött',
+                    value: '👉 A \`/guess\` használatával tippelhetsz.',
                 })
 
             let schema
@@ -347,6 +363,25 @@ module.exports = {
                     expires: dt,
                 })
                 await schema.save();
+            } else if (HUGame) {
+                await interaction.editReply({ embeds: [HUMessage], components: [] })
+                let word = randomWord('hu')
+
+                //Games database
+                let dt = new Date()
+                dt = new Date(dt.getTime() + 3 * 60 * 1000).toUTCString()
+                schema = await gamesSchema.create({
+                    guildID: guildID,
+                    channelStarted: channel,
+                    userID: userID,
+                    word: word,
+                    guesses: '0',
+                    replyMessage: '\n',
+                    alphabet: alphabetLetters,
+                    language: 'hu',
+                    expires: dt,
+                })
+                await schema.save();
             }
 
             schema = await statsSchema.findOne(query)
@@ -387,8 +422,8 @@ module.exports = {
     }
 }
 
-function randomWord(op) {
-    const file = fs.readFileSync(`Words/words_${op}.txt`, 'utf-8')
+function randomWord(lang) {
+    const file = fs.readFileSync(`Words/words_${lang}.txt`, 'utf-8')
     const wordArray = file.split('\n')
 
     let randomWord
