@@ -1,10 +1,10 @@
-const fs = require('fs')
+const fs = require('node:fs')
 
 module.exports = (client, Discord) => {
     const eventFiles = fs.readdirSync('./Events').filter(file => file.endsWith('.js'))
     for (const file of eventFiles) {
         const event = require(`../Events/${file}`)
-        if (event.on) {
+        if (event.on && event.name !== 'messageCreate') {
             client.on(event.name, (...args) => event.execute(...args, client, Discord))
         }
     }
