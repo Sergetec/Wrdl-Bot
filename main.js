@@ -8,6 +8,23 @@ const client = new Client({
     ]
 })
 
+const express = require("express");
+const Topgg = require("@top-gg/sdk");
+
+const app = express(); // Your express app
+
+const webhook = new Topgg.Webhook("parola123");
+
+app.post(
+    "/vote",
+    webhook.listener((vote) => {
+        // vote is your vote object
+        console.log(vote.user);
+    })
+); // attach the middleware
+
+app.listen(process.env.PORT); // your port
+
 client.commands = new Collection()
 client.events = new Collection();
 ['Commands', 'Events'].forEach(handler => {
