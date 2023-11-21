@@ -9,6 +9,8 @@ const statsSchema = require('../Models/statsSchema')
 const {
     AutoPoster
 } = require('topgg-autoposter')
+const express = require('express')
+const Topgg = require('@top-gg/sdk')
 require('dotenv').config()
 
 module.exports = {
@@ -36,6 +38,17 @@ module.exports = {
         ap.on('posted', (stats) => {
             console.log(`✅ Stats updated | ${stats.serverCount} servers`)
         })
+
+        //Voting logs
+        const app = express()
+        const webhook = new Topgg.Webhook(process.env.TOPGG_AUTHORIZATION)
+        app.post(
+            "/vote",
+            webhook.listener((vote) => {
+                console.log(vote.user + "voted the bot.")
+            })
+        )
+        app.listen(process.env.PORT)
 
         //Check for inactive games
         const check = async () => {

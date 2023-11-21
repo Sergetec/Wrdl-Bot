@@ -1,5 +1,9 @@
 //DISCORD
-const { Client, GatewayIntentBits, Collection, Discord } = require('discord.js');
+const { Client,
+    GatewayIntentBits,
+    Collection,
+    Discord
+} = require('discord.js')
 require('dotenv').config()
 const client = new Client({
     intents: [
@@ -7,23 +11,6 @@ const client = new Client({
         GatewayIntentBits.GuildMessages
     ]
 })
-
-const express = require("express");
-const Topgg = require("@top-gg/sdk");
-
-const app = express(); // Your express app
-
-const webhook = new Topgg.Webhook("parola123");
-
-app.post(
-    "/vote",
-    webhook.listener((vote) => {
-        // vote is your vote object
-        console.log(vote.user);
-    })
-); // attach the middleware
-
-app.listen(process.env.PORT); // your port
 
 client.commands = new Collection()
 client.events = new Collection();
