@@ -44,8 +44,14 @@ module.exports = {
         const webhook = new Topgg.Webhook(process.env.TOPGG_AUTHORIZATION)
         app.post(
             "/vote",
-            webhook.listener((vote) => {
-                console.log(vote.user + "voted the bot.")
+            webhook.listener( async (vote) => {
+                console.log(vote.user + " has voted the bot.")
+                const query = {
+                    userID: id,
+                }
+                let schema = await statsSchema.findOne(query)
+                schema.voteCount = schema.voteCount + 1
+                await schema.save()
             })
         )
         app.listen(process.env.PORT)
