@@ -47,7 +47,7 @@ module.exports = {
             webhook.listener( async (vote) => {
                 console.log(vote.user + " has voted the bot.")
                 const query = {
-                    userID: id,
+                    userID: vote.user,
                 }
                 let schema = await statsSchema.findOne(query)
                 schema.voteCount = schema.voteCount + 1
