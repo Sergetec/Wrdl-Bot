@@ -18,12 +18,13 @@ module.exports = {
     description: 'on startup | expired games | autoposter',
     on: true,
     async execute(client) {
-        console.log('Wrdl Bot online!')
+        console.log(`${client.user.username} online`)
 
+        //MongoDB connection
         await mongoose.connect(process.env.MONGO_URI, {
             keepAlive: true
         }).then(() => {
-            console.log('Connected to the database!')
+            console.log('Connected to the database')
         }).catch((err) => {
             console.log(err)
         })
@@ -33,19 +34,19 @@ module.exports = {
         })
         client.user.setStatus('online')
 
-        //Autoposter
+        //Topgg - autoposter
         const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
         ap.on('posted', (stats) => {
             console.log(`✅ Stats updated | ${stats.serverCount} servers`)
         })
 
-        //Voting logs
+        //Topgg - voting logs
         const app = express()
         const webhook = new Topgg.Webhook(process.env.TOPGG_AUTHORIZATION)
         app.post(
             "/vote",
             webhook.listener( async (vote) => {
-                console.log(vote.user + " has voted the bot.")
+                console.log(vote.user, 'has voted the bot')
                 const query = {
                     userID: vote.user,
                 }
@@ -55,6 +56,18 @@ module.exports = {
             })
         )
         app.listen(process.env.PORT)
+
+        //Manual gc
+        if (!global.gc) {
+            console.log('Garbage collection is not exposed')
+        }
+        //Schedule next gc within a random interval (15-45 minutes)
+        let nextMinutes = Math.random() * 30 + 15
+        setTimeout(function(){
+            global.gc()
+            console.log('Manual gc', process.memoryUsage())
+            scheduleGc()
+        }, nextMinutes * 60 * 1000)
 
         //Check for inactive games
         const check = async () => {
