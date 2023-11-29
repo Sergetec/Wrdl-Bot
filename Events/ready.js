@@ -58,16 +58,7 @@ module.exports = {
         app.listen(process.env.PORT)
 
         //Manual gc
-        if (!global.gc) {
-            console.log('Garbage collection is not exposed')
-        }
-        //Schedule next gc within a random interval (15-45 minutes)
-        let nextMinutes = Math.random() * 30 + 15
-        setTimeout(function(){
-            global.gc()
-            console.log('Manual gc', process.memoryUsage())
-            scheduleGc()
-        }, nextMinutes * 60 * 1000)
+        scheduleGc()
 
         //Check for inactive games
         const check = async () => {
@@ -127,4 +118,20 @@ async function sendGameEndedMessage(result, channel, client) {
     } catch (err) {
         console.log(err)
     }
+}
+
+function scheduleGc() {
+    if (!global.gc) {
+        console.log('Garbage collection is not exposed')
+        return
+    }
+
+    // Schedule next gc within a random interval (15-45 minutes)
+    let nextMinutes = Math.random() * 30 + 15
+
+    setTimeout(function(){
+        global.gc()
+        console.log('Manual gc', process.memoryUsage())
+        scheduleGc()
+    }, nextMinutes * 60 * 1000)
 }
