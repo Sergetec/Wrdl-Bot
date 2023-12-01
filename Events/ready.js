@@ -131,7 +131,6 @@ function scheduleGc() {
 
     setTimeout(function(){
         global.gc()
-        console.log('Manual gc', process.memoryUsage())
         scheduleGc()
     }, nextMinutes * 60 * 1000)
 }
