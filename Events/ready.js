@@ -13,6 +13,8 @@ const express = require('express')
 const Topgg = require('@top-gg/sdk')
 require('dotenv').config()
 
+const RED = '#ED4245'
+
 module.exports = {
     name: 'ready',
     description: 'on startup | expired games | autoposter',
@@ -20,7 +22,7 @@ module.exports = {
     async execute(client) {
         console.log(`${client.user.username} online`)
 
-        //MongoDB connection
+        // mongoDB connection
         await mongoose.connect(process.env.MONGO_URI, {
             keepAlive: true
         }).then(() => {
@@ -34,13 +36,13 @@ module.exports = {
         })
         client.user.setStatus('online')
 
-        //Topgg - autoposter
+        // topgg - autoposter
         const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
         ap.on('posted', (stats) => {
             console.log(`✅ Stats updated | ${stats.serverCount} servers`)
         })
 
-        //Topgg - voting logs
+        // topgg - voting logs
         const app = express()
         const webhook = new Topgg.Webhook(process.env.TOPGG_AUTHORIZATION)
         app.post(
@@ -57,10 +59,10 @@ module.exports = {
         )
         app.listen(process.env.PORT)
 
-        //Manual gc
+        // manual gc
         scheduleGc()
 
-        //Check for inactive games
+        // check for inactive games
         const check = async () => {
             try {
                 let dt = new Date().toUTCString()
@@ -70,16 +72,16 @@ module.exports = {
                 const results = await gamesSchema.find(query)
                 for (let i = 0; i < results.length; ++i) {
                     let userIDUser = results[i].userID
-                    await gamesSchema.deleteMany(query) //delete from games database
-                    await expiredGameFound(userIDUser) //update the user in stats database
-                    let guildID = results[i].guildID //get the guild id from database
+                    await gamesSchema.deleteMany(query) // delete from games database
+                    await expiredGameFound(userIDUser) // update the user in stats database
+                    let guildID = results[i].guildID // get the guild id from database
                     let botID = '1011006137690239059'
-                    let guild = client.guilds.cache.get(guildID) //cache the guild
+                    let guild = client.guilds.cache.get(guildID) // cache the guild
                     if (guild) {
-                        let ok = guild.members.cache.get(botID) //check if bot is in the guild
-                        if (ok) { //if it is, then send a message, otherwise it will go to the next result
+                        let ok = guild.members.cache.get(botID) // check if bot is in the guild
+                        if (ok) { // if it is, then send a message, otherwise it will go to the next result
                             let channel = results[i].channelStarted
-                            //if bot has permission to send message & view the channel
+                            // if bot has permission to send message & view the channel
                             if (guild.members.me.permissionsIn(channel).has([PermissionsBitField.Flags.SendMessages, PermissionsBitField.Flags.ViewChannel])) {
                                 await sendGameEndedMessage(results[i], channel, client)
                             }
@@ -110,7 +112,7 @@ async function expiredGameFound(userIDUser) {
 async function sendGameEndedMessage(result, channel, client) {
     const message = new EmbedBuilder()
         .setTitle('Wordle Game')
-        .setColor('#ED4245')
+        .setColor(RED)
         .setDescription(`❗ <@${result.userID}>'s game has ended due to inactivity`)
 
     try {
@@ -122,11 +124,10 @@ async function sendGameEndedMessage(result, channel, client) {
 
 function scheduleGc() {
     if (!global.gc) {
-        console.log('Garbage collection is not exposed')
-        return
+        return console.log('Garbage collection is not exposed')
     }
 
-    // Schedule next gc within a random interval (15-45 minutes)
+    // schedule next gc within a random interval (15-45 minutes)
     let nextMinutes = Math.random() * 30 + 15
 
     setTimeout(function(){
