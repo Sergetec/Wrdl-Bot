@@ -1,7 +1,13 @@
-const { ButtonStyle } = require('discord.js');
-const { EmbedBuilder, ActionRowBuilder, ButtonBuilder } = require('discord.js')
+const { EmbedBuilder,
+    ActionRowBuilder,
+    ButtonBuilder,
+    ButtonStyle,
+} = require('discord.js')
 const gamesSchema = require('../Models/gamesSchema')
 const statsSchema = require('../Models/statsSchema')
+
+const GREEN = '#5c8d4d'
+const RED = '#ED4245'
 
 module.exports = {
     name: 'quit',
@@ -15,11 +21,11 @@ module.exports = {
         }
         const result = await gamesSchema.findOne(query)
         if (!result) {
-            const message = new EmbedBuilder()
+            const embed = new EmbedBuilder()
                 .setTitle('Wordle Game')
-                .setColor('#ED4245')
+                .setColor(RED)
                 .setDescription('❗ **You have not started a game yet**')
-            return await interaction.reply({ embeds: [message], ephemeral: true })
+            return await interaction.reply({ embeds: [embed], ephemeral: true })
         }
         const row = new ActionRowBuilder()
         row.addComponents(
@@ -58,18 +64,18 @@ module.exports = {
 
         const message = new EmbedBuilder()
             .setTitle('Wordle Game')
-            .setColor('#ED4245')
+            .setColor(RED)
             .setDescription('❗ Are you sure that you want to **quit this game**? This will **__count as a loss__** on your account. You can still continue if you wish to.')
         await interaction.reply({ embeds: [message], components: [row] })
 
         const quitMessage = new EmbedBuilder()
             .setTitle('Wordle Game')
-            .setColor('#ED4245')
+            .setColor(RED)
             .setDescription('❗ Game quited')
 
         const continueMessage = new EmbedBuilder()
             .setTitle('Wordle Game')
-            .setColor('#57F287')
+            .setColor(GREEN)
             .setDescription('✅ Game continued')
 
         let continueGame = false
@@ -98,7 +104,7 @@ module.exports = {
                 case 'continue_game':
                     continueGame = true
 
-                    //Update inactive time
+                    // update inactive time
                     const expires1 = new Date()
                     expires1.setMinutes(expires1.getMinutes() + 1)
 
@@ -111,7 +117,7 @@ module.exports = {
             collector.on('end', async () => {
                 const messageExpired = new EmbedBuilder()
                     .setTitle('Wordle Game')
-                    .setColor('#ED4245')
+                    .setColor(RED)
                     .setDescription('❗ Time has expired')
                 return await interaction.editReply({ embeds: [messageExpired], components: [deadRow] })
             })
@@ -119,24 +125,7 @@ module.exports = {
                 return await interaction.editReply({ embeds: [quitMessage], components: [deadRow] })
             }
             if (continueGame) {
-                await interaction.editReply({ embeds: [continueMessage], components: [deadRow] })
-                let channel = result.channelStarted
-                let replyMessage = result.replyMessage
-                if (replyMessage === '\n') {
-                    return
-                }
-                let count = result.guesses
-                const messageToSendContinue = new EmbedBuilder()
-                    .setTitle(`Wordle Game`)
-                    .setColor('#FF964D')
-                    .addFields({
-                        name: '\u200b',
-                        value: `${replyMessage}`,
-                    })
-                    .setFooter({
-                        text: `${count} / 6`
-                    })
-                return await client.channels.cache.get(channel).send({ embeds: [messageToSendContinue] })
+                return await interaction.editReply({ embeds: [continueMessage], components: [deadRow] })
             }
         })
     }
