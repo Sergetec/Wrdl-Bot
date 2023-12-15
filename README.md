@@ -16,25 +16,25 @@ There are 3 colors that will help you throughout the game:
 
 - **`/help` Displays information about Wrdl Bot and the commands available**
 
-![Help Image 1](https://cdn.discordapp.com/attachments/1071147069982642246/1163808770133082143/image.png?ex=6540ec61&is=652e7761&hm=f1da24c81152ce5b86a9790a08d44367717f713a4c3d819b6401cb892165628e&)
+![Help Image 1](https://cdn.discordapp.com/attachments/1071147069982642246/1185245112381485096/image.png?ex=658ee887&is=657c7387&hm=da8e219bee03e83ee102206937aae4d0e072d51cf24b771b367762a160166dfb&)
 
-![Help Image 2](https://cdn.discordapp.com/attachments/1071147069982642246/1163808771169067028/image.png?ex=6540ec61&is=652e7761&hm=f7f11e3834286fe518c8c0d5c744eb786aae3cc8dd198bd384152f2a5b4b92a2&)
+![Help Image 2](https://cdn.discordapp.com/attachments/1071147069982642246/1185245112603770922/image.png?ex=658ee887&is=657c7387&hm=ab34aa7938d9fa146821d3f918598f41426c9106ec66022762275c321893c197&)
 
-![Help Image 3](https://cdn.discordapp.com/attachments/1071147069982642246/1163808771550761041/image.png?ex=6540ec61&is=652e7761&hm=404cb2ee8b125f819745268516f6b66b03e8348cbd3f660c9b67ffca9973887a&)
+![Help Image 3](https://cdn.discordapp.com/attachments/1071147069982642246/1185245112859627580/image.png?ex=658ee887&is=657c7387&hm=b228584c9cb731339912c5afe204540b539a90381227e7560b2a242137d557ec&)
 
 - **`/info` Displays information about the game, rules and how to play it**
 
-![Info Image](https://cdn.discordapp.com/attachments/1071147069982642246/1163809856021606450/image.png?ex=6540ed64&is=652e7864&hm=baa63c9dee2f0481fea34258119f548544d1c211c99d38a9bfdf17824bb23657&)
+![Info Image](https://cdn.discordapp.com/attachments/1071147069982642246/1185245724821160026/image.png?ex=658ee919&is=657c7419&hm=a2a62a8e16b1662b5e2e9925faa4b69e69588ccd9d12e3865396e2b35dd57d1e&)
 
 - **`/start` Start your own Wordle game, you will have to choose the preferred language every time**
 - **`/guess` Make a new guess in your current game**
 
-![Won Game](https://cdn.discordapp.com/attachments/1071147069982642246/1163808773132013588/image.png?ex=6540ec62&is=652e7762&hm=aef2a22fc0483ee1e1c73ed27dfb51b9a8fc9e96d11ff4cf9d8ebcaf5af12cd5&)
+![Won Game](https://cdn.discordapp.com/attachments/1071147069982642246/1185225503708299324/image.png?ex=658ed644&is=657c6144&hm=4b3689c62c1b8d28e229e286227ed21aa5cdbf118240bca6377f8fa24329db94&)
 
 - **`/quit` Quit your current game, you will be given the choice of quitting the game or continuing**
 - **`/stats` Displays either your or someone else's game statistics**
 
-![Stats Image](https://cdn.discordapp.com/attachments/1071147069982642246/1163808772624490527/image.png?ex=6540ec61&is=652e7761&hm=c36d4fe4451846d6fb164e14752f97dc64705d2601217545296f5e9d73dbc8d6&)
+![Stats Image](https://cdn.discordapp.com/attachments/1071147069982642246/1185246458006487161/image.png?ex=658ee9c8&is=657c74c8&hm=93f8cb5b45f7a5fa2b4d8375d8db3b0c9382b54ef88391b010e3a1bc9e717a03&)
 
 - **`/leaderboard` Displays the current leaderboard**
 
