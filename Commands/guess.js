@@ -748,9 +748,15 @@ module.exports = {
                         break
                 }
                 await schema.save()
-                return await interaction.reply({ embeds: [embed], files: [file] })
-            }
-            if (count >= 6) {
+                await interaction.reply({ embeds: [embed], files: [file] })
+                setTimeout( async function() {
+                    const voteEmbed = new EmbedBuilder()
+                        .setColor(GREEN)
+                        .setTitle('🌟 Love Wrdl? Vote for us on Top.gg! 🗳️')
+                        .setDescription('🎉 Congratulations on your Wordle victory! 🏆 If you had fun playing, consider supporting us by voting for the bot on Top.gg. Your votes help us grow, and exciting rewards might be coming your way in the future!\nhttps://top.gg/bot/1011006137690239059/vote')
+                    return await interaction.followUp({ embeds: [voteEmbed], ephemeral: true })
+                }, 3 * 1000)
+            } else if (count >= 6) {
                 await gamesSchema.deleteMany(query2)
                 const embed = new EmbedBuilder()
                     .setImage('attachment://guess.png')
@@ -770,29 +776,30 @@ module.exports = {
                 schema.currentStreak = 0
                 await schema.save()
                 return await interaction.reply({ embeds: [embed], files: [file] })
+            } else {
+
+                // update expire time
+                let dt = new Date()
+                dt = new Date(dt.getTime() + 5 * 60 * 1000).toUTCString()
+
+                let schema2 = await gamesSchema.findOne(query)
+                schema2.expires = dt
+                await schema2.save()
+
+                schema = await gamesSchema.findOne(query2)
+                schema.guesses = count
+                schema.replyMessage = replyMessage
+                schema.alphabet = alphabetNew
+                await schema.save()
+                const embed = new EmbedBuilder()
+                    .setImage('attachment://guess.png')
+                    .setColor(GREEN)
+                    .setTitle('Wordle Game')
+                    .setFooter({
+                        text: `${count} / 6`
+                    })
+                return await interaction.reply({ embeds: [embed], files: [file] })
             }
-
-            // update expire time
-            let dt = new Date()
-            dt = new Date(dt.getTime() + 5 * 60 * 1000).toUTCString()
-
-            let schema2 = await gamesSchema.findOne(query)
-            schema2.expires = dt
-            await schema2.save()
-
-            schema = await gamesSchema.findOne(query2)
-            schema.guesses = count
-            schema.replyMessage = replyMessage
-            schema.alphabet = alphabetNew
-            await schema.save()
-            const embed = new EmbedBuilder()
-                .setImage('attachment://guess.png')
-                .setColor(GREEN)
-                .setTitle('Wordle Game')
-                .setFooter({
-                    text: `${count} / 6`
-                })
-            return await interaction.reply({ embeds: [embed], files: [file] })
         }
     }
 }
