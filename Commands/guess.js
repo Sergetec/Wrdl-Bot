@@ -749,7 +749,7 @@ module.exports = {
                 }
                 await schema.save()
                 await interaction.reply({ embeds: [embed], files: [file] })
-                if (schema.gamesWon % 3 === 0) {
+                if (schema.gamesWon % 5 === 0) {
                     setTimeout(async function () {
                         const voteEmbed = new EmbedBuilder()
                             .setColor(GREEN)
