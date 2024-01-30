@@ -60,7 +60,7 @@ module.exports = {
             // Get the #nr of the player based on wins
             const sort = { gamesWon: -1 }
             await statsSchema.find().sort(sort)
-            const orderNr = await statsSchema.countDocuments({ gamesWon: { $gte: player.gamesWon } }) + 1
+            const orderNr = await statsSchema.countDocuments({ gamesWon: { $gte: player.gamesWon } })
 
             let background = await loadImage('./Images/background1.png')
             context.drawImage(background, 0, 0, 600, 400)
