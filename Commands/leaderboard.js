@@ -33,9 +33,15 @@ module.exports = {
                 emoji: '🏆',
             },
             {
-                label: 'Highet winstreak',
-                description: 'Top players based on winstreak',
-                value: 'streak',
+                label: 'Best winstreak',
+                description: 'Top players based on best winstreak',
+                value: 'streakBest',
+                emoji: '🔥',
+            },
+            {
+                label: 'Current winstreak',
+                description: 'Top players based on current winstreak',
+                value: 'streakCurrent',
                 emoji: '🔥',
             }
         ]
@@ -65,7 +71,7 @@ module.exports = {
         const results = await statsSchema.find({ userID: { $ne: '333664530582208513' } }).sort(sort).limit(10)
         await getTopWins(client, interaction, results, canvas, context, actionRowEnabled)
 
-        let winLeaderboard = false, streakLeaderboard = false
+        let winLeaderboard = false, streakBestLeaderboard = false, streakCurrentLeaderboard = false
         const filter = (interaction) => interaction.user.id === userID
         const time = 1000 * 60 * 5 // 5 minutes
         const collector = reply.createMessageComponentCollector({
@@ -76,8 +82,11 @@ module.exports = {
             await menuInt.deferUpdate()
             if (menuInt.values.includes('wins')) {
                 winLeaderboard = true
-            } else if (menuInt.values.includes('streak')) {
-                streakLeaderboard = true
+            } else if (menuInt.values.includes('streakBest')) {
+                streakBestLeaderboard = true
+            }
+            else if (menuInt.values.includes('streakCurrent')) {
+                streakCurrentLeaderboard = true
             }
             if (winLeaderboard) {
                 reply = await interaction.editReply({ content: 'Fetching...', embeds: [], files: [] })
@@ -89,7 +98,7 @@ module.exports = {
                 await getTopWins(client, interaction, results, canvas, context, actionRowEnabled)
                 winLeaderboard = false
             }
-            if (streakLeaderboard) {
+            if (streakBestLeaderboard) {
                 reply = await interaction.editReply({ content: 'Fetching...', embeds: [], files: [] })
 
                 // This will first cache all the results, sort descending based on maxStreak, and will limit the results to 10
@@ -97,7 +106,17 @@ module.exports = {
                 const sort = { maxStreak: -1 }
                 const results = await statsSchema.find({ userID: { $ne: '333664530582208513' } }).sort(sort).limit(10)
                 await getTopStreak(client, interaction, results, canvas, context, actionRowEnabled)
-                streakLeaderboard = false
+                streakBestLeaderboard = false
+            }
+            if (streakCurrentLeaderboard) {
+                reply = await interaction.editReply({ content: 'Fetching...', embeds: [], files: [] })
+
+                // This will first cache all the results, sort descending based on maxStreak, and will limit the results to 10
+                // So that it will not exceed the memory limit
+                const sort = { currentStreak: -1 }
+                const results = await statsSchema.find({ userID: { $ne: '333664530582208513' } }).sort(sort).limit(10)
+                await getTopStreak(client, interaction, results, canvas, context, actionRowEnabled)
+                streakCurrentLeaderboard = false
             }
         })
         collector.on('end', async () => {
