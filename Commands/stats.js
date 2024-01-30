@@ -42,20 +42,25 @@ module.exports = {
         const query = {
             userID: userID,
         }
-        const results = await statsSchema.findOne(query)
-        if (results !== null) {
-            gamesTotal = results.gamesTotal
-            gamesWon = results.gamesWon
-            gamesLost = results.gamesLost
-            oneGuess = results.oneGuess
-            twoGuess = results.twoGuess
-            threeGuess = results.threeGuess
-            fourGuess = results.fourGuess
-            fiveGuess = results.fiveGuess
-            sixGuess = results.sixGuess
-            maxStreak = Math.max(maxStreak, results.maxStreak)
-            currentStreak = results.currentStreak
-            winRate = results.winRate
+        const player = await statsSchema.findOne(query)
+        if (player !== null) {
+            gamesTotal = player.gamesTotal
+            gamesWon = player.gamesWon
+            gamesLost = player.gamesLost
+            oneGuess = player.oneGuess
+            twoGuess = player.twoGuess
+            threeGuess = player.threeGuess
+            fourGuess = player.fourGuess
+            fiveGuess = player.fiveGuess
+            sixGuess = player.sixGuess
+            maxStreak = Math.max(maxStreak, player.maxStreak)
+            currentStreak = player.currentStreak
+            winRate = player.winRate
+
+            // Get the #nr of the player based on wins
+            const sort = { gamesWon: -1 }
+            await statsSchema.find().sort(sort)
+            const orderNr = await statsSchema.countDocuments({ gamesWon: { $gt: player.gamesWon } }) + 1
 
             let background = await loadImage('./Images/background1.png')
             context.drawImage(background, 0, 0, 600, 400)
@@ -67,6 +72,11 @@ module.exports = {
             image = await loadImage('./Images/chart_decreasing_color.png')
             renderStat(gamesLost, "Words\nUnsolved", canvas.width / 2 - statOffset / 5, image, 240)
             image = await loadImage('./Images/memo_color.png')
+
+            // Render the #nr
+            context.font = `bold 20px ${FONT_FAMILY_EXO}`
+            context.fillText(`Top #${orderNr} wins`, canvas.width / 2, 150)
+
             renderStat(winRate + "%", "Winning\nRate", canvas.width / 2 + statOffset / 5, image, 340)
             image = await loadImage('./Images/fire_color.png')
             renderStat(currentStreak, "Current\nStreak", canvas.width / 2 + (statOffset * 3) / 5, image, 440)
@@ -82,7 +92,7 @@ module.exports = {
             const barOffset = 250
             // Space reserved for the bar labels
             const labelSpace = 12
-            const bars = [results.oneGuess, results.twoGuess, results.threeGuess, results.fourGuess, results.fiveGuess, results.sixGuess]
+            const bars = [player.oneGuess, player.twoGuess, player.threeGuess, player.fourGuess, player.fiveGuess, player.sixGuess]
             const max = Math.max(...bars)
             const scale = (barOffset * 2 - labelSpace) / max
 
