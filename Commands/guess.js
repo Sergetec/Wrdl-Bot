@@ -749,14 +749,28 @@ module.exports = {
                 }
                 await schema.save()
                 await interaction.reply({ embeds: [embed], files: [file] })
-                if (schema.gamesWon % 5 === 0) {
-                    setTimeout(async function () {
-                        const voteEmbed = new EmbedBuilder()
-                            .setColor(GREEN)
-                            .setTitle('🌟 Love Wrdl? Vote for us on Top.gg! 🗳️')
-                            .setDescription('🎉 Congratulations on your Wordle victory! 🏆 If you had fun playing, consider supporting us by voting for the bot on Top.gg. Your votes help us grow, and exciting rewards might be coming your way in the future!\nhttps://top.gg/bot/1011006137690239059/vote')
-                        return await interaction.followUp({ embeds: [voteEmbed], ephemeral: true })
-                    }, 3 * 1000)
+
+                // Check if user has voted in the last 12 hours
+                const apiUrl = `https://top.gg/api/bots/1011006137690239059/check?userId=${userID}`
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: process.env.TOPGG_TOKEN,
+                    },
+                })
+                const data = await response.json()
+                if (response.ok) {
+                    if (!data.voted && schema.gamesWon % 4 === 0) {
+                        setTimeout(async function () {
+                            const voteEmbed = new EmbedBuilder()
+                                .setColor(GREEN)
+                                .setTitle('🌟 Love Wrdl? Vote for us on Top.gg! 🗳️')
+                                .setDescription('🎉 Congratulations on your Wordle victory! 🏆 If you had fun playing, consider supporting us by voting for the bot on Top.gg. Your votes help us grow, and exciting rewards might be coming your way in the future!\nhttps://top.gg/bot/1011006137690239059/vote')
+                            return await interaction.followUp({ embeds: [voteEmbed], ephemeral: true })
+                        }, 3 * 1000)
+                    }
+                } else {
+                    console.log(`Error checking vote status: ${data.error}`)
                 }
             } else if (count >= 6) {
                 await gamesSchema.deleteMany(query2)
