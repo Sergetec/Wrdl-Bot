@@ -12,8 +12,8 @@ const { Canvas,
 
 const GREEN = '#5c8d4d'
 const WHITE = '#ffffff'
-registerFont('./Fonts/Exo-Bold.ttf', { family: 'Exo' })
-const FONT_FAMILY_EXO = 'Exo'
+registerFont('./Fonts/Signika-Bold.ttf', { family: 'Signika' })
+const FONT_FAMILY_SIGNIKA = 'Signika'
 
 const canvas = new Canvas(1920, 1097)
 const context = canvas.getContext("2d")
@@ -126,7 +126,7 @@ module.exports = {
 }
 
 async function getTopWins(client, interaction, results, canvas, context, actionRow) {
-    let background = await loadImage('./Images/background3.png')
+    let background = await loadImage('./Images/background_leaderboard.png')
     context.drawImage(background, 0, 0, 1920, 1097)
     let trophy = await loadImage('./Images/trophy.png')
     context.drawImage(trophy, 34, 29, 110, 110)
@@ -135,7 +135,7 @@ async function getTopWins(client, interaction, results, canvas, context, actionR
     for (let i = 0; i < results.length; ++i) {
         context.fillStyle = WHITE
         context.textAlign = "center"
-        context.font = `bold 60px ${FONT_FAMILY_EXO}`
+        context.font = `bold 65px ${FONT_FAMILY_SIGNIKA}`
         if (i === 10) {
             break
         }
@@ -163,7 +163,7 @@ async function getTopWins(client, interaction, results, canvas, context, actionR
         if (count === 10) {
             x += 600
         }
-        context.font = `bold 40px ${FONT_FAMILY_EXO}`
+        context.font = `bold 50px ${FONT_FAMILY_SIGNIKA}`
         context.fillText(`${fetchUser.username}`, x, y)
         x += 600
         if (count % 3 == 0) { // decrease height
@@ -192,7 +192,7 @@ async function getTopStreak(client, interaction, results, canvas, context, actio
     for (let i = 0; i < results.length; ++i) {
         context.fillStyle = WHITE
         context.textAlign = "center"
-        context.font = `bold 60px ${FONT_FAMILY_EXO}`
+        context.font = `bold 65px ${FONT_FAMILY_SIGNIKA}`
         if (i === 10) {
             break
         }
@@ -220,7 +220,7 @@ async function getTopStreak(client, interaction, results, canvas, context, actio
         if (count === 10) {
             x += 600
         }
-        context.font = `bold 40px ${FONT_FAMILY_EXO}`
+        context.font = `bold 50px ${FONT_FAMILY_SIGNIKA}`
         context.fillText(`${fetchUser.username}`, x, y)
         x += 600
         if (count % 3 == 0) { // decrease height

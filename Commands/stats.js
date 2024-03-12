@@ -13,8 +13,10 @@ const DARK_GRAY = '#313030'
 const WHITE = '#ffffff'
 registerFont('./Fonts/Exo-Bold.ttf', { family: 'Exo' })
 registerFont('./Fonts/ARLRDBD.ttf', { family: 'Arial Rounded MT Bold' })
+registerFont('./Fonts/Signika-Bold.ttf', { family: 'Signika' })
 const FONT_FAMILY_EXO = 'Exo'
 const FONT_FAMILY_ARIAL_ROUNDED = 'Arial Rounded MT Bold'
+const FONT_FAMILY_SIGNIKA = 'Signika'
 
 const canvas = new Canvas(600, 400)
 const context = canvas.getContext("2d")
@@ -62,7 +64,7 @@ module.exports = {
             await statsSchema.find().sort(sort)
             const orderNr = await statsSchema.countDocuments({ gamesWon: { $gte: player.gamesWon } })
 
-            let background = await loadImage('./Images/background1.png')
+            let background = await loadImage('./Images/background_stats.png')
             context.drawImage(background, 0, 0, 600, 400)
             const statOffset = 250
             let image = await loadImage('./Images/globe_showing_americas_color.png')
@@ -74,7 +76,7 @@ module.exports = {
             image = await loadImage('./Images/memo_color.png')
 
             // Render the #nr
-            context.font = `bold 20px ${FONT_FAMILY_EXO}`
+            context.font = `bold 20px ${FONT_FAMILY_SIGNIKA}`
             context.fillText(`Top #${orderNr} wins`, canvas.width / 2, 150)
 
             renderStat(winRate + "%", "Winning\nRate", canvas.width / 2 + statOffset / 5, image, 340)
@@ -85,7 +87,7 @@ module.exports = {
             image = await loadImage('./Images/sparkles_color.png')
             context.drawImage(image, 555, 95, 15, 15)
             context.fillStyle = WHITE
-            context.font = `bold 26px ${FONT_FAMILY_EXO}`
+            context.font = `bold 26px ${FONT_FAMILY_SIGNIKA}`
             context.fillText("GUESS DISTRIBUTION", canvas.width / 2, 195)
 
             // Distance from edge of bars to the vertical center.
