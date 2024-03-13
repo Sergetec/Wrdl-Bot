@@ -183,7 +183,7 @@ async function getTopWins(client, interaction, results, canvas, context, actionR
 }
 
 async function getTopStreak(client, interaction, results, canvas, context, actionRow) {
-    let background = await loadImage('./Images/background3.png')
+    let background = await loadImage('./Images/background_leaderboard.png')
     context.drawImage(background, 0, 0, 1920, 1097)
     let fire = await loadImage('./Images/fire_color.png')
     context.drawImage(fire, 34, 29, 110, 110)
