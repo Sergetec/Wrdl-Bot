@@ -15,7 +15,7 @@ const WHITE = '#ffffff'
 registerFont('./Fonts/Signika-Bold.ttf', { family: 'Signika' })
 const FONT_FAMILY_SIGNIKA = 'Signika'
 
-const canvas = new Canvas(1920, 1097)
+const canvas = new Canvas(500, 700)
 const context = canvas.getContext("2d")
 
 const statsSchema = require('../Models/statsSchema')
@@ -105,7 +105,7 @@ module.exports = {
                 // So that it will not exceed the memory limit
                 const sort = { maxStreak: -1 }
                 const results = await statsSchema.find({ userID: { $ne: '333664530582208513' } }).sort(sort).limit(10)
-                await getTopStreak(client, interaction, results, canvas, context, actionRowEnabled)
+                await getTopStreakBest(client, interaction, results, canvas, context, actionRowEnabled)
                 streakBestLeaderboard = false
             }
             if (streakCurrentLeaderboard) {
@@ -115,7 +115,7 @@ module.exports = {
                 // So that it will not exceed the memory limit
                 const sort = { currentStreak: -1 }
                 const results = await statsSchema.find({ userID: { $ne: '333664530582208513' } }).sort(sort).limit(10)
-                await getTopStreak(client, interaction, results, canvas, context, actionRowEnabled)
+                await getTopStreakCurrent(client, interaction, results, canvas, context, actionRowEnabled)
                 streakCurrentLeaderboard = false
             }
         })
@@ -127,49 +127,76 @@ module.exports = {
 
 async function getTopWins(client, interaction, results, canvas, context, actionRow) {
     let background = await loadImage('./Images/background_leaderboard.png')
-    context.drawImage(background, 0, 0, 1920, 1097)
+    context.drawImage(background, -400, 0, 900, 700) // x = -400 offset
+    // emoji
     let trophy = await loadImage('./Images/trophy.png')
-    context.drawImage(trophy, 34, 29, 110, 110)
+    context.drawImage(trophy, canvas.width / 2 + 95, canvas.height / 2 - 335, 40, 40)
+    context.drawImage(trophy, canvas.width / 2 - 130, canvas.height / 2 - 335, 40, 40)
+    // title
+    context.fillStyle = WHITE
+    context.textAlign = "center"
+    context.font = `bold 35px ${FONT_FAMILY_SIGNIKA}`
+    context.fillText('TOP WINS', canvas.width / 2, canvas.height / 2 - 305)
+    // top players
     let totalPlayers = await statsSchema.count()
-    let count = 3, x = 1920 / 2 - 600, y = 1097 / 2 + 90
+    let x = canvas.width / 2 - 190, y = canvas.height / 2 - 20
     for (let i = 0; i < results.length; ++i) {
-        context.fillStyle = WHITE
-        context.textAlign = "center"
-        context.font = `bold 65px ${FONT_FAMILY_SIGNIKA}`
+        context.textAlign = "left"
+        context.font = `bold 35px ${FONT_FAMILY_SIGNIKA}`
         if (i === 10) {
             break
         }
         let id = results[i].userID
         const fetchUser = await client.users.fetch(id)
         if (i === 0) {
-            context.fillText(`${fetchUser.username}`, canvas.width / 2, canvas.height / 2 - 480)
+            // username
+            context.fillText(`${fetchUser.username}`, canvas.width / 2 - 120, canvas.height / 2 - 220)
+            // games won
+            context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}`
+            context.textAlign = "right"
+            context.fillText(`${results[i].gamesWon} wins`, canvas.width - 30, canvas.height / 2 - 220)
+            // medal
             let image = await loadImage('./Images/1st_place_medal.png')
-            context.drawImage(image, canvas.width / 2 - 100, canvas.height / 2 - 450, 200, 200)
+            context.drawImage(image, canvas.width / 2 - 180, canvas.height / 2 - 255, 50, 50)
             continue
         }
         if (i === 1) {
-            context.fillText(`${fetchUser.username}`, canvas.width / 2 - 500, canvas.height / 2 - 280)
+            // username
+            context.fillText(`${fetchUser.username}`, canvas.width / 2 - 120, canvas.height / 2 - 170)
+            // games won
+            context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}`
+            context.textAlign = "right"
+            context.fillText(`${results[i].gamesWon} wins`, canvas.width - 30, canvas.height / 2 - 170)
+            // medal
             let image = await loadImage('./Images/2nd_place_medal.png')
-            context.drawImage(image, canvas.width / 2 - 600, canvas.height / 2 - 250, 200, 200)
+            context.drawImage(image, canvas.width / 2 - 180, canvas.height / 2 - 205, 50, 50)
             continue
         }
         if (i === 2) {
-            context.fillText(`${fetchUser.username}`, canvas.width / 2 + 500, canvas.height / 2 - 280)
+            // username
+            context.fillText(`${fetchUser.username}`, canvas.width / 2 - 120, canvas.height / 2 - 120)
+            // games won
+            context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}`
+            context.textAlign = "right"
+            context.fillText(`${results[i].gamesWon} wins`, canvas.width - 30, canvas.height / 2 - 120)
+            // medal
             let image = await loadImage('./Images/3rd_place_medal.png')
-            context.drawImage(image, canvas.width / 2 + 400, canvas.height / 2 - 250, 200, 200)
+            context.drawImage(image, canvas.width / 2 - 180, canvas.height / 2 - 155, 50, 50)
             continue
         }
-        count++
-        if (count === 10) {
-            x += 600
-        }
-        context.font = `bold 50px ${FONT_FAMILY_SIGNIKA}`
+        context.font = `bold 27px ${FONT_FAMILY_SIGNIKA}` // for top 4...10
+        // username
         context.fillText(`${fetchUser.username}`, x, y)
-        x += 600
-        if (count % 3 == 0) { // decrease height
-            y += 180
-            x = 1920 / 2 - 600
+        if (i == 9) {
+            context.fillText(`${i + 1}.`, 10, y)
+        } else {
+            context.fillText(`${i + 1}.`, 25, y)
         }
+        // games won
+        context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}`
+        context.textAlign = "right"
+        context.fillText(`${results[i].gamesWon} wins`, canvas.width - 30, y)
+        y += 55
     }
     const file = new AttachmentBuilder(await canvas.toBuffer(), { name: 'leaderboard.png' })
     const embed = new EmbedBuilder()
@@ -182,51 +209,165 @@ async function getTopWins(client, interaction, results, canvas, context, actionR
     return await interaction.editReply({ content: '', embeds: [embed], files: [file], components: [actionRow] })
 }
 
-async function getTopStreak(client, interaction, results, canvas, context, actionRow) {
+async function getTopStreakBest(client, interaction, results, canvas, context, actionRow) {
     let background = await loadImage('./Images/background_leaderboard.png')
-    context.drawImage(background, 0, 0, 1920, 1097)
+    context.drawImage(background, -400, 0, 900, 700) // x = -400 offset
+    // emoji
     let fire = await loadImage('./Images/fire_color.png')
-    context.drawImage(fire, 34, 29, 110, 110)
+    let sparkles = await loadImage('./Images/sparkles_color.png')
+    context.drawImage(fire, canvas.width / 2 + 140, canvas.height / 2 - 335, 40, 40)
+    context.drawImage(fire, canvas.width / 2 - 175, canvas.height / 2 - 335, 40, 40)
+    context.drawImage(sparkles, canvas.width / 2 - 147, canvas.height / 2 - 340, 20, 20)
+    context.drawImage(sparkles, canvas.width / 2 + 168, canvas.height / 2 - 340, 20, 20)
+    // title
+    context.fillStyle = WHITE
+    context.textAlign = "center"
+    context.font = `bold 33px ${FONT_FAMILY_SIGNIKA}`
+    context.fillText('TOP BEST STREAK', canvas.width / 2, canvas.height / 2 - 305)
+    // top players
     let totalPlayers = await statsSchema.count()
-    let count = 3, x = 1920 / 2 - 600, y = 1097 / 2 + 90
+    let x = canvas.width / 2 - 190, y = canvas.height / 2 - 20
     for (let i = 0; i < results.length; ++i) {
-        context.fillStyle = WHITE
-        context.textAlign = "center"
-        context.font = `bold 65px ${FONT_FAMILY_SIGNIKA}`
+        context.textAlign = "left"
+        context.font = `bold 35px ${FONT_FAMILY_SIGNIKA}`
         if (i === 10) {
             break
         }
         let id = results[i].userID
         const fetchUser = await client.users.fetch(id)
         if (i === 0) {
-            context.fillText(`${fetchUser.username}`, canvas.width / 2, canvas.height / 2 - 480)
+            // username
+            context.fillText(`${fetchUser.username}`, canvas.width / 2 - 120, canvas.height / 2 - 220)
+            // max streak
+            context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}`
+            context.textAlign = "right"
+            context.fillText(`${results[i].maxStreak} streak`, canvas.width - 30, canvas.height / 2 - 220)
+            // medal
             let image = await loadImage('./Images/1st_place_medal.png')
-            context.drawImage(image, canvas.width / 2 - 100, canvas.height / 2 - 450, 200, 200)
+            context.drawImage(image, canvas.width / 2 - 180, canvas.height / 2 - 255, 50, 50)
             continue
         }
         if (i === 1) {
-            context.fillText(`${fetchUser.username}`, canvas.width / 2 - 500, canvas.height / 2 - 280)
+            // username
+            context.fillText(`${fetchUser.username}`, canvas.width / 2 - 120, canvas.height / 2 - 170)
+            // max streak
+            context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}`
+            context.textAlign = "right"
+            context.fillText(`${results[i].maxStreak} streak`, canvas.width - 30, canvas.height / 2 - 170)
+            // medal
             let image = await loadImage('./Images/2nd_place_medal.png')
-            context.drawImage(image, canvas.width / 2 - 600, canvas.height / 2 - 250, 200, 200)
+            context.drawImage(image, canvas.width / 2 - 180, canvas.height / 2 - 205, 50, 50)
             continue
         }
         if (i === 2) {
-            context.fillText(`${fetchUser.username}`, canvas.width / 2 + 500, canvas.height / 2 - 280)
+            // username
+            context.fillText(`${fetchUser.username}`, canvas.width / 2 - 120, canvas.height / 2 - 120)
+            // max streak
+            context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}`
+            context.textAlign = "right"
+            context.fillText(`${results[i].maxStreak} streak`, canvas.width - 30, canvas.height / 2 - 120)
+            // medal
             let image = await loadImage('./Images/3rd_place_medal.png')
-            context.drawImage(image, canvas.width / 2 + 400, canvas.height / 2 - 250, 200, 200)
+            context.drawImage(image, canvas.width / 2 - 180, canvas.height / 2 - 155, 50, 50)
             continue
         }
-        count++
-        if (count === 10) {
-            x += 600
-        }
-        context.font = `bold 50px ${FONT_FAMILY_SIGNIKA}`
+        context.font = `bold 27px ${FONT_FAMILY_SIGNIKA}` // for top 4...10
+        // username
         context.fillText(`${fetchUser.username}`, x, y)
-        x += 600
-        if (count % 3 == 0) { // decrease height
-            y += 180
-            x = 1920 / 2 - 600
+        if (i == 9) {
+            context.fillText(`${i + 1}.`, 10, y)
+        } else {
+            context.fillText(`${i + 1}.`, 25, y)
         }
+        // max streak
+        context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}` // for top 4...10
+        context.textAlign = "right"
+        context.fillText(`${results[i].maxStreak} streak`, canvas.width - 30, y)
+        y += 55
+    }
+    const file = new AttachmentBuilder(await canvas.toBuffer(), { name: 'leaderboard.png' })
+    const embed = new EmbedBuilder()
+        .setImage('attachment://leaderboard.png')
+        .setColor(GREEN)
+        .setTitle('LEADERBOARD')
+        .setFooter({
+            text: `Top ${results.length} out of ${totalPlayers} players`
+        })
+    return await interaction.editReply({ content: '', embeds: [embed], files: [file], components: [actionRow] })
+}
+
+async function getTopStreakCurrent(client, interaction, results, canvas, context, actionRow) {
+    let background = await loadImage('./Images/background_leaderboard.png')
+    context.drawImage(background, -400, 0, 900, 700) // x = -400 offset
+    // emoji
+    let fire = await loadImage('./Images/fire_color.png')
+    context.drawImage(fire, canvas.width / 2 + 170, canvas.height / 2 - 335, 40, 40)
+    context.drawImage(fire, canvas.width / 2 - 205, canvas.height / 2 - 335, 40, 40)
+    // title
+    context.fillStyle = WHITE
+    context.textAlign = "center"
+    context.font = `bold 33px ${FONT_FAMILY_SIGNIKA}`
+    context.fillText('TOP CURRENT STREAK', canvas.width / 2, canvas.height / 2 - 305)
+    // top players
+    let totalPlayers = await statsSchema.count()
+    let x = canvas.width / 2 - 190, y = canvas.height / 2 - 20
+    for (let i = 0; i < results.length; ++i) {
+        context.textAlign = "left"
+        context.font = `bold 35px ${FONT_FAMILY_SIGNIKA}`
+        if (i === 10) {
+            break
+        }
+        let id = results[i].userID
+        const fetchUser = await client.users.fetch(id)
+        if (i === 0) {
+            // username
+            context.fillText(`${fetchUser.username}`, canvas.width / 2 - 120, canvas.height / 2 - 220)
+            // current streak
+            context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}`
+            context.textAlign = "right"
+            context.fillText(`${results[i].currentStreak} streak`, canvas.width - 30, canvas.height / 2 - 220)
+            // medal
+            let image = await loadImage('./Images/1st_place_medal.png')
+            context.drawImage(image, canvas.width / 2 - 180, canvas.height / 2 - 255, 50, 50)
+            continue
+        }
+        if (i === 1) {
+            // username
+            context.fillText(`${fetchUser.username}`, canvas.width / 2 - 120, canvas.height / 2 - 170)
+            // current streak
+            context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}`
+            context.textAlign = "right"
+            context.fillText(`${results[i].currentStreak} streak`, canvas.width - 30, canvas.height / 2 - 170)
+            // medal
+            let image = await loadImage('./Images/2nd_place_medal.png')
+            context.drawImage(image, canvas.width / 2 - 180, canvas.height / 2 - 205, 50, 50)
+            continue
+        }
+        if (i === 2) {
+            // username
+            context.fillText(`${fetchUser.username}`, canvas.width / 2 - 120, canvas.height / 2 - 120)
+            // current streak
+            context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}`
+            context.textAlign = "right"
+            context.fillText(`${results[i].currentStreak} streak`, canvas.width - 30, canvas.height / 2 - 120)
+            // medal
+            let image = await loadImage('./Images/3rd_place_medal.png')
+            context.drawImage(image, canvas.width / 2 - 180, canvas.height / 2 - 155, 50, 50)
+            continue
+        }
+        context.font = `bold 27px ${FONT_FAMILY_SIGNIKA}` // for top 4...10
+        // username
+        context.fillText(`${fetchUser.username}`, x, y)
+        if (i == 9) {
+            context.fillText(`${i + 1}.`, 10, y)
+        } else {
+            context.fillText(`${i + 1}.`, 25, y)
+        }
+        // current streak
+        context.font = `bold 25px ${FONT_FAMILY_SIGNIKA}` // for top 4...10
+        context.textAlign = "right"
+        context.fillText(`${results[i].currentStreak} streak`, canvas.width - 30, y)
+        y += 55
     }
     const file = new AttachmentBuilder(await canvas.toBuffer(), { name: 'leaderboard.png' })
     const embed = new EmbedBuilder()
