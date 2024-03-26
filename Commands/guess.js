@@ -764,8 +764,8 @@ module.exports = {
                         setTimeout(async function () {
                             const voteEmbed = new EmbedBuilder()
                                 .setColor(GREEN)
-                                .setTitle('🌟 Love Wrdl? Vote for us on Top.gg! 🗳️')
-                                .setDescription('🎉 Congratulations on your Wordle victory! 🏆 If you had fun playing, consider supporting us by voting for the bot on Top.gg. Your votes help us grow, and exciting rewards might be coming your way in the future!\nhttps://top.gg/bot/1011006137690239059/vote')
+                                .setTitle('🔔 Attention: Monthly Current Streak Reset Incoming!')
+                                .setDescription(`🚀 Heads up! Starting <t:1711918800:R>, the current streak will undergo a monthly reset, offering a fresh start to all participants. But here's the twist: by lending your support through voting for the bot, you unlock a remarkable advantage!\n\nGain **12 hours of immunity**, shielding your streak from resets - an exclusive perk **not applicable during the global monthly reset**. Elevate the competition to new heights with this exciting opportunity!\n\n🌟 In the meantime, you can support the bot by voting on Top.gg: https://top.gg/bot/1011006137690239059/vote 🗳️`)
                             return await interaction.followUp({ embeds: [voteEmbed], ephemeral: true })
                         }, 3 * 1000)
                     }
