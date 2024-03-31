@@ -298,8 +298,8 @@ async function getTopStreakCurrent(client, interaction, results, canvas, context
     context.drawImage(background, -400, 0, 900, 700) // x = -400 offset
     // emoji
     let fire = await loadImage('./Images/fire_color.png')
-    context.drawImage(fire, canvas.width / 2 + 170, canvas.height / 2 - 335, 40, 40)
-    context.drawImage(fire, canvas.width / 2 - 205, canvas.height / 2 - 335, 40, 40)
+    context.drawImage(fire, canvas.width / 2 + 175, canvas.height / 2 - 335, 40, 40)
+    context.drawImage(fire, canvas.width / 2 - 210, canvas.height / 2 - 335, 40, 40)
     // title
     context.fillStyle = WHITE
     context.textAlign = "center"
