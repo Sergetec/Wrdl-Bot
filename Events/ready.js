@@ -66,7 +66,8 @@ module.exports = {
         const checkFirstDayOfTheMonth = async () => {
             const currentDate = new Date()
             const isFirstDayOfTheMonth = currentDate.getDate() === 1
-            const millisecondsUntilNextMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1) - currentDate
+            const nextMonth = new Date(Date.UTC(currentDate.getUTCFullYear(), currentDate.getUTCMonth() + 1, 1))
+            const millisecondsUntilNextMonth = nextMonth - currentDate
             console.log(millisecondsUntilNextMonth)
             setTimeout(async () => {
                 if (isFirstDayOfTheMonth) {
