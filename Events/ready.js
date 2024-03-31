@@ -68,18 +68,23 @@ module.exports = {
             const isFirstDayOfTheMonth = currentDate.getDate() === 1
             const nextMonth = new Date(Date.UTC(currentDate.getUTCFullYear(), currentDate.getUTCMonth() + 1, 1))
             const millisecondsUntilNextMonth = nextMonth - currentDate - (3 * 60 * 60 * 1000) // railway is GMT + 3 => -3h from time
-            setTimeout(async () => {
-                if (isFirstDayOfTheMonth) {
-                    const filter = {
-                        currentStreak: { $ne: 0 } // Find documents where currentStreak is not equal to 0
+            try {
+                setTimeout(async () => {
+                    if (isFirstDayOfTheMonth) {
+                        const filter = {
+                            currentStreak: { $ne: 0 } // Find documents where currentStreak is not equal to 0
+                        }
+                        const update = {
+                            $set: { currentStreak: 0 } // Set currentStreak to 0 for matching documents
+                        }
+                        const result = await statsSchema.updateMany(filter, update)
+                        console.log(`${result.modifiedCount} documents updated.`)
                     }
-                    const update = {
-                        $set: { currentStreak: 0 } // Set currentStreak to 0 for matching documents
-                    }
-                    const result = await statsSchema.updateMany(filter, update)
-                    console.log(`${result.modifiedCount} documents updated.`)
-                }
-            }, millisecondsUntilNextMonth)
+                }, millisecondsUntilNextMonth)
+            } catch (err) {
+                console.log(err)
+                setTimeout(checkFirstDayOfTheMonth, millisecondsUntilNextMonth)
+            }
         }
         await checkFirstDayOfTheMonth()
 
