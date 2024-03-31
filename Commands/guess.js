@@ -749,29 +749,6 @@ module.exports = {
                 }
                 await schema.save()
                 await interaction.reply({ embeds: [embed], files: [file] })
-
-                // Check if user has voted in the last 12 hours
-                const apiUrl = `https://top.gg/api/bots/1011006137690239059/check?userId=${userID}`
-                const response = await fetch(apiUrl, {
-                    method: 'GET',
-                    headers: {
-                        Authorization: process.env.TOPGG_TOKEN,
-                    },
-                })
-                const data = await response.json()
-                if (response.ok) {
-                    if (!data.voted && schema.gamesWon % 4 === 0) {
-                        setTimeout(async function () {
-                            const voteEmbed = new EmbedBuilder()
-                                .setColor(GREEN)
-                                .setTitle('🔔 Attention: Monthly Current Streak Reset Incoming!')
-                                .setDescription(`🚀 Heads up! Starting <t:1711918800:R>, the current streak will undergo a monthly reset, offering a fresh start to all participants. But here's the twist: by lending your support through voting for the bot, you unlock a remarkable advantage!\n\nGain **12 hours of immunity**, shielding your streak from resets - an exclusive perk **not applicable during the global monthly reset**. Elevate the competition to new heights with this exciting opportunity!\n\n🌟 In the meantime, you can support the bot by voting on Top.gg: https://top.gg/bot/1011006137690239059/vote 🗳️`)
-                            return await interaction.followUp({ embeds: [voteEmbed], ephemeral: true })
-                        }, 3 * 1000)
-                    }
-                } else {
-                    console.log(`Error checking vote status: ${data.error}`)
-                }
             } else if (count >= 6) {
                 await gamesSchema.deleteMany(query2)
                 const embed = new EmbedBuilder()
@@ -789,7 +766,42 @@ module.exports = {
                 schema = await statsSchema.findOne(query2)
                 schema.gamesLost = schema.gamesLost + 1
                 schema.winRate = Math.trunc(schema.gamesWon / schema.gamesTotal * 100)
-                schema.currentStreak = 0
+
+                // Check if user has voted in the last 12 hours
+                const apiUrl = `https://top.gg/api/bots/1011006137690239059/check?userId=${userID}`
+                const response = await fetch(apiUrl, {
+                    method: 'GET',
+                    headers: {
+                        Authorization: process.env.TOPGG_TOKEN,
+                    },
+                })
+                const data = await response.json()
+                if (response.ok) {
+                    if (!data.voted) { // not voted
+                        schema.currentStreak = 0 // reset the current streak
+                        if (schema.gamesWon % 7 === 0) {
+                            setTimeout(async function () {
+                                const voteEmbed = new EmbedBuilder()
+                                    .setColor(RED)
+                                    .setTitle('🔔 Heads up, you lost your current streak!')
+                                    .setDescription(`🚀 At the beginning of each new month, the current streak will reset for all players. However: by supporting the bot through voting, you unlock a valuable advantage!\n\n**A 12-hour immunity period against streak resets.** This exclusive benefit **doesn't extend to the global reset** but empowers you to ascend the leaderboard with confidence.\n\n🌟Support us by voting the bot on Top.gg: https://top.gg/bot/1011006137690239059/vote 🗳️`)
+                                return await interaction.followUp({ embeds: [voteEmbed], ephemeral: true })
+                            }, 3 * 1000)
+                        }
+                    } else { // voted
+                        if (schema.gamesWon % 3 === 0) {
+                            setTimeout(async function () {
+                                const voteEmbed = new EmbedBuilder()
+                                    .setColor(GREEN)
+                                    .setTitle('🔔 Yoo-hoo your current streak is saved!')
+                                    .setDescription(`🚀 Thank you for supporting us! Rest assured, we're committed to our promises, ensuring that you haven't lost your current streak!`)
+                                return await interaction.followUp({ embeds: [voteEmbed], ephemeral: true })
+                            }, 3 * 1000)
+                        }
+                    }
+                } else {
+                    console.log(`Error checking vote status: ${data.error}`)
+                }
                 await schema.save()
                 return await interaction.reply({ embeds: [embed], files: [file] })
             } else {
