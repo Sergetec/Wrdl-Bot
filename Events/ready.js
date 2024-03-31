@@ -47,7 +47,7 @@ module.exports = {
         const webhook = new Topgg.Webhook(process.env.TOPGG_AUTHORIZATION)
         app.post(
             "/vote",
-            webhook.listener( async (vote) => {
+            webhook.listener(async (vote) => {
                 console.log(vote.user, 'has voted the bot')
                 const query = {
                     userID: vote.user,
@@ -61,6 +61,27 @@ module.exports = {
 
         // manual gc
         scheduleGc()
+
+        // check for first day of the month
+        const checkFirstDayOfTheMonth = async () => {
+            const currentDate = new Date()
+            const isFirstDayOfTheMonth = currentDate.getDate() === 1
+            const millisecondsUntilNextMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1) - currentDate
+            console.log(millisecondsUntilNextMonth)
+            setTimeout(async () => {
+                if (isFirstDayOfTheMonth) {
+                    const filter = {
+                        currentStreak: { $ne: 0 } // Find documents where currentStreak is not equal to 0
+                    }
+                    const update = {
+                        $set: { currentStreak: 0 } // Set currentStreak to 0 for matching documents
+                    }
+                    const result = await statsSchema.updateMany(filter, update)
+                    console.log(`${result.modifiedCount} documents updated.`)
+                }
+            }, millisecondsUntilNextMonth)
+        }
+        await checkFirstDayOfTheMonth()
 
         // check for inactive games
         const check = async () => {
@@ -130,7 +151,7 @@ function scheduleGc() {
     // schedule next gc within a random interval (15-45 minutes)
     let nextMinutes = Math.random() * 30 + 15
 
-    setTimeout(function(){
+    setTimeout(function () {
         global.gc()
         scheduleGc()
     }, nextMinutes * 60 * 1000)
