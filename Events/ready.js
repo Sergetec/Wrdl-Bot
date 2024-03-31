@@ -67,8 +67,7 @@ module.exports = {
             const currentDate = new Date()
             const isFirstDayOfTheMonth = currentDate.getDate() === 1
             const nextMonth = new Date(Date.UTC(currentDate.getUTCFullYear(), currentDate.getUTCMonth() + 1, 1))
-            const millisecondsUntilNextMonth = nextMonth - currentDate - (3 * 60 * 60 * 1000)
-            console.log(millisecondsUntilNextMonth)
+            const millisecondsUntilNextMonth = nextMonth - currentDate - (3 * 60 * 60 * 1000) // railway is GMT + 3 => -3h from time
             setTimeout(async () => {
                 if (isFirstDayOfTheMonth) {
                     const filter = {
