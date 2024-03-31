@@ -51,12 +51,12 @@ module.exports = {
             .setMaxValues(1)
             .setPlaceholder('Select a category...')
             .addOptions(leaderboards.map((leaderboard) =>
-                    new StringSelectMenuOptionBuilder()
-                        .setLabel(leaderboard.label)
-                        .setDescription(leaderboard.description)
-                        .setValue(leaderboard.value)
-                        .setEmoji(leaderboard.emoji)
-                )
+                new StringSelectMenuOptionBuilder()
+                    .setLabel(leaderboard.label)
+                    .setDescription(leaderboard.description)
+                    .setValue(leaderboard.value)
+                    .setEmoji(leaderboard.emoji)
+            )
             )
 
         const actionRowEnabled = new ActionRowBuilder().addComponents(menu)
@@ -214,15 +214,12 @@ async function getTopStreakBest(client, interaction, results, canvas, context, a
     context.drawImage(background, -400, 0, 900, 700) // x = -400 offset
     // emoji
     let fire = await loadImage('./Images/fire_color.png')
-    let sparkles = await loadImage('./Images/sparkles_color.png')
     context.drawImage(fire, canvas.width / 2 + 140, canvas.height / 2 - 335, 40, 40)
     context.drawImage(fire, canvas.width / 2 - 175, canvas.height / 2 - 335, 40, 40)
-    context.drawImage(sparkles, canvas.width / 2 - 147, canvas.height / 2 - 340, 20, 20)
-    context.drawImage(sparkles, canvas.width / 2 + 168, canvas.height / 2 - 340, 20, 20)
     // title
     context.fillStyle = WHITE
     context.textAlign = "center"
-    context.font = `bold 33px ${FONT_FAMILY_SIGNIKA}`
+    context.font = `bold 35px ${FONT_FAMILY_SIGNIKA}`
     context.fillText('TOP BEST STREAK', canvas.width / 2, canvas.height / 2 - 305)
     // top players
     let totalPlayers = await statsSchema.count()
@@ -306,7 +303,7 @@ async function getTopStreakCurrent(client, interaction, results, canvas, context
     // title
     context.fillStyle = WHITE
     context.textAlign = "center"
-    context.font = `bold 33px ${FONT_FAMILY_SIGNIKA}`
+    context.font = `bold 35px ${FONT_FAMILY_SIGNIKA}`
     context.fillText('TOP CURRENT STREAK', canvas.width / 2, canvas.height / 2 - 305)
     // top players
     let totalPlayers = await statsSchema.count()
