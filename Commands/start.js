@@ -86,6 +86,12 @@ module.exports = {
                 value: 'pl',
                 emoji: '🇵🇱',
             },
+            {
+                label: 'Indonesian',
+                description: 'Indonesian language',
+                value: 'id',
+                emoji: '🇮🇩'
+            },
         ]
 
         const menu = new StringSelectMenuBuilder()
@@ -109,7 +115,7 @@ module.exports = {
             .setColor(ORANGE)
             .setDescription('❗ Choose your language')
         const reply = await interaction.reply({ embeds: [message], components: [actionRow] })
-        let ENGame = false, ROGame = false, TRGame = false, ESGame = false, PTGame = false, FRGame = false, ITGame = false, HUGame = false, PLGame = false
+        let ENGame = false, ROGame = false, TRGame = false, ESGame = false, PTGame = false, FRGame = false, ITGame = false, HUGame = false, PLGame = false, IDGame = false
         const filter = (interaction) => interaction.user.id === userID
         const time = 1000 * 30 //30 seconds
 
@@ -138,6 +144,8 @@ module.exports = {
                 HUGame = true
             } else if (menuInt.values.includes('pl')) {
                 PLGame = true
+            } else if (menuInt.values.includes('id')) {
+                IDGame = true
             }
             const ROMessage = new EmbedBuilder()
                 .setTitle('Wordle Game')
@@ -209,6 +217,14 @@ module.exports = {
                 .addFields({
                     name: 'Gra się rozpoczęła',
                     value: '👉 Użyj \`/guess\` aby zgadnąć.',
+                })
+
+                const IDMessage = new EmbedBuilder()
+                .setTitle('Wordle Game')
+                .setColor(GREEN)
+                .addFields({
+                    name: 'Permainan dimulai',
+                    value: '👉 Gunakan \`/guess\` untuk membuat tebakan Anda',
                 })
 
             let schema
@@ -415,6 +431,25 @@ module.exports = {
                     replyMessage: ' ',
                     alphabet: alphabetLetters,
                     language: 'pl',
+                    expires: dt,
+                })
+                await schema.save()
+            } else if (IDGame) {
+                await interaction.editReply({ embeds: [IDMessage], components: [] })
+                let word = randomWord('id')
+
+                // games database
+                let expires1 = new Date()
+                let dt = new Date(expires1.getTime() + 5 * 1000 * 60).toUTCString()
+                schema = await gamesSchema.create({
+                    guildID: guildID,
+                    channelStarted: channel,
+                    userID: userID,
+                    word: word,
+                    guesses: '0',
+                    replyMessage: ' ',
+                    alphabet: alphabetLetters,
+                    language: 'id',
                     expires: dt,
                 })
                 await schema.save()
