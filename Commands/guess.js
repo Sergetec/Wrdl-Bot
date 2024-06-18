@@ -120,404 +120,50 @@ module.exports = {
             // counter for index
             let counter
             // all are gray in the beginning
-            let wordsRepeated = []
+            let lettersRepeated = []
             for (let i = 97; i <= 122; ++i) {
-                wordsRepeated[i] = 0
+                lettersRepeated[i] = 0
             }
             for (let i = 0; i < 5; ++i) {
                 counter = wordToGuess[i].charCodeAt(0)
-                wordsRepeated[counter] = wordsRepeated[counter] + 1
-                if (charsGuessed[i] === 'a') {
-                    reply[i] = 'A_gray '
-                }
-                if (charsGuessed[i] === 'b') {
-                    reply[i] = 'B_gray '
-                }
-                if (charsGuessed[i] === 'c') {
-                    reply[i] = 'C_gray '
-                }
-                if (charsGuessed[i] === 'd') {
-                    reply[i] = 'D_gray '
-                }
-                if (charsGuessed[i] === 'e') {
-                    reply[i] = 'E_gray '
-                }
-                if (charsGuessed[i] === 'f') {
-                    reply[i] = 'F_gray '
-                }
-                if (charsGuessed[i] === 'g') {
-                    reply[i] = 'G_gray '
-                }
-                if (charsGuessed[i] === 'h') {
-                    reply[i] = 'H_gray '
-                }
-                if (charsGuessed[i] === 'i') {
-                    reply[i] = 'I_gray '
-                }
-                if (charsGuessed[i] === 'j') {
-                    reply[i] = 'J_gray '
-                }
-                if (charsGuessed[i] === 'k') {
-                    reply[i] = 'K_gray '
-                }
-                if (charsGuessed[i] === 'l') {
-                    reply[i] = 'L_gray '
-                }
-                if (charsGuessed[i] === 'm') {
-                    reply[i] = 'M_gray '
-                }
-                if (charsGuessed[i] === 'n') {
-                    reply[i] = 'N_gray '
-                }
-                if (charsGuessed[i] === 'o') {
-                    reply[i] = 'O_gray '
-                }
-                if (charsGuessed[i] === 'p') {
-                    reply[i] = 'P_gray '
-                }
-                if (charsGuessed[i] === 'q') {
-                    reply[i] = 'Q_gray  '
-                }
-                if (charsGuessed[i] === 'r') {
-                    reply[i] = 'R_gray '
-                }
-                if (charsGuessed[i] === 's') {
-                    reply[i] = 'S_gray '
-                }
-                if (charsGuessed[i] === 't') {
-                    reply[i] = 'T_gray '
-                }
-                if (charsGuessed[i] === 'u') {
-                    reply[i] = 'U_gray '
-                }
-                if (charsGuessed[i] === 'v') {
-                    reply[i] = 'V_gray '
-                }
-                if (charsGuessed[i] === 'w') {
-                    reply[i] = 'W_gray '
-                }
-                if (charsGuessed[i] === 'x') {
-                    reply[i] = 'X_gray '
-                }
-                if (charsGuessed[i] === 'y') {
-                    reply[i] = 'Y_gray '
-                }
-                if (charsGuessed[i] === 'z') {
-                    reply[i] = 'Z_gray '
-                }
+                lettersRepeated[counter] = lettersRepeated[counter] + 1
+                reply[i] = `${charsGuessed[i].toUpperCase()}_gray ` // They are all gray in the beginning
             }
 
-            // if character guessed is not in the word
+            // If character guessed is not in the word
             for (let i = 0; i < 5; ++i) {
                 for (let j = 0; j < 5; ++j) {
                     if (charsGuessed[i] !== wordToGuess[j]) {
-                        if (charsGuessed[i] === 'a') {
-                            alphabetCurr[10] = 'A_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'b') {
-                            alphabetCurr[23] = 'B_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'c') {
-                            alphabetCurr[21] = 'C_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'd') {
-                            alphabetCurr[12] = 'D_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'e') {
-                            alphabetCurr[2] = 'E_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'f') {
-                            alphabetCurr[13] = 'F_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'g') {
-                            alphabetCurr[14] = 'G_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'h') {
-                            alphabetCurr[15] = 'H_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'i') {
-                            alphabetCurr[7] = 'I_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'j') {
-                            alphabetCurr[16] = 'J_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'k') {
-                            alphabetCurr[17] = 'K_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'l') {
-                            alphabetCurr[18] = 'L_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'm') {
-                            alphabetCurr[25] = 'M_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'n') {
-                            alphabetCurr[24] = 'N_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'o') {
-                            alphabetCurr[8] = 'O_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'p') {
-                            alphabetCurr[9] = 'P_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'q') {
-                            alphabetCurr[0] = 'Q_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'r') {
-                            alphabetCurr[3] = 'R_darker_gray'
-                        }
-                        if (charsGuessed[i] === 's') {
-                            alphabetCurr[11] = 'S_darker_gray'
-                        }
-                        if (charsGuessed[i] === 't') {
-                            alphabetCurr[4] = 'T_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'u') {
-                            alphabetCurr[6] = 'U_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'v') {
-                            alphabetCurr[22] = 'V_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'w') {
-                            alphabetCurr[1] = 'W_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'x') {
-                            alphabetCurr[20] = 'X_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'y') {
-                            alphabetCurr[5] = 'Y_darker_gray'
-                        }
-                        if (charsGuessed[i] === 'z') {
-                            alphabetCurr[19] = 'Z_darker_gray'
-                        }
+                        alphabetCurr[charsGuessed[i].charCodeAt(0) - 'a'.charCodeAt(0)] = `${charsGuessed[i].toUpperCase()}_darker_gray`
                     }
                 }
             }
 
-            // if character guessed is in the word in the right place
+            // If character guessed is in the word in the right place
             let greenFound = [0, 0, 0, 0, 0]
             for (let i = 0; i < 5; ++i) {
-                counter = wordToGuess[i].charCodeAt(0)
-                if (charsGuessed[i] === wordToGuess[i]) {
-                    wordsRepeated[counter] = wordsRepeated[counter] - 1
-                    greenFound[i] = greenFound[i] + 1
-                    if (charsGuessed[i] === 'a') {
-                        reply[i] = 'A_green '
-                        alphabetCurr[10] = 'A_green'
-                    }
-                    if (charsGuessed[i] === 'b') {
-                        reply[i] = 'B_green '
-                        alphabetCurr[23] = 'B_green'
-                    }
-                    if (charsGuessed[i] === 'c') {
-                        reply[i] = 'C_green '
-                        alphabetCurr[21] = 'C_green'
-                    }
-                    if (charsGuessed[i] === 'd') {
-                        reply[i] = 'D_green '
-                        alphabetCurr[12] = 'D_green'
-                    }
-                    if (charsGuessed[i] === 'e') {
-                        reply[i] = 'E_green '
-                        alphabetCurr[2] = 'E_green'
-                    }
-                    if (charsGuessed[i] === 'f') {
-                        reply[i] = 'F_green '
-                        alphabetCurr[13] = 'F_green'
-                    }
-                    if (charsGuessed[i] === 'g') {
-                        reply[i] = 'G_green '
-                        alphabetCurr[14] = 'G_green'
-                    }
-                    if (charsGuessed[i] === 'h') {
-                        reply[i] = 'H_green '
-                        alphabetCurr[15] = 'H_green'
-                    }
-                    if (charsGuessed[i] === 'i') {
-                        reply[i] = 'I_green '
-                        alphabetCurr[7] = 'I_green'
-                    }
-                    if (charsGuessed[i] === 'j') {
-                        reply[i] = 'J_green '
-                        alphabetCurr[16] = 'J_green'
-                    }
-                    if (charsGuessed[i] === 'k') {
-                        reply[i] = 'K_green '
-                        alphabetCurr[17] = 'K_green'
-                    }
-                    if (charsGuessed[i] === 'l') {
-                        reply[i] = 'L_green '
-                        alphabetCurr[18] = 'L_green'
-                    }
-                    if (charsGuessed[i] === 'm') {
-                        reply[i] = 'M_green '
-                        alphabetCurr[25] = 'M_green'
-                    }
-                    if (charsGuessed[i] === 'n') {
-                        reply[i] = 'N_green '
-                        alphabetCurr[24] = 'N_green'
-                    }
-                    if (charsGuessed[i] === 'o') {
-                        reply[i] = 'O_green '
-                        alphabetCurr[8] = 'O_green'
-                    }
-                    if (charsGuessed[i] === 'p') {
-                        reply[i] = 'P_green '
-                        alphabetCurr[9] = 'P_green'
-                    }
-                    if (charsGuessed[i] === 'q') {
-                        reply[i] = 'Q_green '
-                        alphabetCurr[0] = 'Q_green'
-                    }
-                    if (charsGuessed[i] === 'r') {
-                        reply[i] = 'R_green '
-                        alphabetCurr[3] = 'R_green'
-                    }
-                    if (charsGuessed[i] === 's') {
-                        reply[i] = 'S_green '
-                        alphabetCurr[11] = 'S_green'
-                    }
-                    if (charsGuessed[i] === 't') {
-                        reply[i] = 'T_green '
-                        alphabetCurr[4] = 'T_green'
-                    }
-                    if (charsGuessed[i] === 'u') {
-                        reply[i] = 'U_green '
-                        alphabetCurr[6] = 'U_green'
-                    }
-                    if (charsGuessed[i] === 'v') {
-                        reply[i] = 'V_green '
-                        alphabetCurr[22] = 'V_green'
-                    }
-                    if (charsGuessed[i] === 'w') {
-                        reply[i] = 'W_green '
-                        alphabetCurr[1] = 'W_green'
-                    }
-                    if (charsGuessed[i] === 'x') {
-                        reply[i] = 'X_green '
-                        alphabetCurr[20] = 'X_green'
-                    }
-                    if (charsGuessed[i] === 'y') {
-                        reply[i] = 'Y_green '
-                        alphabetCurr[5] = 'Y_green'
-                    }
-                    if (charsGuessed[i] === 'z') {
-                        reply[i] = 'Z_green '
-                        alphabetCurr[19] = 'Z_green'
-                    }
+                if (charsGuessed[i] === wordToGuess[i]) { // Found a green letter
+                    counter = wordToGuess[i].charCodeAt(0)
+                    lettersRepeated[counter]-- // Decrement the counter of the letter
+                    greenFound[i] = 1 // Mark it as true
+                    reply[i] = `${charsGuessed[i].toUpperCase()}_green `
+                    alphabetCurr[charsGuessed[i].charCodeAt(0) - 'a'.charCodeAt(0)] = `${charsGuessed[i].toUpperCase()}_green`
                 }
             }
 
-            // if character guessed is in the word but wrong place
+            // If character guessed is in the word but wrong place
             for (let i = 0; i < 5; ++i) {
-                for (let j = 0; j < 5; ++j) {
-                    if (charsGuessed[i] === wordToGuess[j]) {
-                        counter = charsGuessed[i].charCodeAt(0)
-                        if (!greenFound[i] && wordsRepeated[counter] > 0) {
-                            if (charsGuessed[i] === 'a') {
-                                reply[i] = 'A_yellow '
-                                alphabetCurr[10] = 'A_yellow'
+                if (!greenFound[i]) {
+                    for (let j = 0; j < 5; ++j) {
+                        if (charsGuessed[i] === wordToGuess[j] && !greenFound[j]) {
+                            counter = charsGuessed[i].charCodeAt(0);
+                            if (lettersRepeated[counter] > 0) {
+                                // Mark the guessed character as yellow
+                                reply[i] = `${charsGuessed[i].toUpperCase()}_yellow `
+                                alphabetCurr[charsGuessed[i].charCodeAt(0) - 'a'.charCodeAt(0)] = `${charsGuessed[i].toUpperCase()}_yellow`
+                                lettersRepeated[counter]-- // Decrement the counter of the letter
+                                break // Move to the next guessed character
                             }
-                            if (charsGuessed[i] === 'b') {
-                                reply[i] = 'B_yellow '
-                                alphabetCurr[23] = 'B_yellow'
-                            }
-                            if (charsGuessed[i] === 'c') {
-                                reply[i] = 'C_yellow '
-                                alphabetCurr[21] = 'C_yellow'
-                            }
-                            if (charsGuessed[i] === 'd') {
-                                reply[i] = 'D_yellow '
-                                alphabetCurr[12] = 'D_yellow'
-                            }
-                            if (charsGuessed[i] === 'e') {
-                                reply[i] = 'E_yellow '
-                                alphabetCurr[2] = 'E_yellow'
-                            }
-                            if (charsGuessed[i] === 'f') {
-                                reply[i] = 'F_yellow '
-                                alphabetCurr[13] = 'F_yellow'
-                            }
-                            if (charsGuessed[i] === 'g') {
-                                reply[i] = 'G_yellow '
-                                alphabetCurr[14] = 'G_yellow'
-                            }
-                            if (charsGuessed[i] === 'h') {
-                                reply[i] = 'H_yellow '
-                                alphabetCurr[15] = 'H_yellow'
-                            }
-                            if (charsGuessed[i] === 'i') {
-                                reply[i] = 'I_yellow '
-                                alphabetCurr[7] = 'I_yellow'
-                            }
-                            if (charsGuessed[i] === 'j') {
-                                reply[i] = 'J_yellow '
-                                alphabetCurr[16] = 'J_yellow'
-                            }
-                            if (charsGuessed[i] === 'k') {
-                                reply[i] = 'K_yellow '
-                                alphabetCurr[17] = 'K_yellow'
-                            }
-                            if (charsGuessed[i] === 'l') {
-                                reply[i] = 'L_yellow '
-                                alphabetCurr[18] = 'L_yellow'
-                            }
-                            if (charsGuessed[i] === 'm') {
-                                reply[i] = 'M_yellow '
-                                alphabetCurr[25] = 'M_yellow'
-                            }
-                            if (charsGuessed[i] === 'n') {
-                                reply[i] = 'N_yellow '
-                                alphabetCurr[24] = 'N_yellow'
-                            }
-                            if (charsGuessed[i] === 'o') {
-                                reply[i] = 'O_yellow '
-                                alphabetCurr[8] = 'O_yellow'
-                            }
-                            if (charsGuessed[i] === 'p') {
-                                reply[i] = 'P_yellow '
-                                alphabetCurr[9] = 'P_yellow'
-                            }
-                            if (charsGuessed[i] === 'q') {
-                                reply[i] = 'Q_yellow '
-                                alphabetCurr[0] = 'Q_yellow'
-                            }
-                            if (charsGuessed[i] === 'r') {
-                                reply[i] = 'R_yellow '
-                                alphabetCurr[3] = 'R_yellow'
-                            }
-                            if (charsGuessed[i] === 's') {
-                                reply[i] = 'S_yellow '
-                                alphabetCurr[11] = 'S_yellow'
-                            }
-                            if (charsGuessed[i] === 't') {
-                                reply[i] = 'T_yellow '
-                                alphabetCurr[4] = 'T_yellow'
-                            }
-                            if (charsGuessed[i] === 'u') {
-                                reply[i] = 'U_yellow '
-                                alphabetCurr[6] = 'U_yellow'
-                            }
-                            if (charsGuessed[i] === 'v') {
-                                reply[i] = 'V_yellow '
-                                alphabetCurr[22] = 'V_yellow'
-                            }
-                            if (charsGuessed[i] === 'w') {
-                                reply[i] = 'W_yellow '
-                                alphabetCurr[1] = 'W_yellow'
-                            }
-                            if (charsGuessed[i] === 'x') {
-                                reply[i] = 'X_yellow '
-                                alphabetCurr[20] = 'X_yellow'
-                            }
-                            if (charsGuessed[i] === 'y') {
-                                reply[i] = 'Y_yellow '
-                                alphabetCurr[5] = 'Y_yellow'
-                            }
-                            if (charsGuessed[i] === 'z') {
-                                reply[i] = 'Z_yellow '
-                                alphabetCurr[19] = 'Z_yellow'
-                            }
-                            wordsRepeated[counter] = wordsRepeated[counter] - 1
                         }
                     }
                 }
