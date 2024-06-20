@@ -30,9 +30,6 @@ module.exports = {
                 .setDescription('❓ **You have already started a game**')
             return await interaction.reply({ embeds: [embed], ephemeral: true })
         }
-        if (userID !== '333664530582208513') {
-            return await interaction.reply({ content: "Bot is being updated. We are sorry for this inconvenience.", ephemeral: true })
-        }
 
         const languages = [
             {
