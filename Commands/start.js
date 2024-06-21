@@ -258,7 +258,7 @@ module.exports = {
                 if (userStats) {
                     userStats.gamesTotal += 1
                 } else {
-                    userStats = await userStats.create({
+                    userStats = await statsSchema.create({
                         guildID,
                         userID,
                         gamesTotal: 1,
