@@ -130,11 +130,15 @@ module.exports = {
                 reply[i] = `${charsGuessed[i].toUpperCase()}_gray ` // They are all gray in the beginning
             }
 
+            const qwerty = "qwertyuiopasdfghjklzxcvbnm"
             // If character guessed is not in the word
             for (let i = 0; i < 5; ++i) {
                 for (let j = 0; j < 5; ++j) {
                     if (charsGuessed[i] !== wordToGuess[j]) {
-                        alphabetCurr[charsGuessed[i].charCodeAt(0) - 'a'.charCodeAt(0)] = `${charsGuessed[i].toUpperCase()}_darker_gray`
+                        let ind = qwerty.indexOf(charsGuessed[i])
+                        if (alphabetCurr[ind] !== `${charsGuessed[i].toUpperCase()}_yellow` && alphabetCurr[ind] !== `${charsGuessed[i].toUpperCase()}_green`) { // Keep the green / yellow letter in place
+                            alphabetCurr[ind] = `${charsGuessed[i].toUpperCase()}_darker_gray`
+                        }
                     }
                 }
             }
@@ -147,7 +151,8 @@ module.exports = {
                     lettersRepeated[counter]-- // Decrement the counter of the letter
                     greenFound[i] = 1 // Mark it as true
                     reply[i] = `${charsGuessed[i].toUpperCase()}_green `
-                    alphabetCurr[charsGuessed[i].charCodeAt(0) - 'a'.charCodeAt(0)] = `${charsGuessed[i].toUpperCase()}_green`
+                    let ind = qwerty.indexOf(charsGuessed[i])
+                    alphabetCurr[ind] = `${charsGuessed[i].toUpperCase()}_green`
                 }
             }
 
@@ -160,7 +165,10 @@ module.exports = {
                             if (lettersRepeated[counter] > 0) {
                                 // Mark the guessed character as yellow
                                 reply[i] = `${charsGuessed[i].toUpperCase()}_yellow `
-                                alphabetCurr[charsGuessed[i].charCodeAt(0) - 'a'.charCodeAt(0)] = `${charsGuessed[i].toUpperCase()}_yellow`
+                                let ind = qwerty.indexOf(charsGuessed[i])
+                                if (alphabetCurr[ind] !== `${charsGuessed[i].toUpperCase()}_green`) { // Keep the green letter in place
+                                    alphabetCurr[ind] = `${charsGuessed[i].toUpperCase()}_yellow`
+                                }
                                 lettersRepeated[counter]-- // Decrement the counter of the letter
                                 break // Move to the next guessed character
                             }
