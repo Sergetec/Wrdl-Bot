@@ -8389,6 +8389,7 @@ pifas
 pifei
 pifem
 pifes
+pifia
 pifio
 pifou
 pigal
@@ -9061,6 +9062,7 @@ ratus
 rauli
 razao
 razia
+reaca
 reagi
 reais
 reaja

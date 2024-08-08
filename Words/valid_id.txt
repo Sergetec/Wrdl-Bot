@@ -24,6 +24,7 @@ acala
 acang
 acara
 acawi
+acuan
 acung
 adaks
 adang
@@ -35,9 +36,12 @@ adnan
 adres
 adven
 advis
+adzab
+adzan
 aerob
 afair
 afdal
+afdol
 afiat
 afiks
 afrit
@@ -50,6 +54,7 @@ agens
 agogo
 agung
 ahkam
+ahlak
 ahlan
 ahmak
 ahmar
@@ -65,6 +70,8 @@ akbar
 akene
 akhir
 akmal
+akmil
+akpol
 akrab
 aksen
 aksep
@@ -83,11 +90,13 @@ albit
 album
 alias
 alibi
+alien
 aling
 alkah
 alkil
 alkus
 allah
+almon
 altar
 alter
 alung
@@ -114,8 +123,10 @@ amina
 amino
 amorf
 ampai
+ampar
 ampas
 ampat
+ampau
 ampek
 ampel
 ampet
@@ -165,6 +176,7 @@ angsa
 angsu
 angus
 angut
+anime
 animo
 anion
 anjak
@@ -203,6 +215,7 @@ anyes
 anyik
 anyir
 aorta
+apaan
 apati
 aping
 apion
@@ -256,6 +269,7 @@ asfar
 asing
 asiri
 askar
+askes
 asket
 askon
 asnad
@@ -274,6 +288,7 @@ ateis
 atfal
 atlas
 atlet
+atlit
 atman
 atowa
 atret
@@ -286,6 +301,7 @@ aural
 aurat
 aurum
 autad
+autis
 avgas
 avtur
 awang
@@ -312,6 +328,7 @@ babur
 babut
 bacah
 bacak
+bacan
 bacar
 bacek
 bacem
@@ -423,6 +440,7 @@ banua
 banyo
 banyu
 bapak
+baper
 bapet
 barah
 barai
@@ -519,6 +537,7 @@ begal
 begap
 begar
 beguk
+behel
 bejat
 bekah
 bekal
@@ -549,6 +568,7 @@ belis
 belit
 beloh
 belok
+belom
 belon
 belot
 beluk
@@ -672,6 +692,7 @@ biuku
 bivak
 bksda
 blong
+bloon
 blues
 bobok
 bobol
@@ -680,6 +701,7 @@ bobot
 bocah
 bocok
 bocor
+bodar
 bodhi
 bodoh
 bodok
@@ -690,9 +712,11 @@ bogem
 bogol
 bogor
 bogot
+bokap
 bokar
 bokca
 bokek
+bokeo
 bokoh
 bokop
 bokor
@@ -727,6 +751,7 @@ botoh
 botok
 botol
 botor
+boxer
 boyak
 boyas
 bozah
@@ -755,6 +780,7 @@ bufer
 bufet
 bugar
 bugil
+bugis
 buhuk
 buhul
 bujal
@@ -897,6 +923,7 @@ capak
 capal
 capar
 capek
+caper
 capik
 capil
 capit
@@ -995,6 +1022,7 @@ cepal
 cepat
 cepek
 ceper
+cepit
 cepol
 cepuk
 cerah
@@ -1024,9 +1052,11 @@ cetok
 cetus
 ceuki
 cewek
+china
 cibir
 cibit
 cibuk
+cicak
 cicik
 cicil
 cicip
@@ -1051,7 +1081,9 @@ cipai
 cipan
 cipok
 cipta
+ciput
 cirit
+citah
 citra
 coang
 coban
@@ -1133,6 +1165,7 @@ curam
 curat
 curik
 curna
+curut
 cutak
 cutel
 cuwil
@@ -1359,6 +1392,7 @@ detap
 detar
 detas
 detik
+detil
 detup
 detus
 dewan
@@ -1380,6 +1414,7 @@ diler
 dimer
 dinar
 dinas
+dinda
 dingo
 diode
 dipan
@@ -1445,7 +1480,9 @@ dudur
 dudus
 dugal
 dugas
+dugem
 duhai
+duhur
 dukan
 dukat
 dukuh
@@ -1476,12 +1513,14 @@ edema
 edisi
 efusi
 egois
+ejaan
 ekang
 ekrin
 eksak
 eksem
 ekses
 eksin
+eksis
 eksit
 ekspo
 elang
@@ -1516,6 +1555,7 @@ embun
 embus
 embut
 emisi
+emoji
 emong
 emosi
 empal
@@ -1586,12 +1626,14 @@ ereng
 ergot
 ering
 erong
+eropa
 erosi
 erpah
 erpak
 esais
 esens
 eskas
+essay
 ester
 etana
 etape
@@ -1647,6 +1689,7 @@ fidah
 fider
 figur
 fikih
+fikir
 fikli
 fiksi
 fikus
@@ -1660,6 +1703,7 @@ fisik
 fisis
 fiton
 fitri
+fitur
 floem
 flora
 fluks
@@ -1701,6 +1745,7 @@ gabuk
 gabus
 gabut
 gacok
+gacor
 gadai
 gadis
 gadon
@@ -1748,6 +1793,7 @@ gamik
 gamis
 gamit
 gamma
+gamon
 gamuh
 ganal
 ganar
@@ -1907,6 +1953,8 @@ getok
 getol
 getuk
 getun
+ghaib
+ghoib
 gibah
 gibas
 gidik
@@ -2154,6 +2202,7 @@ hiruk
 hirup
 hisab
 hitam
+hoaks
 hobat
 hodah
 hokah
@@ -2190,6 +2239,7 @@ hurah
 huria
 huruf
 hutan
+hymne
 ialah
 ibing
 iblis
@@ -2251,6 +2301,7 @@ indah
 indap
 inden
 india
+indie
 indik
 indra
 induk
@@ -2299,6 +2350,7 @@ istan
 istaz
 istri
 itlak
+iuran
 jabal
 jabar
 jabat
@@ -2480,6 +2532,7 @@ joglo
 johan
 johar
 jojol
+joker
 jolak
 jolek
 jolok
@@ -2761,6 +2814,7 @@ kecer
 kecik
 kecil
 kecit
+kecoa
 kecoh
 kecup
 kecut
@@ -3401,6 +3455,7 @@ latas
 laten
 latif
 latih
+latin
 latis
 latma
 latuh
@@ -3953,6 +4008,7 @@ meong
 mepet
 merah
 merak
+meram
 merat
 mercu
 merdu
@@ -4008,6 +4064,7 @@ mioma
 mipis
 mirah
 mirai
+miras
 mirat
 mirih
 mirik
@@ -4062,6 +4119,7 @@ mosok
 motel
 motif
 motor
+motto
 mozah
 muara
 mubah
@@ -4113,6 +4171,7 @@ murup
 murus
 musik
 musim
+musti
 musuh
 mutah
 mutan
@@ -4198,6 +4257,7 @@ nilam
 nilau
 nilon
 ninik
+ninja
 nipah
 nipis
 nisab
@@ -4225,6 +4285,7 @@ nuget
 nujum
 nukil
 nunut
+nusuk
 nusyu
 nutan
 nuzul
@@ -4306,7 +4367,9 @@ orgel
 orien
 orion
 orkes
+ormas
 osean
+ospek
 ovasi
 oyong
 pacai
@@ -4769,6 +4832,8 @@ prasi
 premi
 prima
 prive
+promo
+prona
 prosa
 proto
 psalm
@@ -4856,6 +4921,7 @@ putut
 puyan
 puyer
 puyuh
+qalbu
 qasar
 qudsi
 quran
@@ -5137,6 +5203,7 @@ rimba
 rimis
 rimpi
 rinai
+rinci
 rincu
 rindu
 ripit
@@ -5204,6 +5271,7 @@ ruban
 rubel
 rubik
 rubin
+rubuh
 rucah
 rudah
 rudal
@@ -5238,6 +5306,7 @@ rurut
 rusak
 rusuh
 rusuk
+rusun
 rutab
 rutin
 rutuk
@@ -5609,6 +5678,7 @@ sibir
 sibuk
 sibur
 sidai
+sidak
 sidat
 sidik
 siduk
@@ -5777,6 +5847,7 @@ stepa
 stori
 stres
 strip
+strok
 struk
 studi
 stuko
@@ -5840,6 +5911,7 @@ sunah
 sunam
 sunan
 sunat
+sunda
 sungu
 sunti
 sunyi
@@ -5852,6 +5924,7 @@ surai
 suram
 surat
 surau
+surel
 suren
 surga
 surih
@@ -6213,11 +6286,14 @@ timpa
 timun
 timur
 timus
+tinai
+tinea
 tiner
 tingi
 tinja
 tinju
 tinta
+tipak
 tipar
 tipis
 tirah
@@ -6253,6 +6329,7 @@ tohok
 tohor
 tokak
 tokek
+token
 tokoh
 tokok
 tolak
@@ -6388,11 +6465,14 @@ udara
 udeng
 ujana
 ujang
+ujian
 ujung
+ukhti
 uktab
 ulama
 ulang
 uling
+ultah
 ultra
 ulung
 umara
@@ -6473,6 +6553,7 @@ valis
 varia
 vasal
 vedda
+vegan
 velar
 velum
 venal
@@ -6485,9 +6566,11 @@ vespa
 veste
 veter
 video
+vidio
 vigia
 vinil
 viola
+viral
 virga
 virgo
 virus
@@ -6511,7 +6594,10 @@ waduh
 waduk
 wafak
 wafat
+wafer
 wagon
+wagub
+wagyu
 wahah
 wahai
 waham
@@ -6536,9 +6622,11 @@ walau
 waleh
 walet
 waluh
+wamil
 wanda
 wandu
 wangi
+waqaf
 warak
 waras
 wardi
@@ -6594,6 +6682,7 @@ wodka
 wrang
 wreda
 wregu
+wudhu
 wuduk
 wujud
 wuker
@@ -6645,6 +6734,10 @@ zikir
 zirah
 ziter
 zohal
+zolim
+zombi
 zuama
+zubur
 zuhud
 zuhur
+zumba

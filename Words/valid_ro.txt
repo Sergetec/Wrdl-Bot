@@ -1219,6 +1219,7 @@ bomba
 bombe
 bonca
 bonci
+bonda
 bonei
 bonom
 bonti
@@ -1997,6 +1998,7 @@ clean
 clema
 cleme
 cleni
+cleri
 clica
 clici
 clima
@@ -3772,6 +3774,7 @@ geana
 gebea
 gecii
 gecko
+gelat
 gelep
 geliv
 gelos
@@ -3890,6 +3893,7 @@ goala
 goale
 goana
 goane
+goaza
 gobai
 godac
 goden
@@ -4006,6 +4010,7 @@ gropi
 grosi
 grota
 grote
+gruba
 gruia
 gruie
 grund
@@ -4069,7 +4074,7 @@ hacai
 hacui
 hacul
 hadei
-Hades
+hades
 hadul
 hagii
 hagiu
@@ -5322,6 +5327,7 @@ liaze
 libel
 liber
 libov
+libra
 licar
 licee
 liceu
@@ -5434,6 +5440,7 @@ lizau
 lizei
 lizez
 lizol
+loaba
 loaza
 loaze
 lobai
@@ -5521,6 +5528,7 @@ lucim
 lucis
 lucit
 luciu
+lucla
 lucra
 lucre
 lucri
@@ -7302,6 +7310,7 @@ pazim
 pazit
 peana
 peane
+pecet
 pecia
 pecie
 pecii
@@ -9691,6 +9700,7 @@ tanci
 tanea
 tanga
 tangi
+tango
 tanic
 tanin
 tanji

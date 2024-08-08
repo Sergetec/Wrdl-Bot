@@ -463,7 +463,6 @@ jogar
 jovem
 judeu
 juizo
-julia
 junco
 junto
 justa
@@ -839,8 +838,7 @@ sonsa
 sonso
 sorte
 sosia
-sotao
-staff
+sota
 stand
 suave
 subir
