@@ -66,8 +66,8 @@ module.exports = {
         const checkFirstDayOfTheMonth = async () => {
             const currentDate = new Date()
             const isFirstDayOfTheMonth = currentDate.getDate() === 1
-            const millisecondsUntilNextMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1) - currentDate + (3 * 60 * 60 * 1000) // railway is GMT + 3 => -3h from time
-            if (millisecondsUntilNextMonth >= 2678400000) {
+            let millisecondsUntilNextMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 1) - currentDate + (3 * 60 * 60 * 1000) // railway is GMT + 3 => -3h from time
+            if (millisecondsUntilNextMonth >= 2147483647) {
                 millisecondsUntilNextMonth /= 2
             }
             try {
@@ -79,8 +79,7 @@ module.exports = {
                         const update = {
                             $set: { currentStreak: 0 } // Set currentStreak to 0 for matching documents
                         }
-                        const result = await statsSchema.updateMany(filter, update)
-                        console.log(`${result.modifiedCount} documents updated.`)
+                        await statsSchema.updateMany(filter, update)
                     }
                 }, millisecondsUntilNextMonth)
             } catch (err) {
