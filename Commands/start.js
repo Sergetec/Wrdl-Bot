@@ -92,6 +92,12 @@ module.exports = {
                 value: 'id',
                 emoji: '🇮🇩'
             },
+            {
+                label: 'Croatian',
+                description: 'Croatian language',
+                value: 'hr',
+                emoji: '🇭🇷'
+            },
         ]
 
         const menu = new StringSelectMenuBuilder()
@@ -210,7 +216,17 @@ module.exports = {
                         value: '👉 Gunakan `/guess` untuk membuat tebakan Anda',
                     }),
                 gameFlag: 'IDGame'
-            }
+            },
+            hr: {
+                embed: new EmbedBuilder()
+                    .setTitle('Wordle Game')
+                    .setColor(GREEN)
+                    .addFields({
+                        name: 'Igra je počela',
+                        value: '👉 Koristite `/guess` da biste pogodili',
+                    }),
+                gameFlag: 'HRGame'
+            },
         }
 
         const message = new EmbedBuilder()
@@ -223,9 +239,9 @@ module.exports = {
         const time = 1000 * 30 // 30 seconds
 
         const collector = reply.createMessageComponentCollector({
-            filter,
+            filter: filter,
             max: 1,
-            time
+            time: time,
         })
 
         const alphabetGray = 'QWERTYUIOPASDFGHJKLZXCVBNM'.split('').map(letter => `${letter}_gray`).join(' ')
@@ -245,7 +261,7 @@ module.exports = {
                     guildID: guildID,
                     channelStarted: channel,
                     userID: userID,
-                    word,
+                    word: word,
                     guesses: '0',
                     replyMessage: ' ',
                     alphabet: alphabetGray,
@@ -259,8 +275,8 @@ module.exports = {
                     userStats.gamesTotal += 1
                 } else {
                     userStats = await statsSchema.create({
-                        guildID,
-                        userID,
+                        guildID: guildID,
+                        userID: userID,
                         gamesTotal: 1,
                         gamesWon: 0,
                         gamesLost: 0,
