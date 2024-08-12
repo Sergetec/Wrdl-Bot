@@ -98,6 +98,9 @@ module.exports = {
                 }
                 const results = await gamesSchema.find(query)
                 for (let i = 0; i < results.length; ++i) {
+                    if (results.expires >= dt) {
+                        continue
+                    }
                     let userIDUser = results[i].userID
                     await gamesSchema.deleteMany(query) // delete from games database
                     await expiredGameFound(userIDUser) // update the user in stats database
