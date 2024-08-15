@@ -58,3 +58,5 @@ There are 3 colors that will help you throughout the game:
 🇵🇱 Polish
 
 🇮🇩 Indonesian
+
+🇭🇷 Croatian
