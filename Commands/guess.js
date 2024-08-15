@@ -374,34 +374,36 @@ module.exports = {
                         text: `${count} / 6`
                     })
                 schema = await statsSchema.findOne(query2)
-                schema.gamesWon = schema.gamesWon + 1
-                schema.winRate = Math.trunc(schema.gamesWon / schema.gamesTotal * 100)
-                let currentStreak = schema.currentStreak, maxStreak = schema.maxStreak
-                currentStreak++
-                schema.currentStreak = currentStreak
-                maxStreak = Math.max(maxStreak, currentStreak)
-                schema.maxStreak = maxStreak
-                switch (count) {
-                    case 1:
-                        schema.oneGuess = schema.oneGuess + 1
-                        break
-                    case 2:
-                        schema.twoGuess = schema.twoGuess + 1
-                        break
-                    case 3:
-                        schema.threeGuess = schema.threeGuess + 1
-                        break
-                    case 4:
-                        schema.fourGuess = schema.fourGuess + 1
-                        break
-                    case 5:
-                        schema.fiveGuess = schema.fiveGuess + 1
-                        break
-                    case 6:
-                        schema.sixGuess = schema.sixGuess + 1
-                        break
+                if (schema) {
+                    schema.gamesWon = schema.gamesWon + 1
+                    schema.winRate = Math.trunc(schema.gamesWon / schema.gamesTotal * 100)
+                    let currentStreak = schema.currentStreak, maxStreak = schema.maxStreak
+                    currentStreak++
+                    schema.currentStreak = currentStreak
+                    maxStreak = Math.max(maxStreak, currentStreak)
+                    schema.maxStreak = maxStreak
+                    switch (count) {
+                        case 1:
+                            schema.oneGuess = schema.oneGuess + 1
+                            break
+                        case 2:
+                            schema.twoGuess = schema.twoGuess + 1
+                            break
+                        case 3:
+                            schema.threeGuess = schema.threeGuess + 1
+                            break
+                        case 4:
+                            schema.fourGuess = schema.fourGuess + 1
+                            break
+                        case 5:
+                            schema.fiveGuess = schema.fiveGuess + 1
+                            break
+                        case 6:
+                            schema.sixGuess = schema.sixGuess + 1
+                            break
+                    }
+                    await schema.save()
                 }
-                await schema.save()
                 await interaction.reply({ embeds: [embed], files: [file] })
             } else if (count >= 6) {
                 await gamesSchema.deleteMany(query2)
@@ -462,17 +464,20 @@ module.exports = {
 
                 // update expire time
                 let dt = new Date()
-                dt = new Date(dt.getTime() + 5 * 60 * 1000).toUTCString()
+                dt = new Date(dt.getTime() + 5 * 60 * 1000)
 
                 let schema2 = await gamesSchema.findOne(query)
-                schema2.expires = dt
-                await schema2.save()
-
+                if (schema2) {
+                    schema2.expires = dt
+                    await schema2.save()
+                }
                 schema = await gamesSchema.findOne(query2)
-                schema.guesses = count
-                schema.replyMessage = replyMessage
-                schema.alphabet = alphabetNew
-                await schema.save()
+                if (schema) {
+                    schema.guesses = count
+                    schema.replyMessage = replyMessage
+                    schema.alphabet = alphabetNew
+                    await schema.save()
+                }
                 const embed = new EmbedBuilder()
                     .setImage('attachment://guess.png')
                     .setColor(GREEN)
@@ -487,11 +492,11 @@ module.exports = {
 }
 
 function hasWhiteSpace(s) {
-    return /\s/g.test(s);
+    return /\s/g.test(s)
 }
 
 function hasNumber(s) {
-    return /\d/.test(s);
+    return /\d/.test(s)
 }
 
 function roundRect(x, y, w, h, r, context) {

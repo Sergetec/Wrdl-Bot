@@ -256,7 +256,7 @@ module.exports = {
 
                 const word = randomWord(selectedLanguage)
                 const expires1 = new Date()
-                const dt = new Date(expires1.getTime() + 5 * 1000 * 60).toUTCString()
+                const dt = new Date(expires1.getTime() + 5 * 1000 * 60)
                 const schema = await gamesSchema.create({
                     guildID: guildID,
                     channelStarted: channel,

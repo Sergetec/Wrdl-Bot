@@ -60,7 +60,7 @@ module.exports = {
         app.listen(process.env.PORT)
 
         // manual gc
-        scheduleGc()
+        // scheduleGc()
 
         // check for first day of the month
         const checkFirstDayOfTheMonth = async () => {
@@ -92,15 +92,12 @@ module.exports = {
         // check for inactive games
         const check = async () => {
             try {
-                let dt = new Date().toUTCString()
+                const dt = new Date()
                 const query = {
                     expires: { $lt: dt },
                 }
                 const results = await gamesSchema.find(query)
                 for (let i = 0; i < results.length; ++i) {
-                    if (results.expires >= dt) {
-                        continue
-                    }
                     let userIDUser = results[i].userID
                     await gamesSchema.deleteMany(query) // delete from games database
                     await expiredGameFound(userIDUser) // update the user in stats database
@@ -150,18 +147,4 @@ async function sendGameEndedMessage(result, channel, client) {
     } catch (err) {
         console.log(err)
     }
-}
-
-function scheduleGc() {
-    if (!global.gc) {
-        return console.log('Garbage collection is not exposed')
-    }
-
-    // schedule next gc within a random interval (15-45 minutes)
-    let nextMinutes = Math.random() * 30 + 15
-
-    setTimeout(function () {
-        global.gc()
-        scheduleGc()
-    }, nextMinutes * 60 * 1000)
 }
