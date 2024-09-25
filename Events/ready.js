@@ -39,7 +39,7 @@ module.exports = {
         // topgg - autoposter
         const ap = AutoPoster(process.env.TOPGG_TOKEN, client)
         ap.on('posted', (stats) => {
-            console.log(`✅ Stats updated | ${stats.serverCount} servers`)
+            console.log(`✅ Stats updated | ${stats.serverCount} servers | ${client.shard.count} shards.`)
         })
 
         // topgg - voting logs
@@ -58,9 +58,6 @@ module.exports = {
             })
         )
         app.listen(process.env.PORT)
-
-        // manual gc
-        // scheduleGc()
 
         // check for first day of the month
         const checkFirstDayOfTheMonth = async () => {
