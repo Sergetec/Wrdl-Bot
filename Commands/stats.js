@@ -35,6 +35,8 @@ module.exports = {
         },
     ],
     async execute(client, interaction) {
+        await interaction.deferReply();
+
         const user = interaction.options.getUser('user') || interaction.user
         const userID = user.id
 
@@ -150,7 +152,8 @@ module.exports = {
                 .setImage('attachment://stats.png')
                 .setColor(GREEN)
                 .setAuthor({ name: `${user.displayName}'s wordle stats`, iconURL: `${user.displayAvatarURL({ dynamic: true })}` })
-            return await interaction.reply({ embeds: [embed], files: [file] })
+            
+            return await interaction.editReply({ embeds: [embed], files: [file] })
         } else {
             const message = new EmbedBuilder()
                 .setColor('#ED4245')
