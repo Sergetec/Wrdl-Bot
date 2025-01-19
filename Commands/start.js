@@ -98,6 +98,12 @@ module.exports = {
                 value: 'hr',
                 emoji: '🇭🇷'
             },
+            {
+                label: 'Serbian',
+                description: 'Serbian language',
+                value: 'rs',
+                emoji: '🇷🇸'
+            },
         ]
 
         const menu = new StringSelectMenuBuilder()
@@ -227,6 +233,16 @@ module.exports = {
                     }),
                 gameFlag: 'HRGame'
             },
+            rs: {
+                embed: new EmbedBuilder()
+                    .setTitle('Wordle Game')
+                    .setColor(GREEN)
+                    .addFields({
+                        name: 'Igra je počela',
+                        value: '👉 Koristite `/guess` da biste pogodili',
+                    }),
+                gameFlag: 'RSGame'
+            }
         }
 
         const message = new EmbedBuilder()
