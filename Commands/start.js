@@ -325,7 +325,7 @@ module.exports = {
 
 function randomWord(lang) {
     const file = fs.readFileSync(`Words/words_${lang}.txt`, 'utf-8')
-    const wordArray = file.split('\n')
+    const wordArray = file.split(/\r?\n/)
 
     let randomWord
     let rand = Math.floor(Math.random() * wordArray.length)
