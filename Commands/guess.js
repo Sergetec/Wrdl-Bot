@@ -37,7 +37,6 @@ module.exports = {
         const userID = interaction.user.id
         const guildID = interaction.guild.id
         const query = {
-            // guildID: guildID,
             userID: userID,
         }
         const result = await gamesSchema.findOne(query)
@@ -49,13 +48,8 @@ module.exports = {
             return await interaction.reply({ embeds: [message], ephemeral: true })
         } else {
             let replyMessage = result.replyMessage
-            let alphabetString = ''
-            alphabetString = result.alphabet
-            let alphabetCurr = alphabetString.split(' ')
-            let count = result.guesses
-            let wordToGuess = result.word
-            let guessedWord = interaction.options.getString('word')
-            if (hasWhiteSpace(guessedWord)) {
+            const guessedWord = interaction.options.getString('word').toLowerCase()
+            if (hasWhiteSpaces(guessedWord)) {
                 const message = new EmbedBuilder()
                     .setTitle('Wordle Game')
                     .setColor(RED)
@@ -66,124 +60,75 @@ module.exports = {
                 const message = new EmbedBuilder()
                     .setTitle('Wordle Game')
                     .setColor(RED)
-                    .setDescription('❗ Your guess must be a **5 character word**')
+                    .setDescription('❗Your guess must be a **5 character word**')
                 return await interaction.reply({ embeds: [message], ephemeral: true })
             }
-            if (hasNumber(guessedWord)) {
+            if (hasNumbers(guessedWord)) {
                 const message = new EmbedBuilder()
                     .setTitle('Wordle Game')
                     .setColor(RED)
                     .setDescription('❗You **cannot use numbers**')
                 return await interaction.reply({ embeds: [message], ephemeral: true })
             }
-            count++
-            let charsGuessed = ''
-            // copying
-            for (let i = 0; i < 5; ++i) {
-                charsGuessed += guessedWord[i].toLowerCase()
-            }
-
-            // check for valid word
-            let found
-            let auxChars
-            let fileWords = fs.readFileSync(`Words/valid_${result.language}.txt`, 'utf-8')
-            const wordArray = fileWords.split('\n')
-            for (let i = 0; i < wordArray.length; ++i) {
-                let word = wordArray[i]
-                auxChars = ''
-                for (let j = 0; j < 5; ++j) {
-                    auxChars += word[j]
-                }
-                found = true
-                for (let k = 0; k < 5; ++k) {
-                    if (charsGuessed[k] !== auxChars[k]) {
-                        found = false
-                    }
-                }
-                if (found === true) {
-                    break
-                }
-            }
-            if (!found) {
+            let count = result.guesses
+            const wordToGuess = result.word
+            const alphabetCurr = result.alphabet.split(' ')
+            const wordList = new Set(fs.readFileSync(`Words/valid_${result.language}.txt`, 'utf-8').split(/\r?\n/))
+            
+            // Check if guessed word is valid
+            if (!wordList.has(guessedWord.trim())) {
                 const message = new EmbedBuilder()
                     .setTitle('Wordle Game')
                     .setColor(RED)
-                    .setDescription(`❗**${charsGuessed}** is not in the words list`)
+                    .setDescription(`❗**${guessedWord}** is not in the words list`)
                 return await interaction.reply({ embeds: [message], ephemeral: true })
             }
 
-            // the word is valid stored in charsGuessed[]
+            count++;
 
-            let alphabetNew
-            // current line
-            let reply = ['']
-            // counter for index
-            let counter
-            // all are gray in the beginning
-            let lettersRepeated = []
-            for (let i = 97; i <= 122; ++i) {
-                lettersRepeated[i] = 0
-            }
-            for (let i = 0; i < 5; ++i) {
-                counter = wordToGuess[i].charCodeAt(0)
-                lettersRepeated[counter] = lettersRepeated[counter] + 1
-                reply[i] = `${charsGuessed[i].toUpperCase()}_gray ` // They are all gray in the beginning
+            // Track letter occurrences in wordToGuess
+            const letterCount = {}
+            for (const char of wordToGuess) {
+                letterCount[char] = (letterCount[char] || 0) + 1
             }
 
+            // Initialize reply with all gray
+            let reply = Array(5).fill(null)
             const qwerty = "qwertyuiopasdfghjklzxcvbnm"
-            // If character guessed is not in the word
-            for (let i = 0; i < 5; ++i) {
-                for (let j = 0; j < 5; ++j) {
-                    if (charsGuessed[i] !== wordToGuess[j]) {
-                        let ind = qwerty.indexOf(charsGuessed[i])
-                        if (alphabetCurr[ind] !== `${charsGuessed[i].toUpperCase()}_yellow` && alphabetCurr[ind] !== `${charsGuessed[i].toUpperCase()}_green`) { // Keep the green / yellow letter in place
-                            alphabetCurr[ind] = `${charsGuessed[i].toUpperCase()}_darker_gray`
-                        }
-                    }
+
+            // Identify green letters
+            const greenFound = Array(5).fill(false)
+            for (let i = 0; i < 5; i++) {
+                if (guessedWord[i] === wordToGuess[i]) {
+                    reply[i] = `${guessedWord[i].toUpperCase()}_green `
+                    greenFound[i] = true
+                    letterCount[guessedWord[i]]--
+                    alphabetCurr[qwerty.indexOf(guessedWord[i])] = `${guessedWord[i].toUpperCase()}_green`
                 }
             }
 
-            // If character guessed is in the word in the right place
-            let greenFound = [0, 0, 0, 0, 0]
-            for (let i = 0; i < 5; ++i) {
-                if (charsGuessed[i] === wordToGuess[i]) { // Found a green letter
-                    counter = wordToGuess[i].charCodeAt(0)
-                    lettersRepeated[counter]-- // Decrement the counter of the letter
-                    greenFound[i] = 1 // Mark it as true
-                    reply[i] = `${charsGuessed[i].toUpperCase()}_green `
-                    let ind = qwerty.indexOf(charsGuessed[i])
-                    alphabetCurr[ind] = `${charsGuessed[i].toUpperCase()}_green`
-                }
-            }
-
-            // If character guessed is in the word but wrong place
-            for (let i = 0; i < 5; ++i) {
+            // Identify yellow and gray letters
+            for (let i = 0; i < 5; i++) {
                 if (!greenFound[i]) {
-                    for (let j = 0; j < 5; ++j) {
-                        if (charsGuessed[i] === wordToGuess[j] && !greenFound[j]) {
-                            counter = charsGuessed[i].charCodeAt(0);
-                            if (lettersRepeated[counter] > 0) {
-                                // Mark the guessed character as yellow
-                                reply[i] = `${charsGuessed[i].toUpperCase()}_yellow `
-                                let ind = qwerty.indexOf(charsGuessed[i])
-                                if (alphabetCurr[ind] !== `${charsGuessed[i].toUpperCase()}_green`) { // Keep the green letter in place
-                                    alphabetCurr[ind] = `${charsGuessed[i].toUpperCase()}_yellow`
-                                }
-                                lettersRepeated[counter]-- // Decrement the counter of the letter
-                                break // Move to the next guessed character
-                            }
+                    if (wordToGuess.includes(guessedWord[i]) && letterCount[guessedWord[i]] > 0) {
+                        reply[i] = `${guessedWord[i].toUpperCase()}_yellow `
+                        letterCount[guessedWord[i]]--
+                        const index = qwerty.indexOf(guessedWord[i])
+                        if (!alphabetCurr[index].includes('_green')) {
+                            alphabetCurr[index] = `${guessedWord[i].toUpperCase()}_yellow`
+                        }
+                    } else {
+                        reply[i] = `${guessedWord[i].toUpperCase()}_gray `
+                        const index = qwerty.indexOf(guessedWord[i])
+                        if (!alphabetCurr[index].includes('_green') && !alphabetCurr[index].includes('_yellow')) {
+                            alphabetCurr[index] = `${guessedWord[i].toUpperCase()}_darker_gray`
                         }
                     }
                 }
             }
 
-            // verifying for perfect match
-            let perfectMatch = true
-            for (let i = 0; i < 5; ++i) {
-                if (charsGuessed[i] !== wordToGuess[i]) {
-                    perfectMatch = false
-                }
-            }
+            // Check for perfect match
+            let perfectMatch = guessedWord === wordToGuess
 
             let canvas = new Canvas(400, 600)
             let context = canvas.getContext("2d")
@@ -491,11 +436,11 @@ module.exports = {
     }
 }
 
-function hasWhiteSpace(s) {
+function hasWhiteSpaces(s) {
     return /\s/g.test(s)
 }
 
-function hasNumber(s) {
+function hasNumbers(s) {
     return /\d/.test(s)
 }
 
