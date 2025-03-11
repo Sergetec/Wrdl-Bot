@@ -3483,6 +3483,7 @@ etage
 etape
 etats
 etens
+etern
 ethal
 ether
 ethic
